@@ -1,0 +1,6 @@
+Django auth admin
+user = ask_admin
+password = 12345
+
+user = ask_db_user
+password = user_pass
