@@ -1,0 +1,101 @@
+{% extends "default.html" %}
+{% block content %}
+    <div id="feed">
+        <header id="feed-header">
+            <ul id="feed-nav" class="nav nav-tabs">
+                {% if new == True %}
+                    <li class="active"><a href="/new">New</a></li>
+                    <li><a href="/popular">Popular</a></li>
+                {% else %}
+                    <li><a href="/new">New</a></li>
+                    <li class="active"><a href="/popular">Popular</a></li>
+                {% endif %}
+
+            </ul>
+            <div id="ask-button" class="pull-right">Ask</div>
+        </header>
+        <div id="questions">
+            {% for question in questions %}
+                <section class="question">
+                    <div class="side-info">
+                        <div class="counter">
+                            <div class="rating">{{ question.rating }}</div> <!--TODO: make it auto widening-->
+                            <div class="rating-buttons">
+                                <a href="#"><div class="glyphicon glyphicon-chevron-up rating-button up-button"></div></a>
+                                <a href="#"><div class="glyphicon glyphicon-chevron-down rating-button down-button"></div></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-info">
+                        <div class="question-title">
+                            <a href="#">{{ question.title }}</a>
+                        </div>
+                        <div class="actions-menu">
+                            <ul>
+                                <li><a href="#">Read answers ({{ question.answer_set.count }})</a></li>
+                                <li><a href="#">Answer</a></li>
+                            </ul>
+                        </div>
+                        <div class="tags-section">
+                            <i class="glyphicon glyphicon-tags"></i>
+                            <div class="tags">
+                                {% for tag in question.tag.all %}
+                                    <span class="tag">{{ tag.tagname }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="author-section">
+                            <div class="post-time"><a href="#">{{ question.creation_date }}</a></div>
+                            <div class="user-name">by <a href="#">{{ question.author }}</a></div>
+
+                        </div>
+                    </div>
+                </section>
+            {% endfor %}
+
+            <footer id="paginator" class="text-center">
+                <ul class="pagination">
+                    <li class=""><a href="{{ page }}/?page=1">&laquo;</a></li>
+                    {% for pagenum in pages %}
+                        <li class="{% if pagenum == current_page %}active{% endif %}"><a href="{{ page }}/?page={{ pagenum }}">{{ pagenum }} <span class="sr-only"></span></a></li>
+                    {% endfor %}
+                    <li class=""><a href="{{ page }}/?page={{ pages_count }}">&raquo;</a></li>
+                </ul>
+            </footer>
+        </div>
+    </div>
+
+    <aside id="sidebar">
+        <div class="search-box">
+            <form id="search-form-body" method="GET">
+                <div class="input-group">
+                    <input id="search-query-body" type="text" class="form-control" placeholder="Search...">
+                    <span class="input-group-btn">
+                        <button id="search-button-body" class="btn btn-default" type="submit">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </button>
+                    </span>
+                </div>
+            </form>
+        </div>
+
+        <div id="tags-cloud">
+            {% for tag in tags %}
+                <span class="weight{{ tag.weight }}" data-weight="{{ tag.weight }}"><a href="#">{{ tag.tag.tagname }}</a></span>
+            {% endfor %}
+
+        </div>
+
+        <div id="new_users">
+            <header>New users:</header>
+            <section>
+                {% for user in new_users %}
+                    <span class="user"><a href="#">{{ user }}</a></span>
+                {% endfor %}
+            </section>
+        </div>
+
+    </aside>
+
+{% endblock %}

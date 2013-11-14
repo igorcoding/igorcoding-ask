@@ -50,7 +50,7 @@ def get_top_tags(count):
         if prev_count - tag.questions_count > delta:
             weight -= 1
             prev_count = tag.questions_count
-        res.append((tag, weight))
+        res.append({'tag': tag, 'weight': weight})
 
     random.shuffle(res)
     return res
@@ -58,6 +58,7 @@ def get_top_tags(count):
 
 def get_user(user_id):
     return User.objects.filter(pk=user_id)
+
 
 def get_users(count=None, order='date_joined'):
     if order == 'date_joined':
@@ -71,7 +72,3 @@ def get_users(count=None, order='date_joined'):
         return User.objects.order_by('-rating')[:count]
 
     return None
-
-
-tags = get_top_tags(10)
-pprint(tags)
