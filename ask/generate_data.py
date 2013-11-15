@@ -21,7 +21,7 @@ def get_random_number(number_length_max=7, extra=""):
 
 
 def get_random_datetime():
-    return datetime.datetime(random.randint(1900, 2013),
+    return datetime.datetime(random.randint(1900, 2012),
                              random.randint(1, 12),
                              random.randint(1, 28),
                              random.randint(0, 23),
@@ -129,7 +129,7 @@ def generate_questions(cursor, questionsCount, users, tags):
             if tag not in q_tags:
                 q_tags.append(tag)
         question["tags"] = q_tags
-        question["rating"] = random.randint(0, 300)
+        question["rating"] = random.randint(-900, 900)
 
         questions.append(question["creation_date"])
 
@@ -172,12 +172,12 @@ def generate_answers(connection, cursor, answersCount, questions, users):
             answer_date = get_random_datetime()
         answer["date"] = answer_date
         answer["correct"] = random.randint(0, 1)
-        answer["rating"] = random.randint(0, 300)
+        answer["rating"] = random.randint(-900, 900)
 
         #answers.append(answerif (len(answers) ))
 
-        cursor.execute('INSERT INTO ask_answer (contents, question_id, author_id, correct, rating) VALUES (%s, %s, %s, %s, %s);',
-                      (answer["contents"], answer["question_id"], answer["author_id"], answer["correct"], answer["rating"]))
+        cursor.execute('INSERT INTO ask_answer (contents, question_id, author_id, correct, rating, date) VALUES (%s, %s, %s, %s, %s, %s);',
+                      (answer["contents"], answer["question_id"], answer["author_id"], answer["correct"], answer["rating"], answer["date"]))
         connection.commit()
         n += 1
 
@@ -218,7 +218,7 @@ def main():
 
     connection.close()
 
-#main()
+main()
 
 
 

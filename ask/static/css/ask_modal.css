@@ -1,0 +1,72 @@
+/********Ask modal*******/
+.darking-thing {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: black;
+    opacity: 0.6;
+    z-index: 990;
+}
+
+.ask-modal {
+    display: none;
+    width: 500px;
+    height: 500px;
+    background-color: white;
+    border-radius: 15px;
+    z-index: 999;
+}
+
+.ask-modal header {
+    display: block;
+    padding-top: 15px;
+    padding-bottom: 10px;
+    border: lightgray solid;
+    border-width: 0 0 2px 0;
+    text-align: center;
+    font-size: 20px;
+}
+
+.ask-modal section {
+    display: block;
+    width: 100%;
+    padding: 15px 30px;
+}
+
+.ask-modal textarea {
+    resize: none;
+}
+
+.ask-modal footer {
+    display: block;
+    width: 100%;
+    height: 50px;
+    position: absolute;
+    bottom: 0;
+    padding-top: 7px;
+    border: lightgray solid;
+    border-width: 2px 0 0 0;
+}
+
+.ask-modal .ask-buttons {
+    float: right;
+    margin-right: 20px;
+}
+
+.ask-modal .ask-buttons button {
+    margin-left: 15px;
+}
+
+.modal-close-button {
+    position: absolute !important;
+    right: 7px;
+    top: 5px !important;
+    opacity: 0.5;
+}
+
+.modal-close-button:hover {
+    cursor: pointer;
+}

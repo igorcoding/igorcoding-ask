@@ -1,0 +1,201 @@
+/*******Feed*******/
+
+#feed {
+    width: 77%;
+    float: left;
+    margin-left: 10px;
+    margin-right: 19px;
+    padding-bottom: 5%;
+}
+
+#feed-header {
+
+}
+
+.qtitle {
+    font-weight: bold;
+    font-size: 25px !important;
+    padding-bottom: 10px;
+}
+
+#answers {
+    border: 0 !important;
+}
+
+.question-contents {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.answers-title {
+    margin-top: 50px;
+    font-size: 20px;
+}
+
+
+
+
+
+#questions, #answers {
+    padding: 10px;
+    background-color: white;
+    border: lightgray solid;
+    border-width: 0 1px 1px 1px;
+}
+
+.question, .answer {
+    width: 100%;
+    height: 100%;
+    padding: 10px 0 5px 0;
+    border: solid lightgray;
+    border-width: 0 0 1px 0;
+}
+
+.hovered {
+    background-color: #f6f6f6;
+}
+
+.side-info {
+    display: inline-block;
+    width: 12%;
+    height: 70px;
+    line-height: 70px;
+    vertical-align: top;
+}
+
+.counter {
+    float: right;
+    position: relative;
+    margin-left: 0;
+}
+
+.counter .rating {
+    display: inline-block;
+    position: relative;
+    top: -6px;
+    margin-left: 4px;
+    padding: 0 5px;
+    font-size: 19px;
+}
+
+.extra-big {
+    background-color: #ffc1b4;
+    border-radius: 5px 0 5px 0;
+}
+
+.counter .rating-buttons {
+    display: inline-block;
+    position: relative;
+    top: 2px;
+    right: 0;
+}
+
+.counter .rating-buttons a {
+    color: dimgrey;
+    text-decoration: none;
+}
+
+.counter .rating-buttons a:hover {
+    color: black;
+}
+
+.counter .rating-button {
+    display: block;
+    width: 15px;
+    margin-bottom: 4px;
+}
+
+.up-button {
+    padding-left: 1px;
+}
+
+.tags-section {
+    display: inline-block;
+    height: auto;
+}
+
+.tags {
+    display: inline;
+}
+
+.tags .tag {
+    display: inline-block;
+    height: 23px;
+    margin-left: 5px;
+    padding: 2px 5px;
+    background-color: #fbeed5;
+    border-radius: 100px;
+    color: black;
+}
+
+.tag:hover {
+    background-color: #f6ea94;
+    cursor: pointer;
+}
+
+
+.author-section {
+    display: inline-block;
+    float: right;
+    margin-right: -40px;
+}
+
+.author-section a {
+    color:grey;
+}
+
+.author-section div {
+    display: inline;
+    color: grey;
+    font-size: 12px;
+}
+
+
+
+
+
+.question-info, .answer-info {
+    width: 79%;
+    display: inline-block;
+    padding-left: 1em;
+}
+
+.question-title {
+    font-size: 20px;
+}
+
+.question-title a {
+    color: darkblue;
+}
+
+.question-info .actions-menu   {
+    padding: 0;
+}
+
+.question-info .actions-menu ul {
+    padding: 0;
+}
+
+.question-info .actions-menu li {
+    display: inline;
+    padding-left: 4px;
+    padding-right: 8px;
+    border-right: 1px grey solid;
+}
+
+.question-info .actions-menu li:first-child {
+    padding-left: 0;
+}
+
+.question-info .actions-menu li:last-child {
+    border-right: 0;
+}
+
+.question-info .actions-menu a {
+
+}
+
+
+#paginator {
+
+}

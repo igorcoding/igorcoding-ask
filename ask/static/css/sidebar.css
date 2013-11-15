@@ -1,0 +1,106 @@
+/*******Sidebar*******/
+
+#sidebar {
+    width: 20%;
+    float: left;
+}
+
+#ask-button {
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    margin-top: 42px;
+    border: lightgray solid;
+    border-width: 1px 1px 0 1px;
+    border-radius: 5px;
+    background-color: #b9f3a2;
+    text-align: center;
+}
+
+#ask-button:hover {
+    background-color: #8edd67;
+    cursor: pointer;
+}
+
+.search-box {
+    display: inline-block;
+    /*width: 80%;*/
+    height: 30px;
+    margin-top: 15px;
+    margin-right: 3%;
+}
+
+.search-header {
+    display: none;
+    width: 15%;
+    height: 30px;
+    float: right;
+    margin-top: 10px;
+}
+
+#search-query-header{
+    border-radius: 20px;
+}
+
+
+#search-query-body, #search-query-header {
+    height: 30px;
+}
+
+#search-button-body {
+    height: 30px;
+}
+
+#tags-cloud {
+}
+
+#tags-cloud span {
+    margin: 0 3px 0 3px;
+}
+
+#tags-cloud span a {
+    color: black;
+
+}
+
+#tags-cloud span.weight1 {
+    font-size: 12px;
+}
+
+#tags-cloud span.weight2 {
+    font-size: 16px;
+}
+
+#tags-cloud span.weight3 {
+    font-size: 20px;
+}
+
+#tags-cloud span.weight4 {
+    font-size: 25px;
+}
+
+#tags-cloud span.weight5 {
+    font-size: 32px;
+}
+
+#new_users {
+    width: 200px;
+    margin-top: 15px;
+    padding-top: 10px;
+    border: lightgray solid;
+    border-width: 1px 0 0 0;
+}
+
+#new_users header {
+    font-size: 18px;
+}
+
+#new_users section {
+    padding-left: 15px;
+    border-width: 1px;
+}
+
+#new_users section .user {
+    display: block;
+    margin: 5px 0;
+}
