@@ -1,0 +1,32 @@
+.answer-portion {
+    font-style: italic;
+    font-size: 16px;
+}
+
+.question-part {
+    display: inline;
+}
+
+.dash-thing {
+    margin-left: 35px;
+    font-size: 17px !important;
+}
+
+.small {
+    font-size: 17px !important;
+    margin-left: 60px;
+    margin-top: -23px;
+}
+
+.answers-tags {
+    margin-left: 60px;
+    margin-top: 10px;
+}
+
+.authors-section {
+    margin-top: 20px;
+}
+
+.author-answers {
+    margin-top: 30px;
+}

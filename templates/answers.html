@@ -1,0 +1,79 @@
+{% if required_content != "user" %}
+<header id="feed-header">
+    <ul id="feed-nav" class="nav nav-tabs">
+        {% if page != 'popular' %}
+            <li class="active"><a href="/answers/">New</a></li>
+            <li><a href="/answers/popular/">Popular</a></li>
+        {% else %}
+            <li><a href="/answers/">New</a></li>
+            <li class="active"><a href="/answers/popular/">Popular</a></li>
+        {% endif %}
+    </ul>
+</header>
+{% endif %}
+<div id="questions">
+    {% for answer in answers %}
+        <section class="answer" data-id="{{ answer.id }}">
+            <div class="side-info">
+                <div class="counter">
+                    <div class="rating">{{ answer.rating }}</div> <!--TODO: make it auto widening-->
+                    <div class="rating-buttons">
+                        <a href="#"><div class="glyphicon glyphicon-chevron-up rating-button up-button"></div></a>
+                        <a href="#"><div class="glyphicon glyphicon-chevron-down rating-button down-button"></div></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="answer-info">
+                <div class="answer-portion">
+                    <a href="/question/?q={{ answer.question_id }}#answer_{{ answer.id }}">{{ answer.contents | slice:":180" }}...</a>
+                </div>
+
+                <div class="question-part">
+                    <span class="question-title dash-thing"><a href="/question?q={{ answer.question.id }}">&raquo;</a></span>
+                    <div class="question-title small"><a href="/question?q={{ answer.question.id }}">{{ answer.question.title }}</a></div>
+                    <div class="tags-section answers-tags">
+                        <i class="glyphicon glyphicon-tags"></i>
+                        <div class="tags">
+                            {% for tag in answer.question.tag.all %}
+                                <span class="tag">{{ tag.tagname }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+<!--
+                <div class="authors-section">
+                    <div><strong>Asked by:</strong> {{ answer.question.author }}</div>
+                    <div><strong>Answered by:</strong> {{ answer.author }}</div>
+                </div>
+-->
+                <div class="author-section author-answers">
+                    <div class="post-time">{{ answer.date }}</div>
+                    <div class="user-name">by <a href="/user?username={{ answer.author.username }}">{{ answer.author }}</a></div>
+                </div>
+            </div>
+        </section>
+    {% endfor %}
+
+    {% if required_content == "user" %}
+        <footer id="paginator" class="text-center">
+            <ul class="pagination">
+                <li class=""><a href="/{{ page }}&page=1">&laquo;</a></li>
+                {% for pagenum in pages %}
+                    <li class="{% if pagenum == current_page %}active{% endif %}"><a href="/{{ page }}&page={{ pagenum }}">{{ pagenum }} <span class="sr-only"></span></a></li>
+                {% endfor %}
+                <li class=""><a href="/{{ page }}&page={{ pages_count }}">&raquo;</a></li>
+            </ul>
+        </footer>
+    {% else %}
+        <footer id="paginator" class="text-center">
+            <ul class="pagination">
+                <li class=""><a href="/{{ page }}/?page=1">&laquo;</a></li>
+                {% for pagenum in pages %}
+                    <li class="{% if pagenum == current_page %}active{% endif %}"><a href="/{{ page }}/?page={{ pagenum }}">{{ pagenum }} <span class="sr-only"></span></a></li>
+                {% endfor %}
+                <li class=""><a href="/{{ page }}/?page={{ pages_count }}">&raquo;</a></li>
+            </ul>
+        </footer>
+    {% endif %}
+</div>

@@ -21,7 +21,7 @@
     <schema name="" catalog="test"/>
     <table name="ask_answer" schema="" catalog="ask_db" type="TABLE">
       <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="contents" sqlType="VARCHAR" length="1500" precision="0" nullable="false" jdbcType="12"/>
+      <column name="contents" sqlType="LONGTEXT" length="2147483647" precision="0" nullable="false" jdbcType="-1"/>
       <column name="question_id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
       <column name="author_id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
       <column name="date" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
@@ -30,13 +30,25 @@
       <primary-key name="PRIMARY" columns="id"/>
       <foreign-key name="author_id_refs_id_6ff76f12" columns="author_id" ref-table="auth_user" ref-schema="" ref-catalog="ask_db" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
       <foreign-key name="question_id_refs_id_48ce8bf8" columns="question_id" ref-table="ask_question" ref-schema="" ref-catalog="ask_db" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="answer_id_refs_id_8c08cf1c" table="ask_answervote" schema="" catalog="ask_db" columns="answer_id"/>
       <index name="ask_answer_25110688" unique="false" columns="question_id"/>
       <index name="ask_answer_e969df21" unique="false" columns="author_id"/>
+    </table>
+    <table name="ask_answervote" schema="" catalog="ask_db" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="user_id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="answer_id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="value" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="answer_id_refs_id_8c08cf1c" columns="answer_id" ref-table="ask_answer" ref-schema="" ref-catalog="ask_db" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="user_id_refs_id_0d85cb1a" columns="user_id" ref-table="auth_user" ref-schema="" ref-catalog="ask_db" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="ask_answervote_5b4ce3ea" unique="false" columns="answer_id"/>
+      <index name="ask_answervote_6340c63c" unique="false" columns="user_id"/>
     </table>
     <table name="ask_question" schema="" catalog="ask_db" type="TABLE">
       <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="title" sqlType="VARCHAR" length="255" precision="0" nullable="false" jdbcType="12"/>
-      <column name="contents" sqlType="VARCHAR" length="1500" precision="0" nullable="false" jdbcType="12"/>
+      <column name="contents" sqlType="LONGTEXT" length="2147483647" precision="0" nullable="false" jdbcType="-1"/>
       <column name="author_id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
       <column name="creation_date" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
       <column name="rating" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
@@ -44,6 +56,7 @@
       <foreign-key name="author_id_refs_id_c40ca378" columns="author_id" ref-table="auth_user" ref-schema="" ref-catalog="ask_db" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
       <exported-key name="question_id_refs_id_48ce8bf8" table="ask_answer" schema="" catalog="ask_db" columns="question_id"/>
       <exported-key name="question_id_refs_id_bf48deb0" table="ask_question_tag" schema="" catalog="ask_db" columns="question_id"/>
+      <exported-key name="question_id_refs_id_c8361a4c" table="ask_questionvote" schema="" catalog="ask_db" columns="question_id"/>
       <index name="ask_question_e969df21" unique="false" columns="author_id"/>
     </table>
     <table name="ask_question_tag" schema="" catalog="ask_db" type="TABLE">
@@ -56,6 +69,17 @@
       <index name="question_id" unique="true" columns="tag_id"/>
       <index name="ask_question_tag_25110688" unique="false" columns="question_id"/>
       <index name="ask_question_tag_5659cca2" unique="false" columns="tag_id"/>
+    </table>
+    <table name="ask_questionvote" schema="" catalog="ask_db" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="user_id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="question_id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="value" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="user_id_refs_id_0b0de6a9" columns="user_id" ref-table="auth_user" ref-schema="" ref-catalog="ask_db" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="question_id_refs_id_c8361a4c" columns="question_id" ref-table="ask_question" ref-schema="" ref-catalog="ask_db" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="ask_questionvote_25110688" unique="false" columns="question_id"/>
+      <index name="ask_questionvote_6340c63c" unique="false" columns="user_id"/>
     </table>
     <table name="ask_tag" schema="" catalog="ask_db" type="TABLE">
       <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -108,7 +132,9 @@
       <column name="date_joined" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
       <primary-key name="PRIMARY" columns="id"/>
       <exported-key name="author_id_refs_id_6ff76f12" table="ask_answer" schema="" catalog="ask_db" columns="author_id"/>
+      <exported-key name="user_id_refs_id_0d85cb1a" table="ask_answervote" schema="" catalog="ask_db" columns="user_id"/>
       <exported-key name="author_id_refs_id_c40ca378" table="ask_question" schema="" catalog="ask_db" columns="author_id"/>
+      <exported-key name="user_id_refs_id_0b0de6a9" table="ask_questionvote" schema="" catalog="ask_db" columns="user_id"/>
       <exported-key name="user_id_refs_id_40c41112" table="auth_user_groups" schema="" catalog="ask_db" columns="user_id"/>
       <exported-key name="user_id_refs_id_4dc23c39" table="auth_user_user_permissions" schema="" catalog="ask_db" columns="user_id"/>
       <index name="username" unique="true" columns="username"/>

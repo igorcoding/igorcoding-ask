@@ -30,7 +30,7 @@ def get_random_datetime():
                              random.randint(0, 1000))
 
 
-def generate_users(cursor, usersCount):
+def generate_users(connection, cursor, usersCount):
     print "Generating %d users..." % usersCount
 
     users = []
@@ -72,12 +72,13 @@ def generate_users(cursor, usersCount):
         cursor.execute('INSERT INTO auth_user (password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);',
                        (user["password"], user["last_login"], 0, user["username"],
                         user["first_name"], user["last_name"], user["email"], 0, 1, user["date_joined"],))
+        connection.commit()
 
     print "Users generated."
     return finalusers
 
 
-def generate_tags(cursor, tagsCount):
+def generate_tags(connection, cursor, tagsCount):
     print "Generating %s tags..." % tagsCount
 
     tags = []
@@ -93,12 +94,13 @@ def generate_tags(cursor, tagsCount):
         tags.append(tag)
         cursor.execute('INSERT INTO ask_tag (tagname) VALUES (%s);',
                        (tag["tagname"],))
+        connection.commit()
 
     print "Tags generated."
     return tags
 
 
-def generate_questions(cursor, questionsCount, users, tags):
+def generate_questions(connection, cursor, questionsCount, users, tags):
     print "Generating %s questions..." % questionsCount
 
     TAGS_PER_QUESTION = 3
@@ -129,16 +131,42 @@ def generate_questions(cursor, questionsCount, users, tags):
             if tag not in q_tags:
                 q_tags.append(tag)
         question["tags"] = q_tags
-        question["rating"] = random.randint(-900, 900)
 
-        questions.append(question["creation_date"])
+        voted_users = set([])
+        plus_one = random.randint(0, 99)
+        minus_one = random.randint(0, 20)
+
+        #question["rating"] = plus_one - minus_one
+        question["rating"] = random.randint(-900, 900)
 
         cursor.execute('INSERT INTO ask_question (title, contents, author_id, creation_date, rating) VALUES (%s, %s, %s, %s, %s);',
                       (question["title"], question["contents"], question["author_id"], question["creation_date"], question["rating"]))
+        connection.commit()
+        """
+        for x in range(0, plus_one):
+            rand_user = random.randint(2, len(users)+1)
+            while rand_user in voted_users:
+                rand_user = random.randint(2, len(users)+1)
+            voted_users.add(rand_user)
+            cursor.execute('INSERT INTO ask_questionvote (user_id, question_id, value) values (%s, %s, %s);',
+                           (rand_user, len(questions)+1, 1))
+            connection.commit()
+
+        for x in range(0, minus_one):
+            rand_user = random.randint(2, len(users)+1)
+            while rand_user in voted_users:
+                rand_user = random.randint(2, len(users)+1)
+            cursor.execute('INSERT INTO ask_questionvote (user_id, question_id, value) values (%s, %s, %s);',
+                           (rand_user, len(questions)+1, -1))
+            connection.commit()
+            """
+
+        questions.append(question["creation_date"])
 
         for i in range(len(question["tags"])):
             cursor.execute('INSERT INTO ask_question_tag (question_id, tag_id) VALUES (%s, %s);',
                           (len(questions), question["tags"][i] + 1))
+            connection.commit()
 
     print "Questions generated."
     return questions
@@ -172,6 +200,12 @@ def generate_answers(connection, cursor, answersCount, questions, users):
             answer_date = get_random_datetime()
         answer["date"] = answer_date
         answer["correct"] = random.randint(0, 1)
+
+        voted_users = set([])
+        plus_one = random.randint(0, 99)
+        minus_one = random.randint(0, 20)
+
+        #answer["rating"] = plus_one - minus_one
         answer["rating"] = random.randint(-900, 900)
 
         #answers.append(answerif (len(answers) ))
@@ -179,6 +213,25 @@ def generate_answers(connection, cursor, answersCount, questions, users):
         cursor.execute('INSERT INTO ask_answer (contents, question_id, author_id, correct, rating, date) VALUES (%s, %s, %s, %s, %s, %s);',
                       (answer["contents"], answer["question_id"], answer["author_id"], answer["correct"], answer["rating"], answer["date"]))
         connection.commit()
+        """
+        for x in range(0, plus_one):
+            rand_user = random.randint(2, len(users)+1)
+            while rand_user in voted_users:
+                rand_user = random.randint(2, len(users)+1)
+            voted_users.add(rand_user)
+            cursor.execute('INSERT INTO ask_answervote (user_id, answer_id, value) values (%s, %s, %s);',
+                           (rand_user, n+1, 1))
+            connection.commit()
+
+        for x in range(0, minus_one):
+            rand_user = random.randint(2, len(users)+1)
+            while rand_user in voted_users:
+                rand_user = random.randint(2, len(users)+1)
+            cursor.execute('INSERT INTO ask_answervote (user_id, answer_id, value) values (%s, %s, %s);',
+                           (rand_user, n+1, -1))
+            connection.commit()
+        """
+
         n += 1
 
     print "Answers generated."
@@ -197,18 +250,15 @@ def main():
     cursor = connection.cursor()
 
     now = time.time()
-    users_res = generate_users(cursor, MAX_USERS)
-    connection.commit()
+    users_res = generate_users(connection,  cursor, MAX_USERS)
     print "Time: %d" % (time.time() - now)
 
     now = time.time()
-    tags_res = generate_tags(cursor, MAX_TAGS)
-    connection.commit()
+    tags_res = generate_tags(connection, cursor, MAX_TAGS)
     print "Time: %d" % (time.time() - now)
 
     now = time.time()
-    questions_res = generate_questions(cursor, MAX_QUESTIONS, users_res, tags_res)
-    connection.commit()
+    questions_res = generate_questions(connection, cursor, MAX_QUESTIONS, users_res, tags_res)
     print "Time: %d" % (time.time() - now)
 
     now = time.time()

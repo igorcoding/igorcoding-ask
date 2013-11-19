@@ -16,6 +16,7 @@
     font-weight: bold;
     font-size: 25px !important;
     padding-bottom: 10px;
+    color: darkblue !important;
 }
 
 #answers {
@@ -23,13 +24,17 @@
 }
 
 .question-contents {
-    font-size: 20px;
+    font-size: 16px;
     margin-bottom: 10px;
 }
 
 .answers-title {
     margin-top: 50px;
     font-size: 20px;
+}
+
+.answer-contents {
+    font-size: 15px;
 }
 
 
@@ -58,7 +63,7 @@
 .side-info {
     display: inline-block;
     width: 12%;
-    height: 70px;
+    height: 100%;
     line-height: 70px;
     vertical-align: top;
 }
@@ -109,6 +114,33 @@
     padding-left: 1px;
 }
 
+.correctness {
+    width: 35px;
+    height: 40px;
+
+    position: relative;
+    left: -40px;
+    top: 8px;
+
+    background-image: url("../img/correct.gif");
+    background-repeat: no-repeat;
+    background-position: center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+
+    opacity: 0.1;
+}
+
+.correct {
+    opacity: 1;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
 .tags-section {
     display: inline-block;
     height: auto;
@@ -138,6 +170,7 @@
     display: inline-block;
     float: right;
     margin-right: -40px;
+    padding-top: auto;
 }
 
 .author-section a {
@@ -199,3 +232,4 @@
 #paginator {
 
 }
+

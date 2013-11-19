@@ -3,6 +3,7 @@
 @import url(feed.css);
 @import url(sidebar.css);
 @import url(ask_modal.css);
+@import url(user_info.css);
 
 html, body {
     width: 100%;
@@ -29,6 +30,7 @@ html, body {
     margin: 0 auto;
     padding: 60px 10px 10px 10px;
 }
+
 
 @media(max-width: 970px) {
     #sidebar {

@@ -12,6 +12,18 @@ class Tag(models.Model):
         app_label = 'ask'
 
 
+class QuestionVote(models.Model):
+    user = models.ForeignKey(User)
+    question = models.ForeignKey('Question')
+    value = models.IntegerField(max_length=5)
+
+
+class AnswerVote(models.Model):
+    user = models.ForeignKey(User)
+    answer = models.ForeignKey('Answer')
+    value = models.IntegerField(max_length=5)
+
+
 class Question(models.Model):
     title = models.CharField(max_length=255)
     contents = models.TextField()
@@ -19,7 +31,6 @@ class Question(models.Model):
     creation_date = models.DateTimeField()
     tag = models.ManyToManyField(Tag)
     rating = models.IntegerField(default=0)
-    #raters = models.ManyToManyField(User)
 
     def save(self, *args, **kwargs):
         """ On save, update timestamps """
@@ -38,7 +49,6 @@ class Answer(models.Model):
     date = models.DateTimeField()
     correct = models.BooleanField(default=False)
     rating = models.IntegerField(default=0)
-    #raters = models.ManyToManyField(User)
 
     def save(self, *args, **kwargs):
         """ On save, update timestamps """

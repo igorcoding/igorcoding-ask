@@ -1,0 +1,28 @@
+<section id="user_info">
+    {% load staticfiles %}
+    <div class="user_pic large" style="background-image: url('{{ STATIC_URL }}img/{{ user.username }}.jpg');">&nbsp</div>
+
+    <div class="fields">
+        <div class="name">{{ user.first_name }} {{ user.last_name }} ({{ user.username }})</div>
+        <div class="field-value"><span class="field-name">E-mail:</span> {{ user.email }}</div>
+        <div class="field-value"><span class="field-name">Joined:</span> {{ user.date_joined }}</div>
+        <div class="field-value"><span class="field-name">Last login:</span> {{ user.last_login }}</div>
+    </div>
+</section>
+<header id="feed-header">
+    <ul id="user-feed-nav" class="nav nav-tabs">
+        {% if tab == 'questions' %}
+            <li class="active" data-tab="questions"><a href="">Asked Questions</a></li>
+            <li data-tab="answers"><a href="#">Answers</a></li>
+        {% elif tab == 'answers' %}
+            <li data-tab="questions"><a href="#" >Asked Questions</a></li>
+            <li class="active" data-tab="answers"><a href="#">Answers</a></li>
+        {% endif %}
+    </ul>
+
+</header>
+{% if tab == 'questions' %}
+    {% include "questions.html" %}
+{% elif tab == 'answers' %}
+    {% include "answers.html" %}
+{% endif %}

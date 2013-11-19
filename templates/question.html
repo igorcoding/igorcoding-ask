@@ -1,80 +1,76 @@
-{% extends "default.html" %}
-{% block content %}
-    <div id="feed">
-        <header id="feed-header" style="margin-top:42px;">
-            <div class="question-title qtitle">
-                {{ q.title }}
-            </div>
-            <section class="question disable-hover" data-id="{{ q.id }}" >
-                <div class="side-info">
-                    <div class="counter">
-                        <div class="rating">{{ q.rating }}</div> <!--TODO: make it auto widening-->
-                        <div class="rating-buttons">
-                            <a href="#"><div class="glyphicon glyphicon-chevron-up rating-button up-button"></div></a>
-                            <a href="#"><div class="glyphicon glyphicon-chevron-down rating-button down-button"></div></a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="question-info">
-                    <div class="question-contents">
-                        {{ q.contents }}
-                    </div>
-
-                    <div class="tags-section">
-                        <i class="glyphicon glyphicon-tags"></i>
-                        <div class="tags">
-                            {% for tag in q.tag.all %}
-                                <span class="tag">{{ tag.tagname }}</span>
-                            {% endfor %}
-                        </div>
-                    </div>
-
-                    <div class="author-section">
-                        <div class="post-time">{{ q.date }}</div>
-                        <div class="user-name">by <a href="#">{{ q.author }}</a></div>
-                    </div>
-                </div>
-                <div class="answers-title">Answers ({{ answers.count }}):</div>
-            </section>
-        </header>
-        <div id="answers">
-            {% for answer in answers %}
-                <section class="answer" data-id="{{ answer.id }}">
-                    <div class="side-info">
-                        <div class="counter">
-                            <div class="rating">{{ answer.rating }}</div> <!--TODO: make it auto widening-->
-                            <div class="rating-buttons">
-                                <a href="#"><div class="glyphicon glyphicon-chevron-up rating-button up-button"></div></a>
-                                <a href="#"><div class="glyphicon glyphicon-chevron-down rating-button down-button"></div></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="answer-info">
-                        <div class="answer-contents">
-                            {{ answer.contents }}
-                        </div>
-
-                        <div class="author-section">
-                            <div class="post-time">{{ answer.date }}</div>
-                            <div class="user-name">by <a href="#">{{ answer.author }}</a></div>
-                        </div>
-                    </div>
-                </section>
-            {% endfor %}
-
-            <footer id="paginator" class="text-center">
-                <ul class="pagination">
-                    <li class=""><a href="{{ page }}/?page=1">&laquo;</a></li>
-                    {% for pagenum in pages %}
-                        <li class="{% if pagenum == current_page %}active{% endif %}"><a href="{{ page }}/?page={{ pagenum }}">{{ pagenum }} <span class="sr-only"></span></a></li>
-                    {% endfor %}
-                    <li class=""><a href="{{ page }}/?page={{ pages_count }}">&raquo;</a></li>
-                </ul>
-            </footer>
-        </div>
+<header id="feed-header" style="margin-top:42px;">
+    <div class="question-title qtitle">
+        {{ q.title }}
     </div>
+    <section class="question disable-hover" data-id="{{ q.id }}" >
+        <div class="side-info">
+            <div class="counter">
+                <div class="rating">{{ q.rating }}</div> <!--TODO: make it auto widening-->
+                <div class="rating-buttons">
+                    <a href="#"><div class="glyphicon glyphicon-chevron-up rating-button up-button"></div></a>
+                    <a href="#"><div class="glyphicon glyphicon-chevron-down rating-button down-button"></div></a>
+                </div>
+            </div>
+        </div>
 
-    {% include "sidebar.html" %}
-{% endblock %}
+        <div class="question-info">
+            <div class="question-contents">
+                {{ q.contents }}
+            </div>
+
+            <div class="tags-section">
+                <i class="glyphicon glyphicon-tags"></i>
+                <div class="tags">
+                    {% for tag in q.tag.all %}
+                        <span class="tag">{{ tag.tagname }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="author-section">
+                <div class="post-time">{{ q.creation_date }}</div>
+                <div class="user-name">by <a href="/user?username={{ q.author.username }}">{{ q.author }}</a></div>
+            </div>
+        </div>
+        <span id="ans" style="visibility: hidden">&nbsp;</span>
+        <div class="answers-title" >Answers ({{ answers.count }}):</div>
+    </section>
+</header>
+<div id="answers">
+    {% for answer in answers %}
+        <section class="answer" data-id="{{ answer.id }}" id="answer_{{ answer.id }}">
+            <div class="side-info">
+                <div class="counter">
+                    <div class="rating">{{ answer.rating }}</div> <!--TODO: make it auto widening-->
+                    <div class="rating-buttons">
+                        <a href="#"><div class="glyphicon glyphicon-chevron-up rating-button up-button"></div></a>
+                        <a href="#"><div class="glyphicon glyphicon-chevron-down rating-button down-button"></div></a>
+                    </div>
+                </div>
+                <div class="correctness {% if answer.correct %} correct {% endif %}"></div>
+
+            </div>
+
+            <div class="answer-info">
+                <div class="answer-contents">
+                    {{ answer.contents }}
+                </div>
+
+                <div class="author-section">
+                    <div class="post-time">{{ answer.date }}</div>
+                    <div class="user-name">by <a href="/user?username={{ answer.author.username }}">{{ answer.author }}</a></div>
+                </div>
+            </div>
+        </section>
+    {% endfor %}
+
+    <footer id="paginator" class="text-center">
+        <ul class="pagination">
+            <li class=""><a href="{{ page }}/?page=1">&laquo;</a></li>
+            {% for pagenum in pages %}
+                <li class="{% if pagenum == current_page %}active{% endif %}"><a href="{{ page }}/?page={{ pagenum }}">{{ pagenum }} <span class="sr-only"></span></a></li>
+            {% endfor %}
+            <li class=""><a href="{{ page }}/?page={{ pages_count }}">&raquo;</a></li>
+        </ul>
+    </footer>
+</div>

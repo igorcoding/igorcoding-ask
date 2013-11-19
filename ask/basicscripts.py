@@ -25,8 +25,32 @@ def get_question(question_id):
     return Question.objects.get(pk=question_id)
 
 
-def get_answers(question_id):
+def get_answer(answer_id):
+    return Answer.objects.get(pk=answer_id)
+
+
+def get_answers_for_question(question_id):
     return Answer.objects.filter(question=get_question(question_id)).order_by('-date').order_by('-rating')
+
+
+def get_answers_by_date(page, count=30):
+    offset = (page - 1) * count
+    return Answer.objects.order_by('-date')[offset:(offset + count)]
+
+
+def get_answers_by_rating(page, count=30):
+    offset = (page - 1) * count
+    return Answer.objects.order_by('-rating')[offset:(offset + count)]
+
+
+def get_questions_by_user(user, page, count=30):
+    offset = (page - 1) * count
+    return Question.objects.filter(author_id=user.id).order_by('-creation_date')[offset:(offset + count)]
+
+
+def get_answers_by_user(user, page, count=30):
+    offset = (page - 1) * count
+    return Answer.objects.filter(author_id=user.id).order_by('-date')[offset:(offset + count)]
 
 
 def get_tag(tag_id):
@@ -36,6 +60,10 @@ def get_tag(tag_id):
 def get_questions_by_tag(tag_id, page, count=30):
     offset = (page - 1) * count
     return get_tag(tag_id).question_set.order_by('-creation_date')[offset:(offset + count)]
+
+
+def get_all_tags():
+    return Tag.objects.all()
 
 
 def get_top_tags(count):
@@ -59,7 +87,11 @@ def get_top_tags(count):
 
 
 def get_user(user_id):
-    return User.objects.filter(pk=user_id)
+    return User.objects.filter(pk=user_id)[0]
+
+
+def get_user_by_name(username):
+    return User.objects.filter(username=username)[0]
 
 
 def get_users(count=None, order='date_joined'):
@@ -76,13 +108,41 @@ def get_users(count=None, order='date_joined'):
     return None
 
 
-def increase_q_rating(question_id):
+def get_question_rating(question_id):
+    return QuestionVote.objects.filter(question_id=question_id).aggregate(sum=models.Sum('value'))['sum']
+
+
+def get_answer_rating(answer_id):
+    return AnswerVote.objects.filter(answer_id=answer_id).aggregate(sum=models.Sum('value'))['sum']
+
+
+def increase_q_rating(question_id, user_id):
     q = get_question(question_id)
-    q.rating += 1
+    qvote = QuestionVote(question=q, user=get_user(user_id), value=1)
+    qvote.save()
+    q.rating = get_question_rating(question_id)
     q.save()
 
 
-def decrease_question_rating(question_id):
+def decrease_q_rating(question_id, user_id):
     q = get_question(question_id)
-    q.rating -= 1
+    qvote = QuestionVote(question=q, user=get_user(user_id), value=-1)
+    qvote.save()
+    q.rating = get_question_rating(question_id)
     q.save()
+
+
+def increase_a_rating(answer_id, user_id):
+    a = get_answer(answer_id)
+    avote = AnswerVote(answer=a, user=get_user(user_id), value=1)
+    avote.save()
+    a.rating = get_answer_rating(answer_id)
+    a.save()
+
+
+def decrease_a_rating(answer_id, user_id):
+    a = get_answer(answer_id)
+    avote = AnswerVote(answer=a, user=get_user(user_id), value=-1)
+    avote.save()
+    a.rating = get_answer_rating(answer_id)
+    a.save()
