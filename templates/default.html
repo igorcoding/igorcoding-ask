@@ -33,18 +33,22 @@
                 </ul>
             </nav>
 
-
+            {% if user.is_authenticated %}
             <div id="logout_btn">
-                <a href="#">logout</a>
+                <a href="/logout">logout</a>
             </div>
 
-            <div class="user_info" data-username="Kate">
-                <div class="user_pic" style="background-image: url('{{ STATIC_URL }}img/Kate.jpg');">&nbsp</div>
-                <div class="user_name">
-                    ask_admin
-                </div>
+            <div class="user_info" onclick="document.location.href='/users/{{ user.username }}'">
+                <div class="user_pic" style="background-image: url('{{ STATIC_URL }}img/{{ user.username }}.jpg');">&nbsp</div>
+                <div class="user_name">{{ user.username }}</div>
                 <!--<div class="user-rating"></div>-->
             </div>
+            {% else %}
+            <div id="login_btn">
+                <a href="/login">login / registration</a>
+            </div>
+
+            {% endif %}
 
             <div class="search-header">
                 <form id="search-form-header" method="GET">
@@ -74,14 +78,12 @@
                         <label for="id_title" class="col-lg-2 control-label">Title</label>
                         <div class="col-lg-10">
                             {{ form.title }}
-                            <!--<input type="text" class="form-control" id="id_title" placeholder="Question title">-->
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="id_contents" class="col-lg-2 control-label">Contents</label>
                         <div class="col-lg-10">
                             {{ form.contents }}
-                            <!--<textarea class="form-control" id="id_contents" placeholder="Type your question right here" rows="11"></textarea>-->
                         </div>
                     </div>
                     <div class="form-group">
@@ -113,7 +115,8 @@
                     tagLimit: 3,
                     singleField: true,
                     singleFieldNode: document.getElementById('id_tags'),
-                    placeholderText: "Enter 0 to 3 tags..."
+                    placeholderText: "Enter 0 to 3 tags...",
+                    removeConfirmation: true
 
                 });
             });

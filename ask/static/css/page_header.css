@@ -103,7 +103,7 @@
     cursor: pointer;
 }
 
-#logout_btn {
+#logout_btn, #login_btn {
     display: inline-block;
     line-height: 50px;
     position: relative;

@@ -108,8 +108,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware'
-
+    'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -172,7 +171,11 @@ LOGGING = {
         },
     }
 }
-"""
+
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_URL = '/logout/'
+
 if DEBUG:
     INSTALLED_APPS += ('debug_toolbar', )
     MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware', )
@@ -189,6 +192,7 @@ if DEBUG:
         'debug_toolbar.panels.logger.LoggingPanel',
     )
 
+
     def custom_show_toolbar(request):
         return True
 
@@ -200,4 +204,3 @@ if DEBUG:
         'TAG': 'div',
         'ENABLE_STACKTRACES': True,
     }
-"""

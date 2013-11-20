@@ -1,6 +1,8 @@
 # Create your views here.
 from datetime import datetime
 import json
+from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render
 from django.template import loader, Context, RequestContext
 from django.http import HttpResponse, Http404, HttpResponseRedirect
@@ -34,98 +36,90 @@ def get_pages_bounds(pages_count, page):
     return page_left, page_right
 
 
-def new_questions(request):
+def get_count(to_count):
+    return to_count.count()
 
+
+def get_response(request, required_page, tab=None):
     if request.method == "POST":
         form = AskForm(request.POST)
         if form.is_valid():
             return HttpResponseRedirect("/thanks")
     else:
         form = AskForm()
+
     page = get_page(request)
-    qs = get_questions_by_date(page)
+
+    if not tab and tab is not None:
+        tab = 'new'
+    c = {}
+    if required_page == 'questions':
+        if tab is not None:
+            if tab == 'new':
+                c['res'] = get_questions_by_date(page)
+            elif tab == 'popular':
+                c['res'] = get_questions_by_rating(page)
+            else:
+                raise Http404
+        to_count = Question.objects
+
+    elif required_page == 'answers':
+        if tab is not None:
+            if tab == 'new':
+                c['res'] = get_answers_by_date(page)
+            elif tab == 'popular':
+                c['res'] = get_answers_by_rating(page)
+            else:
+                raise Http404
+        to_count = Answer.objects
+
+    elif required_page == 'question':
+        try:
+            q_id = int(request.GET['q'])
+        except MultiValueDictKeyError:
+            raise Http404
+
+        c['q'] = get_question(q_id)
+        c['answers'] = get_answers_for_question(q_id)
+        to_count = c['q'].answer_set
+
+    else:
+        raise Http404
 
     tags = get_top_tags(30)
     new_users = get_users(10)
-    pages_count = int(ceil(Question.objects.count() / 30 + 1))
+    pages_count = int(ceil(get_count(to_count) / 30 + 1))
     page_left, page_right = get_pages_bounds(pages_count, page)
     pages = range(page_left, page_right + 1)
     all_tags = get_all_tags()
 
-    c = {'questions': qs,
-         'tags': tags,
+    d = {'tags': tags,
          'new_users': new_users,
          'pages': pages,
          'pages_count': pages_count,
-         'page': '',
+         'tab': tab,
          'current_page': page,
          'all_tags': all_tags,
-         'required_content': 'questions',
-         'form': form}
-    return render(request, "index.html", c)
+         'required_page': required_page,
+         'form': form
+         }
+    return render(request, "index.html", dict(c, **d))
+
+
+def new_questions(request):
+    return get_response(request, 'questions', 'new')
 
 
 def popular_questions(request):
-    page = get_page(request)
-    qs = get_questions_by_rating(page)
-
-    tags = get_top_tags(30)
-    new_users = get_users(10)
-    pages_count = int(ceil(Question.objects.count() / 30 + 1))
-    page_left, page_right = get_pages_bounds(pages_count, page)
-    pages = range(page_left, page_right + 1)
-
-    c = {'questions': qs,
-         'tags': tags,
-         'new_users': new_users,
-         'pages': pages,
-         'pages_count': pages_count,
-         'page': 'popular',
-         'current_page': page,
-         'required_content': 'questions'}
-    return render(request, "index.html", c)
+    return get_response(request, 'questions', 'popular')
 
 
 def new_answers(request):
-    page = get_page(request)
-    answers = get_answers_by_date(page)
-
-    tags = get_top_tags(30)
-    new_users = get_users(10)
-    pages_count = int(ceil(Answer.objects.count() / 30 + 1))
-    page_left, page_right = get_pages_bounds(pages_count, page)
-    pages = range(page_left, page_right + 1)
-
-    c = {'answers': answers,
-         'tags': tags,
-         'new_users': new_users,
-         'pages': pages,
-         'pages_count': pages_count,
-         'page': 'answers',
-         'current_page': page,
-         'required_content': 'answers'}
-    return render(request, "index.html", c)
+    return get_response(request, 'answers', 'new')
 
 
 def popular_answers(request):
-    page = get_page(request)
-    answers = get_answers_by_rating(page)
-
-    tags = get_top_tags(30)
-    new_users = get_users(10)
-    pages_count = int(ceil(Answer.objects.count() / 30 + 1))
-    page_left, page_right = get_pages_bounds(pages_count, page)
-    pages = range(page_left, page_right + 1)
-
-    c = {'answers': answers,
-         'tags': tags,
-         'new_users': new_users,
-         'pages': pages,
-         'pages_count': pages_count,
-         'page': 'popular',
-         'current_page': page,
-         'required_content': 'answers'}
-    return render(request, "index.html", c)
+    return get_response(request, 'answers', 'popular')
 
 
 def users(request):
@@ -133,37 +127,13 @@ def users(request):
 
 
 def question_page(request):
-    try:
-        q_id = int(request.GET['q'])
-    except MultiValueDictKeyError:
-        raise Http404
-
-    page = get_page(request)
-    q = get_question(q_id)
-    answers = get_answers_for_question(q_id)
-
-    tags = get_top_tags(30)
-    new_users = get_users(10)
-    pages_count = int(ceil(q.answer_set.count() / 30 + 1))
-    page_left, page_right = get_pages_bounds(pages_count, page)
-    pages = range(page_left, page_right + 1)
-
-    c = {'q': q,
-         'answers': answers,
-         'tags': tags,
-         'new_users': new_users,
-         'pages': pages,
-         'pages_count': pages_count,
-         'page': '',
-         'current_page': page,
-         'required_content': 'question'}
-    return render(request, "index.html", c)
+    return get_response(request, 'question')
 
 
+@login_required
 def user(request):
     try:
         username = request.GET['username']
-
     except MultiValueDictKeyError:
         raise Http404
 
@@ -188,7 +158,8 @@ def user(request):
     page_left, page_right = get_pages_bounds(pages_count, page)
     pages = range(page_left, page_right + 1)
 
-    c = {'user': user,
+    c = {'show_user': user,
+         'res': res,
          'tab': tab,
          'tags': tags,
          'new_users': new_users,
@@ -196,51 +167,83 @@ def user(request):
          'pages_count': pages_count,
          'page': 'user/?username=' + user.username + '&tab=' + tab,
          'current_page': page,
-         'required_content': 'user'}
-
-    if tab == "questions":
-        c["questions"] = res
-    elif tab == "answers":
-        c["answers"] = res
+         'required_page': 'user'}
 
     return render(request, "index.html", c)
 
 
-def change_question_rating(request):
+@login_required
+def user1(request, username, tab=None):
+    if not tab:
+        tab = 'questions'
     try:
-        q_id = int(request.POST['q'])
-        way = request.POST['way']
-        user_id = int(request.POST['user_id'])
+        user = get_user_by_name(username)
+    except:
+        raise Http404
+
+    page = get_page(request)
+
+    if tab == "questions":
+        res = get_questions_by_user(user, page)
+    elif tab == "answers":
+        res = get_answers_by_user(user, page)
+    else:
+        raise Http404
+
+    tags = get_top_tags(30)
+    new_users = get_users(10)
+    pages_count = int(ceil(res.count() / 30 + 1))
+    page_left, page_right = get_pages_bounds(pages_count, page)
+    pages = range(page_left, page_right + 1)
+
+    c = {'show_user': user,
+         'res': res,
+         'tab': tab,
+         'tags': tags,
+         'new_users': new_users,
+         'pages': pages,
+         'pages_count': pages_count,
+         'page': 'user/?username=' + user.username + '&tab=' + tab,
+         'current_page': page,
+         'required_page': 'user'}
+
+    return render(request, "index.html", c)
+
+
+def change_content_rating(request, content_type, way):
+    try:
+        content_id = int(request.POST['content_id'])
     except MultiValueDictKeyError:
         raise Http404
-    if way == "increase":
-        increase_q_rating(q_id, user_id)
-    elif way == "decrease":
-        decrease_q_rating(q_id, user_id)
+    error = None
 
-    response_data = {
-        'msg': "Your vote accepted.",
-        'rating': get_question(q_id).rating
-    }
-    return HttpResponse(json.dumps(response_data), content_type="application/json")
+    if error is None:
+        if content_type == 'question':
+            content = get_question(content_id)
+        elif content_type == 'answer':
+            content = get_answer(content_id)
+        else:
+            raise Http404
 
+        if request.user.is_authenticated():
+            if content_type == 'question':
+                change_q_rating(content, request.user, way)
+            elif content_type == 'answer':
+                change_a_rating(content, request.user, way)
 
-def change_answer_rating(request):
-    try:
-        a_id = int(request.POST['a'])
-        way = request.POST['way']
-        user_id = int(request.POST['user_id'])
-    except MultiValueDictKeyError:
-        raise Http404
-    if way == "increase":
-        increase_a_rating(a_id, user_id)
-    elif way == "decrease":
-        decrease_a_rating(a_id, user_id)
-
-    response_data = {
-        'msg': "Your vote accepted.",
-        'rating': get_answer(a_id).rating
-    }
+            response_data = {
+                'msg': "Your vote accepted.",
+                'rating': content.rating
+            }
+        else:
+            response_data = {
+                'msg': "You should login to make a vote.",
+                'rating': content.rating
+            }
+    else:
+        response_data = {
+            'msg': error
+        }
     return HttpResponse(json.dumps(response_data), content_type="application/json")
 
 

@@ -56,8 +56,12 @@
     border-width: 0 0 1px 0;
 }
 
-.hovered {
+.question:hover, .answer:hover {
     background-color: #f6f6f6;
+}
+
+.question.disable-hover:hover,.answer.disable-hover:hover {
+    background-color: #ffffff;
 }
 
 .side-info {

@@ -19,38 +19,15 @@ function closeAskModal() {
     $('body').removeClass('stop-scrolling');
 }
 
-jQuery(document).ready(function($) {
-    $('.user_info').click(function() {
-        var username = $(this).data('username');
-        var req_url = $.param({username: username});
-        document.location.href = "/user?" + req_url;
-    });
+function showModal(modal) {
+    var darker = $('.darking-thing');
+    darker.fadeIn();
 
-    $('#user-feed-nav a').click(function() {
-        var username = $('.user_info').data('username');
-        var req_url = $.param({
-                                username: username,
-                                tab: $(this).parents('li').data('tab')});
-        document.location.href = "/user?" + req_url;
-    });
+    modal.center(false);
+    modal.fadeIn();
+}
 
-
-    $('.question, .answer').hover(
-        function(){
-            if (!$(this).hasClass('disable-hover'))
-                $(this).addClass('hovered');
-        },
-        function(){
-            if (!$(this).hasClass('disable-hover'))
-                $(this).removeClass('hovered');
-        }
-    );
-
-    $('#feed-nav li').click(function(){
-        $(this).parents('#feed-nav').children('li').removeClass('active');
-        $(this).addClass('active');
-    });
-
+function setupCsrfAndAjax() {
     function getCookie(name) {
         var cookieValue = null;
         if (document.cookie && document.cookie != '') {
@@ -72,6 +49,7 @@ jQuery(document).ready(function($) {
         // these HTTP methods do not require CSRF protection
         return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
     }
+
     $.ajaxSetup({
         crossDomain: false, // obviates need for sameOrigin test
         beforeSend: function(xhr, settings) {
@@ -80,78 +58,60 @@ jQuery(document).ready(function($) {
             }
         }
     });
+}
 
 
-    $('.question .up-button').click(function() {
-        var question = $(this).parents('.question');
-        $.ajax({
-          type: "POST",
-          url: "/qrating/",
-          data: {
-              q: $(this).parents('.question').data('id'),
-              user_id: 1,
-              way: "increase"
-          }
-        })
-          .done(function( msg ) {
-                question.find('.rating').text(msg['rating']);
-                alert(msg['msg']);
-          });
-        return false;
-    });
+jQuery(document).ready(function($) {
 
-    $('.question .down-button').click(function() {
-        var question = $(this).parents('.question');
-        $.ajax({
-          type: "POST",
-          url: "/qrating/",
-          data: {
-              q: $(this).parents('.question').data('id'),
-              user_id: 1,
-              way: "decrease"
-          }
-        })
-          .done(function( msg ) {
-                question.find('.rating').text(msg['rating']);
-                alert(msg['msg']);
-          });
-        return false;
-    });
+    /*$('#feed-nav li').click(function(){
+        $(this).parents('#feed-nav').children('li').removeClass('active');
+        $(this).addClass('active');
+    });*/
 
-    $('.answer .up-button').click(function() {
-        var answer = $(this).parents('.answer');
-        $.ajax({
-          type: "POST",
-          url: "/arating/",
-          data: {
-              a: answer.data('id'),
-              user_id: 1,
-              way: "increase"
-          }
-        })
-          .done(function( msg ) {
-                answer.find('.rating').text(msg['rating']);
-                alert(msg['msg']);
-          });
-        return false;
-    });
+    setupCsrfAndAjax();
 
-    $('.answer .down-button').click(function() {
-        var answer = $(this).parents('.answer');
-        $.ajax({
-          type: "POST",
-          url: "/arating/",
-          data: {
-              a: answer.data('id'),
-              user_id: 1,
-              way: "decrease"
-          }
-        })
-          .done(function( msg ) {
-                answer.find('.rating').text(msg['rating']);
-                alert(msg['msg']);
-          });
-        return false;
+    $('.content-block .rating-button').click(function() {
+        var content = $(this).parents('.content-block');
+        var way = null;
+        var link = null;
+        var OK = true;
+
+        if ($(this).hasClass('up-button'))
+            way = 'up';
+        else if ($(this).hasClass('down-button'))
+            way = 'down';
+        else
+            OK = false;
+
+        if (content.hasClass('question')) {
+            link = '/rating/question/';
+        }
+        else if (content.hasClass('answer')) {
+            link = '/rating/answer/';
+        }
+        else
+            OK = false;
+
+        if (OK)
+        {
+            $.ajax({
+              type: "POST",
+              url: link + way,
+              data: {
+                  content_id: content.data('id')
+              }
+            })
+              .done(function( msg ) {
+                    content.find('.rating').text(msg['rating']);
+                    alert(msg['msg']);
+              })
+              .fail(function( msg ) {
+                    alert(msg);
+              });
+            return false;
+        }
+        else
+            alert("An error occurred. Try refreshing your page.");
     });
 
 
@@ -206,17 +166,11 @@ jQuery(document).ready(function($) {
     var modal = $('.ask-modal');
 
     $('#ask-button').click(function() {
-        //$('#askModal').modal({"show":true});
-        //$('body').addClass('stop-scrolling');
-        darker.fadeIn();
-
-        modal.center(false);
-        modal.fadeIn();
+        showModal(modal);
     });
 
     darker.click(function() {
         closeAskModal();
-
     });
 
     $(document).keyup(function(e) {

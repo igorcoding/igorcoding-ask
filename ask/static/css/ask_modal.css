@@ -110,6 +110,9 @@
     margin-top: -15px;
 }
 
+.ui-widget input {
+    font-family: inherit !important;
+}
 
 .ui-autocomplete {
     z-index: 1000 !important;

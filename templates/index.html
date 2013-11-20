@@ -2,15 +2,15 @@
 {% block content %}
 
     <div id="feed">
-        {% if required_content == "questions" %}
+        {% if required_page == "questions" %}
             {% include "questions.html" %}
-        {% elif required_content == "answers" %}
+        {% elif required_page == "answers" %}
             {% include "answers.html" %}
-        {% elif required_content == "users" %}
+        {% elif required_page == "users" %}
             {% include "users.html" %}
-        {% elif required_content == "question" %}
+        {% elif required_page == "question" %}
             {% include "question.html" %}
-        {% elif required_content == "user" %}
+        {% elif required_page == "user" %}
             {% include "user.html" %}
         {% endif %}
 

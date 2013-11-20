@@ -116,33 +116,43 @@ def get_answer_rating(answer_id):
     return AnswerVote.objects.filter(answer_id=answer_id).aggregate(sum=models.Sum('value'))['sum']
 
 
-def increase_q_rating(question_id, user_id):
-    q = get_question(question_id)
-    qvote = QuestionVote(question=q, user=get_user(user_id), value=1)
+def increase_q_rating(q, user):
+    qvote = QuestionVote(question=q, user=user, value=1)
     qvote.save()
-    q.rating = get_question_rating(question_id)
+    q.rating = get_question_rating(q.id)
     q.save()
 
 
-def decrease_q_rating(question_id, user_id):
-    q = get_question(question_id)
-    qvote = QuestionVote(question=q, user=get_user(user_id), value=-1)
+def decrease_q_rating(q, user):
+    qvote = QuestionVote(question=q, user=user, value=-1)
     qvote.save()
-    q.rating = get_question_rating(question_id)
+    q.rating = get_question_rating(q.id)
     q.save()
 
 
-def increase_a_rating(answer_id, user_id):
-    a = get_answer(answer_id)
-    avote = AnswerVote(answer=a, user=get_user(user_id), value=1)
+def increase_a_rating(a, user):
+    avote = AnswerVote(answer=a, user=user, value=1)
     avote.save()
-    a.rating = get_answer_rating(answer_id)
+    a.rating = get_answer_rating(a.id)
     a.save()
 
 
-def decrease_a_rating(answer_id, user_id):
-    a = get_answer(answer_id)
-    avote = AnswerVote(answer=a, user=get_user(user_id), value=-1)
+def decrease_a_rating(a, user):
+    avote = AnswerVote(answer=a, user=user, value=-1)
     avote.save()
-    a.rating = get_answer_rating(answer_id)
+    a.rating = get_answer_rating(a.id)
     a.save()
+
+
+def change_q_rating(q, user, way):
+    if way == 'up':
+        increase_q_rating(q, user)
+    elif way == 'down':
+        decrease_q_rating(q, user)
+
+
+def change_a_rating(a, user, way):
+    if way == 'up':
+        increase_a_rating(a, user)
+    elif way == 'down':
+        decrease_a_rating(a, user)
