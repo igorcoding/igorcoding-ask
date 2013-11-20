@@ -3,6 +3,7 @@ import os
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+ENABLE_DJANGO_TOOLBAR = False
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -176,7 +177,13 @@ LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_URL = '/logout/'
 
-if DEBUG:
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
+
+TEMPLATE_CONTEXT_PROCESSORS += (
+    'django.core.context_processors.request',
+)
+
+if DEBUG and ENABLE_DJANGO_TOOLBAR:
     INSTALLED_APPS += ('debug_toolbar', )
     MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware', )
 

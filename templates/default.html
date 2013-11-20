@@ -45,7 +45,7 @@
             </div>
             {% else %}
             <div id="login_btn">
-                <a href="/login">login / registration</a>
+                <a href="{% url 'django.contrib.auth.views.login' %}?next={{ request.path }}">login / registration</a>
             </div>
 
             {% endif %}

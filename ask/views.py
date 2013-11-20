@@ -246,6 +246,7 @@ def change_content_rating(request, content_type, way):
         }
     return HttpResponse(json.dumps(response_data), content_type="application/json")
 
+from django.contrib.auth import forms
 
 def set_correct(request):
     try:
