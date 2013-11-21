@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="reg-form">
-        <form class="form-horizontal" role="form" method="post" action="">
+        <form class="form-horizontal" role="form" method="post" action="" enctype="multipart/form-data">
             <div class="form_error_message">
                 {% if reg_form.errors %}
                     There are some errors.
@@ -106,6 +106,20 @@
                 </div>
                 <div class="col-sm-5 error_message">
                     {{ reg_form.password2.errors|first }}
+                </div>
+            </div>
+            {% if reg_form.user_pic.errors %}
+            <div class="form-group has-error">
+            {% else %}
+            <div class="form-group">
+            {% endif %}
+                <label for="{{ reg_form.user_pic.id_for_label }}"
+                        class="col-sm-2 control-label">{{ reg_form.user_pic.label }}</label>
+                <div class="col-sm-5">
+                    <input type="file" id="{{ reg_form.user_pic.id_for_label }}" name="user_pic">
+                </div>
+                <div class="col-sm-5 error_message">
+                    {{ reg_form.user_pic.errors|first }}
                 </div>
             </div>
             <input type="hidden" name="next" value="{{ next }}"/>

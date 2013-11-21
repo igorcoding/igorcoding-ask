@@ -132,43 +132,43 @@ def get_answer_rating(answer_id):
     return AnswerVote.objects.filter(answer_id=answer_id).aggregate(sum=models.Sum('value'))['sum']
 
 
-def increase_q_rating(q, user):
-    qvote = QuestionVote(question=q, user=user, value=1)
-    qvote.save()
-    q.rating = get_question_rating(q.id)
-    q.save()
+def change_q_rating(q, user, value):
+    ok = False
+    try:
+        vote_entry = QuestionVote.objects.get(user=user, question=q)
+        if vote_entry.value != value:
+            q.rating += -vote_entry.value
+            vote_entry.delete()
+            ok = True
+    except QuestionVote.DoesNotExist:
+        ok = True
+
+    if ok:
+        vote_entry = QuestionVote(user=user, question=q, value=value)
+        vote_entry.save()
+    return ok
 
 
-def decrease_q_rating(q, user):
-    qvote = QuestionVote(question=q, user=user, value=-1)
-    qvote.save()
-    q.rating = get_question_rating(q.id)
-    q.save()
+def change_a_rating(a, user, value):
+    ok = False
+
+    try:
+        vote_entry = AnswerVote.objects.get(user=user, answer=a)
+        if vote_entry.value != value:
+            a.rating += -vote_entry.value
+            vote_entry.delete()
+            ok = True
+    except AnswerVote.DoesNotExist:
+        ok = True
+
+    if ok:
+        vote_entry = AnswerVote(user=user, answer=a, value=value)
+        vote_entry.save()
+    return ok
 
 
-def increase_a_rating(a, user):
-    avote = AnswerVote(answer=a, user=user, value=1)
-    avote.save()
-    a.rating = get_answer_rating(a.id)
-    a.save()
-
-
-def decrease_a_rating(a, user):
-    avote = AnswerVote(answer=a, user=user, value=-1)
-    avote.save()
-    a.rating = get_answer_rating(a.id)
-    a.save()
-
-
-def change_q_rating(q, user, way):
-    if way == 'up':
-        increase_q_rating(q, user)
-    elif way == 'down':
-        decrease_q_rating(q, user)
-
-
-def change_a_rating(a, user, way):
-    if way == 'up':
-        increase_a_rating(a, user)
-    elif way == 'down':
-        decrease_a_rating(a, user)
+def save_userpic(f, username):
+    filename = '%s/%s.jpg' % (settings.MEDIA_ROOT, username)
+    with open(filename, 'wb+') as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)

@@ -14,7 +14,6 @@
 .ask-modal {
     display: none;
     width: 500px;
-    height: 500px;
     background-color: white;
     border-radius: 15px;
     z-index: 999;
@@ -51,6 +50,11 @@
     border-width: 2px 0 0 0;
 }
 
+.ask-modal label {
+    padding-right: 0;
+}
+
+
 .ask-modal {
     text-align: left !important;
 }
@@ -77,12 +81,14 @@
 .allTagsBlock {
     position: relative;
     left: -20px;
+    margin-bottom: 20px;
 }
 
 #allTags {
     z-index: 1000;
     font-size: 14px !important;
     font-family: inherit !important;
+    margin-bottom: 40px;
 }
 
 #allTags .tagit-choice {

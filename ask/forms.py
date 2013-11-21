@@ -37,10 +37,14 @@ class AnswerForm(forms.Form):
 
 class RegistrationForm(UserCreationForm):
     first_name = CharField(max_length=30,
-                           label="First name")
+                           label="First name",
+                           required=False)
     last_name = CharField(max_length=30,
-                          label="Last name")
+                          label="Last name",
+                          required=False)
     email = EmailField(label="Email")
+    user_pic = FileField(label="Your userpic",
+                         required=False)
 
     class Meta:
         model = User

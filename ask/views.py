@@ -265,16 +265,32 @@ def change_content_rating(request, content_type, way):
         else:
             raise Http404
 
-        if request.user.is_authenticated():
-            if content_type == 'question':
-                change_q_rating(content, request.user, way)
-            elif content_type == 'answer':
-                change_a_rating(content, request.user, way)
+        value = 0
+        if way == 'up':
+            value = 1
+        elif way == 'down':
+            value = -1
 
-            response_data = {
-                'msg': "Your vote accepted.",
-                'rating': content.rating
-            }
+        if request.user.is_authenticated():
+            ok = False
+            if content_type == 'question':
+                ok = change_q_rating(content, request.user, value)
+            elif content_type == 'answer':
+                ok = change_a_rating(content, request.user, value)
+
+            if ok:
+                content.rating += value
+                content.save()
+
+                response_data = {
+                    'msg': "Your vote accepted.",
+                    'rating': content.rating
+                }
+            else:
+                response_data = {
+                    'msg': "You cannot vote twice.",
+                    'rating': content.rating
+                }
         else:
             response_data = {
                 'msg': "You should login to make a vote.",
@@ -303,9 +319,12 @@ def set_correct(request):
 
 
 def register(request):
+    if request.user.is_authenticated():
+        return HttpResponseRedirect('/')
     if request.method == 'POST':
-        reg_form = RegistrationForm(request.POST)
+        reg_form = RegistrationForm(request.POST, request.FILES)
         if reg_form.is_valid():
+            save_userpic(request.FILES['user_pic'], request.POST['username'])
             new_user = reg_form.save()
             new_user = authenticate(username=request.POST['username'], password=request.POST['password2'])
             login(request, new_user)
