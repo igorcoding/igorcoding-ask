@@ -306,16 +306,23 @@ def change_content_rating(request, content_type, way):
 def set_correct(request):
     try:
         a_id = int(request.POST['answer_id'])
-    except MultiValueDictKeyError:
-        raise Http404
+        answer = get_answer(a_id)
 
-    answer = get_answer(a_id)
-    answer.correct = True
-    answer.save()
-    response_data = {
-        'msg': "Answer marked as correct."
-    }
-    return HttpResponse(json.dumps(response_data), content_type="application/json")
+        if answer.question.author == request.user:
+            if not answer.correct:
+                answer.correct = True
+                response_data = {
+                    'msg': "Answer marked as correct."
+                }
+            else:
+                answer.correct = False
+                response_data = {
+                    'msg': "Answer is no longer correct."
+                }
+            answer.save()
+            return HttpResponse(json.dumps(response_data), content_type="application/json")
+    except:
+        raise Http404
 
 
 def register(request):

@@ -125,13 +125,17 @@ jQuery(document).ready(function($) {
         var answer = $(this).parents('.answer');
         $.ajax({
           type: "POST",
-          url: "setcorrect/",
+          url: "/setcorrect/",
           data: {
               answer_id: answer.data('id')
           }
         })
           .done(function( msg ) {
-                answer.find('.correctness').stop().addClass('correct').removeClass('clickable');
+                var correctnessObj = answer.find('.correctness');
+                if (correctnessObj.hasClass('correct'))
+                    correctnessObj.stop().removeClass('correct');
+                else
+                    correctnessObj.stop().addClass('correct');
                 alert(msg['msg']);
           });
         return false;
@@ -139,18 +143,16 @@ jQuery(document).ready(function($) {
 
     $('.correctness').hover(
         function(){
-            if (!$(this).hasClass('correct'))
-            {
+            if ($(this).hasClass('correct'))
+                $(this).animate({'opacity': 0.3}, 300);
+            else
                 $(this).animate({'opacity': 1}, 300);
-                $(this).addClass('clickable');
-            }
         },
         function() {
-            if (!$(this).hasClass('correct'))
-            {
+            if ($(this).hasClass('correct'))
+                $(this).animate({'opacity': 1}, 300);
+            else
                 $(this).animate({'opacity': 0.1}, 300);
-                $(this).removeClass('clickable');
-            }
         }
     );
 

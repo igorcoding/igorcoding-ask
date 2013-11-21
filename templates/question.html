@@ -48,7 +48,9 @@
                         <a href="#"><div class="glyphicon glyphicon-chevron-down rating-button down-button"></div></a>
                     </div>
                 </div>
-                <div class="correctness {% if answer.correct %} correct {% endif %}"></div>
+                {% if q.author == user %}
+                <div class="correctness {% if answer.correct %} correct {% endif %} clickable"></div>
+                {% endif %}
             </div>
 
             <div class="answer-info">
