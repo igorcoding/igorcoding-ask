@@ -23,3 +23,12 @@ class AskForm(forms.Form):
         'rows': '11'
     }))
     tags = TagsField(required=False, widget=HiddenInput())
+
+
+class AnswerForm(forms.Form):
+    contents = CharField(widget=Textarea(attrs={
+        'class': 'form-control',
+        'placeholder': 'Type your answer right here',
+        'rows': '11',
+        'style': 'resize:vertical;'
+    }))

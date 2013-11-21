@@ -14,17 +14,17 @@
 
             <div class="answer-info">
                 <div class="answer-portion">
-                    <a href="/question/?q={{ answer.question_id }}#answer_{{ answer.id }}">{{ answer.contents | slice:":180" }}...</a>
+                    <a href="/question/{{ answer.question_id }}#answer_{{ answer.id }}">{{ answer.contents | slice:":180" }}...</a>
                 </div>
 
                 <div class="question-part">
-                    <span class="question-title dash-thing"><a href="/question?q={{ answer.question.id }}">&raquo;</a></span>
-                    <div class="question-title small"><a href="/question?q={{ answer.question.id }}">{{ answer.question.title }}</a></div>
+                    <span class="question-title dash-thing"><a href="/question/{{ answer.question.id }}">&raquo;</a></span>
+                    <div class="question-title small"><a href="/question/{{ answer.question.id }}">{{ answer.question.title }}</a></div>
                     <div class="tags-section answers-tags">
                         <i class="glyphicon glyphicon-tags"></i>
                         <div class="tags">
                             {% for tag in answer.question.tag.all %}
-                                <span class="tag">{{ tag.tagname }}</span>
+                                <span class="tag" onclick="document.location.href='/tag/{{ tag.tagname }}'">{{ tag.tagname }}</span>
                             {% endfor %}
                         </div>
                     </div>
@@ -43,25 +43,6 @@
         </section>
     {% endfor %}
 
-    {% if required_page == "user" %}
-        <footer id="paginator" class="text-center">
-            <ul class="pagination">
-                <li class=""><a href="/{{ tab }}&page=1">&laquo;</a></li>
-                {% for pagenum in pages %}
-                    <li class="{% if pagenum == current_page %}active{% endif %}"><a href="/{{ tab }}&page={{ pagenum }}">{{ pagenum }} <span class="sr-only"></span></a></li>
-                {% endfor %}
-                <li class=""><a href="/{{ tab }}&page={{ pages_count }}">&raquo;</a></li>
-            </ul>
-        </footer>
-    {% else %}
-        <footer id="paginator" class="text-center">
-            <ul class="pagination">
-                <li class=""><a href="/{{ required_page }}/{{ tab }}/?page=1">&laquo;</a></li>
-                {% for pagenum in pages %}
-                    <li class="{% if pagenum == current_page %}active{% endif %}"><a href="/{{ required_page }}/{{ tab }}/?page={{ pagenum }}">{{ pagenum }} <span class="sr-only"></span></a></li>
-                {% endfor %}
-                <li class=""><a href="/{{ required_page }}/{{ tab }}/?page={{ pages_count }}">&raquo;</a></li>
-            </ul>
-        </footer>
-    {% endif %}
+    {% include "pagintaor.html" %}
+
 </div>

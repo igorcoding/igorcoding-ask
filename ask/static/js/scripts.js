@@ -114,11 +114,11 @@ jQuery(document).ready(function($) {
             alert("An error occurred. Try refreshing your page.");
     });
 
-
+/*
     $('.tag').click(function() {
         alert("tag");
     });
-
+*/
 
 
     $(document).on('click', '.correctness.clickable', function() {

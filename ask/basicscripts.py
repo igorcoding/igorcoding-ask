@@ -1,6 +1,8 @@
 # coding=utf8
 import random
 import sys, os
+from twisted.python._reflectpy3 import ObjectNotFound
+from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
 
 sys.path.append('/home/igor/Documents/www/igorcoding_ask/')
@@ -53,13 +55,27 @@ def get_answers_by_user(user, page, count=30):
     return Answer.objects.filter(author_id=user.id).order_by('-date')[offset:(offset + count)]
 
 
-def get_tag(tag_id):
-    return Tag.objects.get(pk=tag_id)
+def get_or_add_tag(tagname):
+    try:
+        tag = Tag.objects.get(tagname=tagname)
+    except ObjectDoesNotExist:
+        tag = Tag(tagname=tagname)
+        tag.save()
+    return tag
 
 
-def get_questions_by_tag(tag_id, page, count=30):
+def get_tag(tagname):
+    return Tag.objects.get(tagname=tagname)
+
+
+def get_questions_by_tag(tagname, page, count=30, order='date'):
     offset = (page - 1) * count
-    return get_tag(tag_id).question_set.order_by('-creation_date')[offset:(offset + count)]
+    if order == 'date':
+        return get_tag(tagname).question_set.order_by('-creation_date')[offset:(offset + count)]
+    elif order == 'rating':
+        return get_tag(tagname).question_set.order_by('-rating')[offset:(offset + count)]
+    else:
+        raise Exception
 
 
 def get_all_tags():

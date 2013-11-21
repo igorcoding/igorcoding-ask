@@ -1,6 +1,6 @@
 <div id="tags-cloud">
     {% for tag in tags %}
-        <span class="weight{{ tag.weight }}" data-weight="{{ tag.weight }}"><a href="#">{{ tag.tag.tagname }}</a></span>
+        <span class="weight{{ tag.weight }}" data-weight="{{ tag.weight }}"><a href="/tag/{{ tag.tag.tagname }}">{{ tag.tag.tagname }}</a></span>
     {% endfor %}
 
 </div>

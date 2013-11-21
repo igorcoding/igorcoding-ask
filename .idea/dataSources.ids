@@ -76,8 +76,8 @@
       <column name="question_id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
       <column name="value" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
-      <foreign-key name="user_id_refs_id_0b0de6a9" columns="user_id" ref-table="auth_user" ref-schema="" ref-catalog="ask_db" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
       <foreign-key name="question_id_refs_id_c8361a4c" columns="question_id" ref-table="ask_question" ref-schema="" ref-catalog="ask_db" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="user_id_refs_id_0b0de6a9" columns="user_id" ref-table="auth_user" ref-schema="" ref-catalog="ask_db" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
       <index name="ask_questionvote_25110688" unique="false" columns="question_id"/>
       <index name="ask_questionvote_6340c63c" unique="false" columns="user_id"/>
     </table>

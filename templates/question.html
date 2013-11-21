@@ -15,17 +15,19 @@
 
         <div class="question-info">
             <div class="question-contents">
-                {{ q.contents }}
+                {{ q.contents | linebreaks }}
             </div>
 
+            {% if q.tag.all %}
             <div class="tags-section">
                 <i class="glyphicon glyphicon-tags"></i>
                 <div class="tags">
                     {% for tag in q.tag.all %}
-                        <span class="tag">{{ tag.tagname }}</span>
+                        <span class="tag" onclick="document.location.href='/tag/{{ tag.tagname }}'">{{ tag.tagname }}</span>
                     {% endfor %}
                 </div>
             </div>
+            {% endif %}
 
             <div class="author-section">
                 <div class="post-time">{{ q.creation_date }}</div>
@@ -51,7 +53,7 @@
 
             <div class="answer-info">
                 <div class="answer-contents">
-                    {{ answer.contents }}
+                    {{ answer.contents | linebreaks }}
                 </div>
 
                 <div class="author-section">
@@ -62,13 +64,37 @@
         </section>
     {% endfor %}
 
-    <footer id="paginator" class="text-center">
-        <ul class="pagination">
-            <li class=""><a href="{{ page }}/?page=1">&laquo;</a></li>
-            {% for pagenum in pages %}
-                <li class="{% if pagenum == current_page %}active{% endif %}"><a href="{{ page }}/?page={{ pagenum }}">{{ pagenum }} <span class="sr-only"></span></a></li>
-            {% endfor %}
-            <li class=""><a href="{{ page }}/?page={{ pages_count }}">&raquo;</a></li>
-        </ul>
-    </footer>
+
+    <div id="answer_form" class="answer-form-block">
+        <header>Your answer:</header>
+        <form class="form-horizontal" method="POST">
+            <fieldset>
+                <section>
+                    {% csrf_token %}
+                    {% if answer_form.title.errors %}
+                        Contents is required.
+                    {% endif %}
+                    {% if answer_form.contents.errors %}
+                    <div class="form-group has-error">
+                    {% else %}
+                    <div class="form-group">
+                    {% endif %}
+                        <!--<label for="id_contents" class="col-lg-2 control-label sr-only">Contents</label>-->
+                        <div class="col-lg-10">
+                            {{ answer_form.contents }}
+                        </div>
+                    </div>
+                </section>
+                <footer>
+                    <input type="hidden" name="form_type" value="answer">
+                    <div class="form-group col-sm-offset-2 col-sm-4">
+                        <button type="submit" class="btn btn-success">Answer</button>
+                    </div>
+                </footer>
+            </fieldset>
+        </form>
+    </div>
+
+    {% include "pagintaor.html" %}
 </div>
+

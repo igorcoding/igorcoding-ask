@@ -2,7 +2,7 @@
 {% block content %}
 
     <div id="feed">
-        {% if required_page == "questions" %}
+        {% if required_page == "questions" or "tag" in required_page %}
             {% include "questions.html" %}
         {% elif required_page == "answers" %}
             {% include "answers.html" %}
