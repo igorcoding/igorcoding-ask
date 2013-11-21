@@ -11,7 +11,8 @@
 
 .login-form {
     float: left;
-    width: 48%;
+    width: 40%;
+    margin: 0 auto;
     padding-right: 1%;
     border: solid #d3d3d3;
     border-width: 0 1px 0 0;

@@ -1,4 +1,5 @@
 import json
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render
@@ -303,13 +304,20 @@ def set_correct(request):
 
 def register(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            new_user = form.save()
-            return HttpResponseRedirect("/books/")
+        reg_form = RegistrationForm(request.POST)
+        if reg_form.is_valid():
+            new_user = reg_form.save()
+            new_user = authenticate(username=request.POST['username'], password=request.POST['password2'])
+            login(request, new_user)
+
+            try:
+                redirect_to = request.GET['next']
+            except:
+                raise Http404
+            return HttpResponseRedirect(redirect_to)
     else:
-        form = UserCreationForm()
+        reg_form = RegistrationForm()
 
     return render(request, "registration/register.html", {
-        'form': form,
+        'reg_form': reg_form,
     })

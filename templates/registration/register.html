@@ -1,71 +1,121 @@
 {% extends "default.html" %}
 
 {% block content %}
-    {% if form.errors %}
-        <p>Error.</p>
-    {% endif %}
-
     <div class="reg-form">
-        <form action="" method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Create the account">
-        </form>
-
         <form class="form-horizontal" role="form" method="post" action="">
+            <div class="form_error_message">
+                {% if reg_form.errors %}
+                    There are some errors.
+                {% endif %}
+            </div>
             {% csrf_token %}
+            {% if reg_form.username.errors %}
+            <div class="form-group has-error">
+            {% else %}
             <div class="form-group">
-                <label for="{{ form.username.id_for_label }}"
-                       class="col-sm-2 control-label">{{ form.username.label }}</label>
+            {% endif %}
+                <label for="{{ reg_form.username.id_for_label }}"
+                       class="col-sm-2 control-label">{{ reg_form.username.label }}</label>
 
-                <div class="col-sm-10">
-                    <input id="{{ form.username.id_for_label }}" class="form-control"
-                           maxlength="{{ form.username.max_length }}" name="username" type="text">
+                <div class="col-sm-5">
+                    <input id="{{ reg_form.username.id_for_label }}" class="form-control"
+                           maxlength="{{ reg_form.username.max_length }}" name="username" type="text" placeholder="Enter a username">
+                </div>
+
+                <div class="col-sm-5 error_message">
+                    {{ reg_form.username.errors|first }}
+                </div>
+
+            </div>
+            {% if reg_form.first_name.errors %}
+            <div class="form-group has-error">
+            {% else %}
+            <div class="form-group">
+            {% endif %}
+                <label for="{{ reg_form.first_name.id_for_label }}"
+                       class="col-sm-2 control-label">{{ reg_form.first_name.label }}</label>
+
+                <div class="col-sm-5">
+                    <input id="{{ reg_form.first_name.id_for_label }}" class="form-control"
+                           maxlength="{{ reg_form.first_name.max_length }}" name="first_name" type="text" placeholder="Enter your first name">
+                </div>
+
+                <div class="col-sm-5 error_message">
+                    {{ reg_form.first_name.errors|first }}
                 </div>
             </div>
+            {% if reg_form.last_name.errors %}
+            <div class="form-group has-error">
+            {% else %}
             <div class="form-group">
-                <label for="{{ form.first_name.id_for_label }}"
-                       class="col-sm-2 control-label">{{ form.first_name.label }}</label>
+            {% endif %}
+                <label for="{{ reg_form.last_name.id_for_label }}"
+                       class="col-sm-2 control-label">{{ reg_form.last_name.label }}</label>
 
-                <div class="col-sm-10">
-                    <input id="{{ form.first_name.id_for_label }}" class="form-control"
-                           maxlength="{{ form.first_name.max_length }}" name="first_name" type="text">
+                <div class="col-sm-5">
+                    <input id="{{ reg_form.last_name.id_for_label }}" class="form-control"
+                           maxlength="{{ reg_form.last_name.max_length }}" name="last_name" type="text" placeholder="Enter your last name">
+                </div>
+                <div class="col-sm-5 error_message">
+                    {{ reg_form.last_name.errors|first }}
                 </div>
             </div>
+            {% if reg_form.email.errors %}
+            <div class="form-group has-error">
+            {% else %}
             <div class="form-group">
-                <label for="{{ form.last_name.id_for_label }}"
-                       class="col-sm-2 control-label">{{ form.last_name.label }}</label>
+            {% endif %}
+                <label for="{{ reg_form.email.id_for_label }}"
+                       class="col-sm-2 control-label">{{ reg_form.email.label }}</label>
 
-                <div class="col-sm-10">
-                    <input id="{{ form.last_name.id_for_label }}" class="form-control"
-                           maxlength="{{ form.last_name.max_length }}" name="last_name" type="text">
+                <div class="col-sm-5">
+                    <input id="{{ reg_form.email.id_for_label }}" class="form-control"
+                           maxlength="{{ reg_form.email.max_length }}" name="email" type="text" placeholder="Enter a real email address">
+                </div>
+                <div class="col-sm-5 error_message">
+                    {{ reg_form.email.errors|first }}
                 </div>
             </div>
+            {% if reg_form.password1.errors %}
+            <div class="form-group has-error">
+            {% else %}
             <div class="form-group">
-                <label for="{{ form.password1.id_for_label }}"
-                       class="col-sm-2 control-label">{{ form.password1.label }}</label>
+            {% endif %}
+                <label for="{{ reg_form.password1.id_for_label }}"
+                       class="col-sm-2 control-label">{{ reg_form.password1.label }}</label>
 
-                <div class="col-sm-10">
-                    <input id="{{ form.password1.id_for_label }}" class="form-control"
-                           maxlength="{{ form.password1.max_length }}" name="password1" type="password">
+                <div class="col-sm-5">
+                    <input id="{{ reg_form.password1.id_for_label }}" class="form-control"
+                           maxlength="{{ form.password1.max_length }}" name="password1" type="password" placeholder="Your password goes here">
+                </div>
+                <div class="col-sm-5 error_message">
+                    {{ reg_form.password1.errors|first }}
                 </div>
             </div>
+            {% if reg_form.password2.errors %}
+            <div class="form-group has-error">
+            {% else %}
             <div class="form-group">
-                <label for="{{ form.password2.id_for_label }}"
-                       class="col-sm-2 control-label">{{ form.password2.label }}</label>
+            {% endif %}
+                <label for="{{ reg_form.password2.id_for_label }}"
+                       class="col-sm-2 control-label">{{ reg_form.password2.label }}</label>
 
-                <div class="col-sm-10">
-                    <input id="{{ form.password2.id_for_label }}" class="form-control"
-                           maxlength="{{ form.password2.max_length }}" name="password2" type="password">
+                <div class="col-sm-5">
+                    <input id="{{ reg_form.password2.id_for_label }}" class="form-control"
+                           maxlength="{{ reg_form.password2.max_length }}" name="password2" type="password" placeholder="{{ reg_form.password2.help_text }}">
+                </div>
+                <div class="col-sm-5 error_message">
+                    {{ reg_form.password2.errors|first }}
                 </div>
             </div>
             <input type="hidden" name="next" value="{{ next }}"/>
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-4">
-                    <button type="submit" class="btn btn-default">Log in</button>
+                    <button type="submit" class="btn btn-default">Sign up</button>
                 </div>
             </div>
         </form>
     </div>
+
 {% endblock %}
