@@ -12,9 +12,9 @@ jQuery.fn.center = function(parent) {
     return this;
 };
 
-function closeAskModal() {
+function closeModal(modal) {
     //TODO: добавить проверку на наличие содержимого
-    $('.ask-modal').fadeOut();
+    modal.fadeOut();
     $('.darking-thing').fadeOut();
     $('body').removeClass('stop-scrolling');
 }
@@ -165,20 +165,29 @@ jQuery(document).ready(function($) {
 
 
     var darker = $('.darking-thing');
-    var modal = $('.ask-modal');
+    var loginModal = $('.login-modal');
+    var askModal = $('.ask-modal');
+
+    $('#modal_login').click(function() {
+        showModal(loginModal);
+    });
 
     $('#ask-button').click(function() {
-        showModal(modal);
+        showModal(askModal);
     });
 
     darker.click(function() {
-        closeAskModal();
+        closeModal(askModal);
+        closeModal(loginModal);
     });
 
     $(document).keyup(function(e) {
         if (e.keyCode == 27) {    // esc
-            if(modal.css("display") != "none") {
-                closeAskModal();
+            if(loginModal.css("display") != "none") {
+                closeModal(loginModal);
+            }
+            if(askModal.css("display") != "none") {
+                closeModal(askModal);
             }
         }
     });
@@ -192,7 +201,7 @@ jQuery(document).ready(function($) {
     });
 
     $('.modal-close-button').click(function() {
-        closeAskModal();
+        closeModal(askModal);
     });
 
 

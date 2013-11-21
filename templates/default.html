@@ -56,8 +56,8 @@
             </div>
             {% else %}
             <div id="login_btn">
-                <a href="{% url 'django.contrib.auth.views.login' %}?next={{ request.path }}">login </a>/
-                <a href="/signup?next={{ request.path }}">registration</a>
+                <a href="/login?next={{ request.get_full_path }}">login </a>/
+                <a href="/signup?next={{ request.get_full_path }}">registration</a>
             </div>
 
             {% endif %}
@@ -78,7 +78,9 @@
         </div>
 
         <div class="darking-thing">&nbsp;</div>
-        <div class="ask-modal">
+        <div class="my-modal"></div>
+
+        <div class="ask-modal my-modal">
             <form id="ask-form" class="form-horizontal" method="POST">
                 <fieldset>
                     <header>
@@ -89,32 +91,32 @@
                         {% csrf_token %}
 
                         <div class="ask_form_error_message">
-                            {% if form.title.errors or form.contents.errors %}
+                            {% if ask_form.title.errors or ask_form.contents.errors %}
                                 Some fields are required.
                             {% endif %}
                         </div>
 
-                        {% if form.title.errors %}
+                        {% if ask_form.title.errors %}
                         <div class="form-group has-error">
                         {% else %}
                         <div class="form-group">
                         {% endif %}
                             <label for="id_title" class="col-lg-2 control-label">Title</label>
                             <div class="col-lg-10">
-                                {{ form.title }}
+                                {{ ask_form.title }}
                             </div>
                         </div>
-                        {% if form.contents.errors %}
+                        {% if ask_form.contents.errors %}
                         <div class="form-group has-error">
                         {% else %}
                         <div class="form-group">
                         {% endif %}
                             <label for="id_contents" class="col-lg-2 control-label">Contents</label>
                             <div class="col-lg-10">
-                                {{ form.contents }}
+                                {{ ask_form.contents }}
                             </div>
                         </div>
-                        {% if form.tags.errors %}
+                        {% if ask_form.tags.errors %}
                             <div class="form-group has-error">
                         {% else %}
                             <div class="form-group">
@@ -122,7 +124,7 @@
                             <label for="allTags" class="col-lg-2 control-label">Tags</label>
                             <div class="col-lg-10">
                                 <ul id="allTags"></ul>
-                                {{ form.tags }}
+                                {{ ask_form.tags }}
                             </div>
 
                         </div>

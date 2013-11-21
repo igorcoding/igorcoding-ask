@@ -1,7 +1,7 @@
 {% extends "default.html" %}
 
 {% block content %}
-    <div class="reg-form">
+    <div id="feed" class="reg-form">
         <form class="form-horizontal" role="form" method="post" action="" enctype="multipart/form-data">
             <div class="form_error_message">
                 {% if reg_form.errors %}
@@ -17,13 +17,13 @@
                 <label for="{{ reg_form.username.id_for_label }}"
                        class="col-sm-2 control-label">{{ reg_form.username.label }}</label>
 
-                <div class="col-sm-5">
+                <div class="col-sm-6">
                     <input id="{{ reg_form.username.id_for_label }}" class="form-control"
                            maxlength="{{ reg_form.username.max_length }}" name="username" type="text"
                            placeholder="Enter a username" value="{{ reg_form.username.value|default_if_none:"" }}">
                 </div>
 
-                <div class="col-sm-5 error_message">
+                <div class="col-sm-4 error_message">
                     {{ reg_form.username.errors|first }}
                 </div>
 
@@ -36,13 +36,13 @@
                 <label for="{{ reg_form.first_name.id_for_label }}"
                        class="col-sm-2 control-label">{{ reg_form.first_name.label }}</label>
 
-                <div class="col-sm-5">
+                <div class="col-sm-6">
                     <input id="{{ reg_form.first_name.id_for_label }}" class="form-control"
                            maxlength="{{ reg_form.first_name.max_length }}" name="first_name" type="text"
                            placeholder="Enter your first name" value="{{ reg_form.first_name.value|default_if_none:"" }}">
                 </div>
 
-                <div class="col-sm-5 error_message">
+                <div class="col-sm-4 error_message">
                     {{ reg_form.first_name.errors|first }}
                 </div>
             </div>
@@ -54,12 +54,12 @@
                 <label for="{{ reg_form.last_name.id_for_label }}"
                        class="col-sm-2 control-label">{{ reg_form.last_name.label }}</label>
 
-                <div class="col-sm-5">
+                <div class="col-sm-6">
                     <input id="{{ reg_form.last_name.id_for_label }}" class="form-control"
                            maxlength="{{ reg_form.last_name.max_length }}" name="last_name" type="text"
                            placeholder="Enter your last name" value="{{ reg_form.last_name.value|default_if_none:"" }}">
                 </div>
-                <div class="col-sm-5 error_message">
+                <div class="col-sm-4 error_message">
                     {{ reg_form.last_name.errors|first }}
                 </div>
             </div>
@@ -71,12 +71,12 @@
                 <label for="{{ reg_form.email.id_for_label }}"
                        class="col-sm-2 control-label">{{ reg_form.email.label }}</label>
 
-                <div class="col-sm-5">
+                <div class="col-sm-6">
                     <input id="{{ reg_form.email.id_for_label }}" class="form-control"
                            maxlength="{{ reg_form.email.max_length }}" name="email" type="text"
                            placeholder="Enter a real email address" value="{{ reg_form.email.value|default_if_none:"" }}">
                 </div>
-                <div class="col-sm-5 error_message">
+                <div class="col-sm-4 error_message">
                     {{ reg_form.email.errors|first }}
                 </div>
             </div>
@@ -88,11 +88,11 @@
                 <label for="{{ reg_form.password1.id_for_label }}"
                        class="col-sm-2 control-label">{{ reg_form.password1.label }}</label>
 
-                <div class="col-sm-5">
+                <div class="col-sm-6">
                     <input id="{{ reg_form.password1.id_for_label }}" class="form-control"
                            maxlength="{{ form.password1.max_length }}" name="password1" type="password" placeholder="Your password goes here">
                 </div>
-                <div class="col-sm-5 error_message">
+                <div class="col-sm-4 error_message">
                     {{ reg_form.password1.errors|first }}
                 </div>
             </div>
@@ -104,11 +104,11 @@
                 <label for="{{ reg_form.password2.id_for_label }}"
                        class="col-sm-2 control-label">{{ reg_form.password2.label }}</label>
 
-                <div class="col-sm-5">
+                <div class="col-sm-6">
                     <input id="{{ reg_form.password2.id_for_label }}" class="form-control"
                            maxlength="{{ reg_form.password2.max_length }}" name="password2" type="password" placeholder="{{ reg_form.password2.help_text }}">
                 </div>
-                <div class="col-sm-5 error_message">
+                <div class="col-sm-4 error_message">
                     {{ reg_form.password2.errors|first }}
                 </div>
             </div>
@@ -119,21 +119,22 @@
             {% endif %}
                 <label for="{{ reg_form.user_pic.id_for_label }}"
                         class="col-sm-2 control-label">{{ reg_form.user_pic.label }}</label>
-                <div class="col-sm-5">
+                <div class="col-sm-6">
                     <input type="file" id="{{ reg_form.user_pic.id_for_label }}" name="user_pic">
                 </div>
-                <div class="col-sm-5 error_message">
+                <div class="col-sm-4 error_message">
                     {{ reg_form.user_pic.errors|first }}
                 </div>
             </div>
-            <input type="hidden" name="next" value="{{ next }}"/>
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-4">
-                    <button type="submit" class="btn btn-default">Sign up</button>
+                    <button type="submit" class="btn btn-primary">Sign up</button>
                 </div>
             </div>
         </form>
     </div>
+
+    {% include "sidebar.html" %}
 
 {% endblock %}

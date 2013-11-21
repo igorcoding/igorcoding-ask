@@ -1,21 +1,27 @@
 import json
+from django import contrib
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render
 from django.http import HttpResponse, Http404, HttpResponseRedirect
+from django.template import Context
 from django.utils.datastructures import MultiValueDictKeyError
 from ask.forms import *
 from ask.models import *
 from basicscripts import *
 from math import ceil
+from django.contrib.auth.views import login as django_login
 
 
 def get_page(request):
     page = request.GET.get('page')
     if page is None:
         page = 1
-    return int(page)
+    page = int(page)
+    if page <= 0:
+        raise Http404
+    return page
 
 
 def get_pages_bounds(pages_count, page):
@@ -95,9 +101,9 @@ def get_response(request, required_page, extra_context, current_page):
          'current_page': current_page,
          'all_tags': all_tags,
          'required_page': required_page,
-         'form': form,
+         'ask_form': form,
          'askform_error': askform_error
-         }
+    }
     return render(request, "index.html", dict(extra_context, **d))
 
 
@@ -114,6 +120,7 @@ def questions(request, tab):
             c['res'] = get_questions_by_rating(current_page)
         else:
             raise Http404
+
     c['page'] = '/questions/' + tab
     c['tab'] = tab
     return get_response(request, 'questions', c, current_page)
@@ -166,7 +173,8 @@ def question_page(request, q_id):
         answer_form = AnswerForm(request.POST)
         if answer_form.is_valid():
             contents = answer_form.cleaned_data['contents']
-            ans = Answer(question=q, author=request.user, date=datetime.datetime.today(), correct=False, rating=0, contents=contents)
+            ans = Answer(question=q, author=request.user, date=datetime.datetime.today(), correct=False, rating=0,
+                         contents=contents)
             ans.save()
             return HttpResponseRedirect('/question/' + str(q_id) + '/' + '#answer_' + str(ans.id))
         else:
@@ -200,14 +208,16 @@ def user1(request, username, tab=None):
 
     if tab == "questions":
         res = get_questions_by_user(user, page)
+        to_count = Question.objects.filter(author_id=user.id)
     elif tab == "answers":
         res = get_answers_by_user(user, page)
+        to_count = Answer.objects.filter(author_id=user.id)
     else:
         raise Http404
 
     tags = get_top_tags(30)
     new_users = get_users(10)
-    pages_count = int(ceil(res.count() / 30 + 1))
+    pages_count = int(ceil(to_count.count() / 30 + 1))
     page_left, page_right = get_pages_bounds(pages_count, page)
     pages = range(page_left, page_right + 1)
 
@@ -325,6 +335,17 @@ def set_correct(request):
         raise Http404
 
 
+def my_login(request):
+    if request.user.is_authenticated():
+        return HttpResponseRedirect('/')
+
+    c = {'tags': get_top_tags(30),
+         'new_users': get_users(10),
+         'ask_form': AskForm()
+    }
+    return django_login(request, extra_context=c)
+
+
 def register(request):
     if request.user.is_authenticated():
         return HttpResponseRedirect('/')
@@ -346,4 +367,7 @@ def register(request):
 
     return render(request, "registration/register.html", {
         'reg_form': reg_form,
+        'ask_form': AskForm(),
+        'tags': get_top_tags(30),
+        'new_users': get_users(10),
     })

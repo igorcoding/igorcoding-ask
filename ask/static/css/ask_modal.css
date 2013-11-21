@@ -11,7 +11,7 @@
     z-index: 990;
 }
 
-.ask-modal {
+.my-modal {
     display: none;
     width: 500px;
     background-color: white;
@@ -19,7 +19,7 @@
     z-index: 999;
 }
 
-.ask-modal header {
+.my-modal header {
     display: block;
     padding-top: 15px;
     padding-bottom: 10px;
@@ -29,17 +29,17 @@
     font-size: 20px;
 }
 
-.ask-modal section {
+.my-modal section {
     display: block;
     width: 100%;
     padding: 15px 30px;
 }
 
-.ask-modal textarea {
+.my-modal textarea {
     resize: none;
 }
 
-.ask-modal footer {
+.my-modal footer {
     display: block;
     width: 100%;
     height: 50px;
@@ -50,21 +50,21 @@
     border-width: 2px 0 0 0;
 }
 
-.ask-modal label {
+.my-modal label {
     padding-right: 0;
 }
 
 
-.ask-modal {
+.my-modal {
     text-align: left !important;
 }
 
-.ask-modal .ask-buttons {
+.my-modal .ask-buttons {
     float: right;
     margin-right: 15px !important;
 }
 
-.ask-modal .ask-buttons button {
+.my-modal .ask-buttons button {
 }
 
 .modal-close-button {

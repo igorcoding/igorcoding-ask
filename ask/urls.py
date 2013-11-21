@@ -5,7 +5,7 @@ from igorcoding_ask import settings
 
 urlpatterns = patterns('',
     url(r'^$', views.new_questions, name='index'),
-    url(r'^login/$', 'django.contrib.auth.views.login'),
+    url(r'^login/$', views.my_login),
     url(r'^logout/$', 'django.contrib.auth.views.logout'),
     url(r'^signup/$', views.register),
 

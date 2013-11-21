@@ -3,24 +3,31 @@
     margin-top: 20px;
 }
 
-.login-reg-page {
-    width: 100%;
-    height: 100%;
-    margin: 0 auto;
+.login-page {
+    margin-top: 25px;
+    margin-left: 40px;
+}
+
+.login-page form {
+    margin-left: 150px;
 }
 
 .login-form {
-    float: left;
-    width: 40%;
     margin: 0 auto;
     padding-right: 1%;
-    border: solid #d3d3d3;
-    border-width: 0 1px 0 0;
 }
 
-.reg-form {
-    float: left;
-    padding-left: 1%;
-    width: 50%;
+.form_error_message {
+    text-align: left;
+    color: #bc3331;
+    padding-bottom: 15px;
+    font-size: 16px;
+}
+
+.error_message {
+    margin-top: 5px;
+    font-style: italic;
+    font-size: 13px;
+    color: #bc3331;
 }
 
