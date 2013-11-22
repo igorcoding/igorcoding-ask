@@ -2,15 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6463f351-8393-4985-ab19-46ddcb1f5493" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ask/basicscripts.py" afterPath="$PROJECT_DIR$/ask/basicscripts.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/default.html" afterPath="$PROJECT_DIR$/templates/default.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ask/static/css/feed.css" afterPath="$PROJECT_DIR$/ask/static/css/feed.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/question.html" afterPath="$PROJECT_DIR$/templates/question.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/questions.html" afterPath="$PROJECT_DIR$/templates/questions.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ask/static/js/scripts.js" afterPath="$PROJECT_DIR$/ask/static/js/scripts.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ask/urls.py" afterPath="$PROJECT_DIR$/ask/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/users.html" afterPath="$PROJECT_DIR$/templates/users.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ask/views.py" afterPath="$PROJECT_DIR$/ask/views.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ask/static/css/users.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="igorcoding_ask.iws" />
@@ -85,7 +77,7 @@
       <file leaf-file-name="urls.py" pinned="true" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ask/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="0" selection-start="455" selection-end="455" vertical-scroll-proportion="0.33110368" vertical-offset="0" max-vertical-offset="598">
+            <state line="14" column="0" selection-start="455" selection-end="455" vertical-scroll-proportion="0.69964665" vertical-offset="0" max-vertical-offset="594">
               <folding />
             </state>
           </provider>
@@ -397,7 +389,7 @@
       <recent name="$PROJECT_DIR$/ask/templates" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.views">
+  <component name="RunManager" selected="Django server.igorcoding_ask">
     <configuration default="false" name="index.html" type="JavascriptDebugType" factoryName="JavaScript Debug" singleton="true" temporary="true" uri="http://localhost:8000/popular">
       <RunnerSettings RunnerId="JavascriptDebugRunner" />
       <ConfigurationWrapper RunnerId="JavascriptDebugRunner" />
@@ -688,11 +680,11 @@
       <method />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="JavaScript Debug.index.html" />
-      <item index="1" class="java.lang.String" itemvalue="Python.views" />
-      <item index="2" class="java.lang.String" itemvalue="Django server.igorcoding_ask" />
-      <item index="3" class="java.lang.String" itemvalue="Python.generate_data" />
-      <item index="4" class="java.lang.String" itemvalue="Python.basicscripts" />
+      <item index="0" class="java.lang.String" itemvalue="Django server.igorcoding_ask" />
+      <item index="1" class="java.lang.String" itemvalue="Python.generate_data" />
+      <item index="2" class="java.lang.String" itemvalue="Python.basicscripts" />
+      <item index="3" class="java.lang.String" itemvalue="JavaScript Debug.index.html" />
+      <item index="4" class="java.lang.String" itemvalue="Python.views" />
     </list>
     <recent_temporary>
       <list size="2">
@@ -769,7 +761,11 @@
       <created>1385070334472</created>
       <updated>1385070334472</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="fixed bugs in setting of correctness of question">
+      <created>1385132620610</created>
+      <updated>1385132620610</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -796,23 +792,23 @@
     <frame x="64" y="-4" width="1303" height="773" extended-state="6" />
     <editor active="true" />
     <layout>
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3232" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32854864" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21673307" sideWeight="0.4784689" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24940239" sideWeight="0.4784689" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23505977" sideWeight="0.62279296" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23505977" sideWeight="0.4992" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.37720707" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34104937" sideWeight="0.50038433" order="10" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.50239235" sideWeight="0.49961567" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.5008" sideWeight="0.49961567" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5215311" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.328" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -835,7 +831,8 @@
     <MESSAGE value="more registration + implemented uploading userpics" />
     <MESSAGE value="improved setting of correctness of the answer:&#10;now only the author of the question can mark an answer as correct" />
     <MESSAGE value="i don't know...&#10;some changes, i guess" />
-    <option name="LAST_COMMIT_MESSAGE" value="i don't know...&#10;some changes, i guess" />
+    <MESSAGE value="fixed bugs in setting of correctness of question" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed bugs in setting of correctness of question" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -949,7 +946,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ask/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="0" selection-start="455" selection-end="455" vertical-scroll-proportion="0.33110368" vertical-offset="0" max-vertical-offset="598">
+        <state line="14" column="0" selection-start="455" selection-end="455" vertical-scroll-proportion="0.69964665" vertical-offset="0" max-vertical-offset="594">
           <folding />
         </state>
       </provider>

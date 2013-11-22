@@ -1,0 +1,32 @@
+#users {
+
+}
+
+.user-info {
+
+}
+
+.user-info section {
+    display: inline-block;
+}
+
+.user_info-title {
+    margin-top: -5px;
+}
+
+.user_info-userpic {
+    width: 60px;
+    height: 60px;
+    border-radius: 0;
+    margin-right: 10px;
+    vertical-align: top;
+    position: static;
+}
+
+.user_info-section {
+
+}
+
+.user_info-field_name {
+    font-weight: bold;
+}
