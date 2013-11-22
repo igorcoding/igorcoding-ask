@@ -53,14 +53,14 @@
 
 
 
-#questions, #answers {
+#questions, #answers, #users {
     padding: 10px;
     background-color: white;
     border: lightgray solid;
     border-width: 0 1px 1px 1px;
 }
 
-.question, .answer {
+.content-block {
     width: 100%;
     height: 100%;
     padding: 10px 0 5px 0;
@@ -68,11 +68,11 @@
     border-width: 0 0 1px 0;
 }
 
-.question:hover, .answer:hover {
+.content-block:hover {
     background-color: #f6f6f6;
 }
 
-.question.disable-hover:hover,.answer.disable-hover:hover {
+.content-block.disable-hover:hover {
     background-color: #ffffff;
 }
 
@@ -146,14 +146,18 @@
     -o-background-size: cover;
     background-size: cover;
 
-    opacity: 0.1;
+    display: none;
+    opacity: 0.2;
 }
 
 .correct {
-    opacity: 1;
+    display: block;
+    opacity: 1.0;
 }
 
-.clickable {
+.ratable {
+    display: block;
+
     cursor: pointer;
 }
 
@@ -166,9 +170,8 @@
     display: inline;
 }
 
-.tags .tag {
+.tag {
     display: inline-block;
-    height: 23px;
     margin-left: 5px;
     padding: 2px 5px;
     background-color: #fbeed5;
@@ -203,44 +206,44 @@
 
 
 
-.question-info, .answer-info {
+.question-info, .answer-info, .user-info {
     width: 79%;
     display: inline-block;
     padding-left: 1em;
 }
 
-.question-title {
+.question-title, .user_info-title {
     font-size: 20px;
 }
 
-.question-title a {
+.question-title a, .user_info-title a {
     color: darkblue;
 }
 
-.question-info .actions-menu   {
+.actions-menu   {
     padding: 0;
 }
 
-.question-info .actions-menu ul {
+.actions-menu ul {
     padding: 0;
 }
 
-.question-info .actions-menu li {
+.actions-menu li {
     display: inline;
     padding-left: 4px;
     padding-right: 8px;
     border-right: 1px grey solid;
 }
 
-.question-info .actions-menu li:first-child {
+.actions-menu li:first-child {
     padding-left: 0;
 }
 
-.question-info .actions-menu li:last-child {
+.actions-menu li:last-child {
     border-right: 0;
 }
 
-.question-info .actions-menu a {
+.actions-menu a {
 
 }
 
@@ -249,3 +252,11 @@
 
 }
 
+.res-title {
+    margin-top: 10px;
+    margin-bottom: 12px;
+    padding-bottom: 5px;
+    font-size: 25px;
+    border: solid #d3d3d3;
+    border-width: 0 0 1px 0;
+}

@@ -1,0 +1,65 @@
+<header id="feed-header">
+    <ul id="feed-nav" class="nav nav-tabs">
+        {% if tab == 'date' %}
+            <li class="active"><a href="/users?order=date">By date joined</a></li>
+            <li><a href="/users?order=rating">By rating</a></li>
+            <li><a href="/users?order=username">By username</a></li>
+            <li><a href="/users?order=name">By name</a></li>
+        {% elif tab == 'rating' %}
+            <li><a href="/users?order=date">By date joined</a></li>
+            <li class="active"><a href="/users?order=rating">By rating</a></li>
+            <li><a href="/users?order=username">By username</a></li>
+            <li><a href="/users?order=name">By name</a></li>
+        {% elif tab == 'username' %}
+            <li><a href="/users?order=date">By date joined</a></li>
+            <li><a href="/users?order=rating">By rating</a></li>
+            <li class="active"><a href="/users?order=username">By username</a></li>
+            <li><a href="/users?order=name">By name</a></li>
+        {% elif tab == 'name' %}
+            <li><a href="/users?order=date">By date joined</a></li>
+            <li><a href="/users?order=rating">By rating</a></li>
+            <li><a href="/users?order=username">By username</a></li>
+            <li class="active"><a href="/users?order=name">By name</a></li>
+        {% endif %}
+    </ul>
+</header>
+
+<div id="users">
+    {% for user_info in res %}
+        <section class="user-tile content-block" data-id="{{ user_info.id }}">
+            <div class="side-info">
+                <div class="counter">
+                    <div class="rating">{{ user_info.rating }}</div>
+                    <div class="rating-buttons">
+                        <a href="#"><div class="glyphicon glyphicon-chevron-up rating-button up-button"></div></a>
+                        <a href="#"><div class="glyphicon glyphicon-chevron-down rating-button down-button"></div></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="user-info">
+                <div class="user_pic user_info-userpic"  style="background-image: url('{{ STATIC_URL }}img/{{ user_info.username }}.jpg');">&nbsp</div>
+                <section>
+                    <div class="user_info-title">
+                        <a href="/users/{{ user_info.username }}">{{ user_info.first_name }} {{ user_info.last_name }} ({{ user_info.username }})</a>
+                    </div>
+
+                    <div class="user_info-section">
+                        <div class="user_info-field"><span class="user_info-field_name">Joined: </span>{{ user_info.date_joined }}</div>
+                        <div class="user_info-field"><span class="user_info-field_name">Last login: </span>{{ user_info.last_login }}</div>
+                    </div>
+                </section>
+            </div>
+        </section>
+    {% endfor %}
+
+    <footer id="paginator" class="text-center">
+        <ul class="pagination">
+            <li class=""><a href="{{ page }}&page=1">&laquo;</a></li>
+            {% for pagenum in pages %}
+                <li class="{% if pagenum == current_page %}active{% endif %}"><a href="{{ page }}&page={{ pagenum }}">{{ pagenum }} <span class="sr-only"></span></a></li>
+            {% endfor %}
+            <li class=""><a href="{{ page }}&page={{ pages_count }}">&raquo;</a></li>
+        </ul>
+    </footer>
+</div>

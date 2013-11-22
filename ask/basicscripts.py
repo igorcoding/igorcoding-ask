@@ -110,6 +110,20 @@ def get_user_by_name(username):
     return User.objects.filter(username=username)[0]
 
 
+def get_all_users(order, page, count=30):
+    offset = (page - 1) * count
+    if order == 'date':
+        return User.objects.order_by('-date_joined').filter(~Q(pk=1))[offset:(offset + count)]
+    elif order == 'rating':
+        return User.objects.order_by('-rating').filter(~Q(pk=1))[offset:(offset + count)]
+    elif order == 'username':
+        return User.objects.order_by('username').filter(~Q(pk=1))[offset:(offset + count)]
+    elif order == 'name':
+        return User.objects.order_by('last_name').order_by('first_name').filter(~Q(pk=1))[offset:(offset + count)]
+    else:
+        return None
+
+
 def get_users(count=None, order='date_joined'):
     if order == 'date_joined':
         if count is None:
@@ -134,6 +148,8 @@ def get_answer_rating(answer_id):
 
 def change_q_rating(q, user, value):
     ok = False
+    if user == q.author:
+        return None
     try:
         vote_entry = QuestionVote.objects.get(user=user, question=q)
         if vote_entry.value != value:
@@ -151,7 +167,8 @@ def change_q_rating(q, user, value):
 
 def change_a_rating(a, user, value):
     ok = False
-
+    if user == a.author:
+        return None
     try:
         vote_entry = AnswerVote.objects.get(user=user, answer=a)
         if vote_entry.value != value:

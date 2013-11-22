@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Ask igorcoding</title>
+        <title>{{ title }} {{ extra_title }}</title>
         {% load staticfiles %}
         <link rel="stylesheet" type="text/css" href="{% static "css/styles.css" %}" />
         <link rel="stylesheet" type="text/css" href="{% static "css/answers.css" %}" />
@@ -14,6 +14,9 @@
         {% if request.path == '/signup/' %}
             <link rel="stylesheet" type="text/css" href="{% static "css/register.css" %}" />
         {% endif %}
+        {% if '/users/' in request.path  %}
+            <link rel="stylesheet" type="text/css" href="{% static "css/users.css" %}" />
+        {% endif %}
         <script type="text/javascript" src="{% static "js/jquery-2.0.3.js" %}"></script>
         <script type="text/javascript" src="{% static "js/jquery-ui.js" %}"></script>
         <script type="text/javascript" src="{% static "js/bootstrap.js" %}"></script>
@@ -23,7 +26,7 @@
         <meta content="text/html" >
 
         {% if request.path == '/logout/' %}
-            <meta http-equiv="refresh" content="2; url=/">
+            <meta http-equiv="refresh" content="1; url=/">
         {% endif %}
 
 

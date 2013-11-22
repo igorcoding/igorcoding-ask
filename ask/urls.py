@@ -6,11 +6,13 @@ from igorcoding_ask import settings
 urlpatterns = patterns('',
     url(r'^$', views.new_questions, name='index'),
     url(r'^login/$', views.my_login),
-    url(r'^logout/$', 'django.contrib.auth.views.logout'),
+    url(r'^logout/$', views.my_logout),
     url(r'^signup/$', views.register),
 
+    url(r'^users/$', views.users),
     url(r'^users/(?P<username>\S*)/(?P<tab>[A-Za-z]*)', views.user1),
     url(r'^users/(?P<username>\S*)', views.user1),
+
 
     url(r'^question/(?P<q_id>\d+)', views.question_page),
     url(r'^questions/(?P<tab>\S*)', views.questions),
@@ -25,14 +27,5 @@ urlpatterns = patterns('',
     url(r'^setcorrect', views.set_correct),
 
     #url(r'^(?P<required_page>[A-Za-z]*)/(?P<tab>[A-Za-z]*)', views.get_response),
-
-
-
-
-    #url(r'^users', views.users),
-    #
-    #
-
-
 
 )

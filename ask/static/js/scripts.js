@@ -121,7 +121,7 @@ jQuery(document).ready(function($) {
 */
 
 
-    $(document).on('click', '.correctness.clickable', function() {
+    $(document).on('click', '.correctness.ratable', function() {
         var answer = $(this).parents('.answer');
         $.ajax({
           type: "POST",
@@ -143,16 +143,22 @@ jQuery(document).ready(function($) {
 
     $('.correctness').hover(
         function(){
-            if ($(this).hasClass('correct'))
-                $(this).animate({'opacity': 0.3}, 300);
-            else
-                $(this).animate({'opacity': 1}, 300);
+            if ($(this).hasClass('ratable'))
+            {
+                if ($(this).hasClass('correct'))
+                    $(this).animate({'opacity': 0.2}, 300);
+                else
+                    $(this).animate({'opacity': 1}, 300);
+            }
         },
         function() {
-            if ($(this).hasClass('correct'))
-                $(this).animate({'opacity': 1}, 300);
-            else
-                $(this).animate({'opacity': 0.1}, 300);
+            if ($(this).hasClass('ratable'))
+            {
+                if ($(this).hasClass('correct'))
+                    $(this).animate({'opacity': 1}, 300);
+                else
+                    $(this).animate({'opacity': 0.2}, 300);
+            }
         }
     );
 

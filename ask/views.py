@@ -12,6 +12,7 @@ from ask.models import *
 from basicscripts import *
 from math import ceil
 from django.contrib.auth.views import login as django_login
+from django.contrib.auth.views import logout as django_logout
 
 
 def get_page(request):
@@ -83,7 +84,11 @@ def get_response(request, required_page, extra_context, current_page):
             to_count = extra_context['q'].answer_set
         except:
             raise Http404
-
+    elif required_page == 'users':
+        try:
+            to_count = User.objects
+        except:
+            raise Http404
     else:
         raise Http404
 
@@ -116,8 +121,10 @@ def questions(request, tab):
     if tab is not None:
         if tab == 'new':
             c['res'] = get_questions_by_date(current_page)
+            c['title'] = 'New Questions'
         elif tab == 'popular':
             c['res'] = get_questions_by_rating(current_page)
+            c['title'] = 'Popular Questions'
         else:
             raise Http404
 
@@ -143,8 +150,10 @@ def answers(request, tab):
     if tab is not None:
         if tab == 'new':
             c['res'] = get_answers_by_date(current_page)
+            c['title'] = 'New Answers'
         elif tab == 'popular':
             c['res'] = get_answers_by_rating(current_page)
+            c['title'] = 'Popular Answers'
         else:
             raise Http404
     c['page'] = '/answers/' + tab
@@ -161,7 +170,26 @@ def popular_answers(request):
 
 
 def users(request):
-    return None
+    current_page = get_page(request)
+
+    order = request.GET.get('order')
+    if order is None:
+        order = 'date'
+
+    try:
+        all_users = get_all_users(order, current_page)
+        if all_users is None:
+            raise Http404
+
+        c = {}
+        c['title'] = 'All users'
+        c['res'] = all_users
+        c['tab'] = order
+        c['page'] = '/users?order=%s' % (order, )
+        #c['amp-get-delim'] = '&'
+        return get_response(request, 'users', c, current_page)
+    except:
+        raise Http404
 
 
 def question_page(request, q_id):
@@ -186,6 +214,7 @@ def question_page(request, q_id):
         current_page = get_page(request)
         c = {'q': q,
              'answers': get_answers_for_question(q_id),
+             'title': q.title,
              'page': '/question/' + str(q_id),
              'answer_form': answer_form,
              'answerform_error': answerform_error}
@@ -230,7 +259,8 @@ def user1(request, username, tab=None):
          'pages_count': pages_count,
          'page': '/users/' + user.username + '/' + tab,
          'current_page': page,
-         'required_page': 'user'}
+         'required_page': 'user',
+         'title': '%s\'s %s' % (user.username, tab)}
 
     return render(request, "index.html", c)
 
@@ -256,7 +286,11 @@ def tag_search(request, tagname, tab):
 
     c['page'] = '/tag/' + tagname + '/' + tab
     c['tab'] = tab
+    c['search_tag'] = get_tag(tagname)
     c['tagname'] = tagname
+    c['title'] = 'Search tag: '
+    c['extra_title'] = tagname
+    c['show_title'] = True
     return get_response(request, 'tag/' + tagname, c, current_page)
 
 
@@ -288,19 +322,23 @@ def change_content_rating(request, content_type, way):
             elif content_type == 'answer':
                 ok = change_a_rating(content, request.user, value)
 
-            if ok:
-                content.rating += value
-                content.save()
-
-                response_data = {
-                    'msg': "Your vote accepted.",
-                    'rating': content.rating
-                }
+            if ok is None:
+                response_data = {'msg': 'You cannot vote to your own content.',
+                           'rating': content.rating}
             else:
-                response_data = {
-                    'msg': "You cannot vote twice.",
-                    'rating': content.rating
-                }
+                if ok:
+                    content.rating += value
+                    content.save()
+
+                    response_data = {
+                        'msg': "Your vote accepted.",
+                        'rating': content.rating
+                    }
+                else:
+                    response_data = {
+                        'msg': "You have already voted this way.\nYou cannot do it twice.",
+                        'rating': content.rating
+                    }
         else:
             response_data = {
                 'msg': "You should login to make a vote.",
@@ -341,9 +379,18 @@ def my_login(request):
 
     c = {'tags': get_top_tags(30),
          'new_users': get_users(10),
-         'ask_form': AskForm()
+         'ask_form': AskForm(),
+         'title': 'Login'
     }
     return django_login(request, extra_context=c)
+
+
+def my_logout(request):
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect('/')
+
+    c = {'title': 'Logging out...'}
+    return django_logout(request, extra_context=c)
 
 
 def register(request):
@@ -370,4 +417,5 @@ def register(request):
         'ask_form': AskForm(),
         'tags': get_top_tags(30),
         'new_users': get_users(10),
+        'title': 'Sign up'
     })

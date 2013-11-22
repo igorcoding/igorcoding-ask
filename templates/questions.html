@@ -1,3 +1,15 @@
+{% if show_title %}
+    <div class="res-title">
+        {{ title }}
+        {% if search_tag %}
+            <span class="tag" onclick="document.location.href='/tag/{{ search_tag.tagname }}'">{{ search_tag.tagname }}</span>
+        {% else %}
+            {{ extra_title }}
+        {% endif %}
+
+    </div>
+{% endif %}
+
 {% include "new_popular_tabs.html" %}
 
 <div id="questions">

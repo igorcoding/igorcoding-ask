@@ -15,7 +15,7 @@
 
         <div class="question-info">
             <div class="question-contents">
-                {{ q.contents | linebreaks }}
+                {{ q.contents|linebreaks }}
             </div>
 
             {% if q.tag.all %}
@@ -48,14 +48,13 @@
                         <a href="#"><div class="glyphicon glyphicon-chevron-down rating-button down-button"></div></a>
                     </div>
                 </div>
-                {% if q.author == user %}
-                <div class="correctness {% if answer.correct %} correct {% endif %} clickable"></div>
-                {% endif %}
+
+                <div class="correctness {% if answer.correct %}correct{% endif %} {% if q.author == user %}ratable{% endif %}"></div>
             </div>
 
             <div class="answer-info">
                 <div class="answer-contents">
-                    {{ answer.contents | linebreaks }}
+                    {{ answer.contents|linebreaks }}
                 </div>
 
                 <div class="author-section">
