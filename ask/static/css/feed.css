@@ -260,3 +260,13 @@
     border: solid #d3d3d3;
     border-width: 0 0 1px 0;
 }
+
+
+.search-hit {
+    background-color: #6e85ee;
+}
+
+.nothing_found_msg {
+    margin: 30px;
+    font-size: 18px;
+}

@@ -21,6 +21,7 @@ urlpatterns = patterns('',
     url(r'^popular', views.popular_questions),
 
     url(r'^tag/(?P<tagname>\S+)/(?P<tab>\S*)', views.tag_search),
+    url(r'^search/(?P<tab>\S*)', views.search),
 
 
     url(r'^rating/(?P<content_type>\S+)/(?P<way>\S+)', views.change_content_rating),

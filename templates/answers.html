@@ -1,5 +1,16 @@
+{% if show_title %}
+    <div class="res-title">
+        {{ title }}
+    </div>
+{% endif %}
+
 {% include "new_popular_tabs.html" %}
 <div id="questions">
+
+    {% if search and not res %}
+        <div class="nothing_found_msg">Nothing found on this query. Try again.</div>
+    {% else %}
+
     {% for answer in res %}
         <section class="answer content-block" data-id="{{ answer.id }}">
             <div class="side-info">
@@ -29,12 +40,6 @@
                         </div>
                     </div>
                 </div>
-<!--
-                <div class="authors-section">
-                    <div><strong>Asked by:</strong> {{ answer.question.author }}</div>
-                    <div><strong>Answered by:</strong> {{ answer.author }}</div>
-                </div>
--->
                 <div class="author-section author-answers">
                     <div class="post-time">{{ answer.date }}</div>
                     <div class="user-name">by <a href="/users/{{ answer.author.username }}">{{ answer.author }}</a></div>
@@ -44,5 +49,8 @@
     {% endfor %}
 
     {% include "paginator.html" %}
+
+    {% endif %}
+
 
 </div>

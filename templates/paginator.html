@@ -1,9 +1,9 @@
 <footer id="paginator" class="text-center">
     <ul class="pagination">
-        <li class=""><a href="{{ page }}?page=1">&laquo;</a></li>
+        <li class=""><a href="{{ page }}{{ delim }}page=1">&laquo;</a></li>
         {% for pagenum in pages %}
-            <li class="{% if pagenum == current_page %}active{% endif %}"><a href="{{ page }}?page={{ pagenum }}">{{ pagenum }} <span class="sr-only"></span></a></li>
+            <li class="{% if pagenum == current_page %}active{% endif %}"><a href="{{ page }}{{ delim }}page={{ pagenum }}">{{ pagenum }} <span class="sr-only"></span></a></li>
         {% endfor %}
-        <li class=""><a href="{{ page }}?page={{ pages_count }}">&raquo;</a></li>
+        <li class=""><a href="{{ page }}{{ delim }}page={{ pages_count }}">&raquo;</a></li>
     </ul>
 </footer>

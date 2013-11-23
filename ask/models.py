@@ -3,6 +3,7 @@ import datetime
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from djangosphinx.models import SphinxSearch
 
 
 class Tag(models.Model):
@@ -32,6 +33,14 @@ class Question(models.Model):
     tag = models.ManyToManyField(Tag)
     rating = models.IntegerField(default=0)
 
+    search = SphinxSearch(
+        index='questions_index',
+        weights={
+            'title': 100,
+            'contents': 100,
+        }
+    )
+
     def save(self, *args, **kwargs):
         """ On save, update timestamps """
         if not self.id:
@@ -40,6 +49,9 @@ class Question(models.Model):
 
     class Meta:
         app_label = 'ask'
+
+    def __unicode__(self):
+        return self.title
 
 
 class Answer(models.Model):
@@ -50,11 +62,21 @@ class Answer(models.Model):
     correct = models.BooleanField(default=False)
     rating = models.IntegerField(default=0)
 
+    search = SphinxSearch(
+        index='answers_index',
+        weights={
+            'contents': 100,
+        }
+    )
+
     def save(self, *args, **kwargs):
         """ On save, update timestamps """
         if not self.id:
             self.date = datetime.datetime.today()
         return super(Answer, self).save(*args, **kwargs)
+
+    def __unicode__(self):
+        return u'%s...' % self.contents[:30]
 
     class Meta:
         app_label = 'ask'

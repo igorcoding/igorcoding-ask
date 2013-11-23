@@ -8,6 +8,8 @@
         <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.css" %}" />
         <link rel="stylesheet" type="text/css" href="{% static "css/jquery-ui.css" %}" />
         <link rel="stylesheet" type="text/css" href="{% static "css/tag-it/jquery.tagit.css" %}" />
+        <link rel="stylesheet" type="text/css" href="{% static "css/jquery.toast.css" %}" />
+
         {% if request.path == '/logout/' or request.path == '/login/' %}
             <link rel="stylesheet" type="text/css" href="{% static "css/login.css" %}" />
         {% endif %}
@@ -21,6 +23,8 @@
         <script type="text/javascript" src="{% static "js/jquery-ui.js" %}"></script>
         <script type="text/javascript" src="{% static "js/bootstrap.js" %}"></script>
         <script type="text/javascript" src="{% static "js/tag-it.js" %}"></script>
+        <script type="text/javascript" src="{% static "js/jquery.toast.js" %}"></script>
+        <script type="text/javascript" src="{% static "js/jquery.toast.min.js" %}"></script>
         <script type="text/javascript" src="{% static "js/scripts.js" %}"></script>
 
         <meta content="text/html" >
@@ -53,7 +57,7 @@
             </div>
 
             <div class="user_info" onclick="document.location.href='/users/{{ user.username }}'">
-                <div class="user_pic" style="background-image: url('{{ STATIC_URL }}img/{{ user.username }}.jpg');">&nbsp</div>
+                <div class="user_pic" style="background-image: url('{{ MEDIA_URL }}{{ user.username }}.jpg');">&nbsp</div>
                 <div class="user_name">{{ user.username }}</div>
                 <!--<div class="user-rating"></div>-->
             </div>

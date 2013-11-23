@@ -13,6 +13,10 @@
 {% include "new_popular_tabs.html" %}
 
 <div id="questions">
+    {% if search and not res %}
+        <div class="nothing_found_msg">Nothing found on this query. Try again.</div>
+    {% else %}
+
     {% for question in res %}
         <section class="question content-block" data-id="{{ question.id }}">
             <div class="side-info">
@@ -53,5 +57,9 @@
         </section>
     {% endfor %}
 
+
+
     {% include "paginator.html" %}
+
+    {% endif %}
 </div>

@@ -70,6 +70,9 @@ jQuery(document).ready(function($) {
 
     setupCsrfAndAjax();
 
+    $.toast.config.align = 'right';
+    $.toast.config.closeForStickyOnly = false;
+
     $('.content-block .rating-button').click(function() {
         var content = $(this).parents('.content-block');
         var way = null;
@@ -103,15 +106,18 @@ jQuery(document).ready(function($) {
             })
               .done(function( msg ) {
                     content.find('.rating').text(msg['rating']);
-                    alert(msg['msg']);
+                    $.toast(msg['msg'], {sticky: false, type: msg['notify']});
+                    //alert(msg['msg']);
               })
               .fail(function( msg ) {
-                    alert(msg);
+                    $.toast(msg['msg'], {sticky: false, type: msg['notify']});
+                    //alert(msg);
               });
             return false;
         }
         else
-            alert("An error occurred. Try refreshing your page.");
+            $.toast("An error occurred. Try refreshing your page.", {sticky: true, type: 'danger'});
+            //alert("An error occurred. Try refreshing your page.");
     });
 
 /*
@@ -136,8 +142,12 @@ jQuery(document).ready(function($) {
                     correctnessObj.stop().removeClass('correct');
                 else
                     correctnessObj.stop().addClass('correct');
-                alert(msg['msg']);
-          });
+                //alert(msg['msg']);
+                $.toast(msg['msg'], {sticky: false, type: 'success'});
+          })
+            .fail(function(msg){
+                $.toast(msg['msg'], {sticky: false, type: msg['danger']});
+            });
         return false;
     });
 

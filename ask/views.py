@@ -70,31 +70,17 @@ def get_response(request, required_page, extra_context, current_page):
     else:
         form = AskForm()
 
-    if required_page == 'questions':
-        to_count = Question.objects
+    if 'total_count' not in extra_context:
+        raise Exception
+    count = extra_context['total_count']
 
-    elif required_page == 'answers':
-        to_count = Answer.objects
+    if not 'delim' in extra_context:
+        extra_context['delim'] = '?'
 
-    elif 'tag' in required_page:
-        to_count = get_tag(extra_context['tagname']).question_set
-
-    elif required_page == 'question':
-        try:
-            to_count = extra_context['q'].answer_set
-        except:
-            raise Http404
-    elif required_page == 'users':
-        try:
-            to_count = User.objects
-        except:
-            raise Http404
-    else:
-        raise Http404
 
     tags = get_top_tags(30)
     new_users = get_users(10)
-    pages_count = int(ceil(get_count(to_count) / 30 + 1))
+    pages_count = int(ceil(count / 30 + 1))
     page_left, page_right = get_pages_bounds(pages_count, current_page)
     pages = range(page_left, page_right + 1)
     all_tags = get_all_tags()
@@ -130,6 +116,7 @@ def questions(request, tab):
 
     c['page'] = '/questions/' + tab
     c['tab'] = tab
+    c['total_count'] = Question.objects.count()
     return get_response(request, 'questions', c, current_page)
 
 
@@ -158,6 +145,7 @@ def answers(request, tab):
             raise Http404
     c['page'] = '/answers/' + tab
     c['tab'] = tab
+    c['total_count'] = Answer.objects.count()
     return get_response(request, 'answers', c, current_page)
 
 
@@ -169,6 +157,7 @@ def popular_answers(request):
     return answers(request, 'popular')
 
 
+@login_required
 def users(request):
     current_page = get_page(request)
 
@@ -186,7 +175,8 @@ def users(request):
         c['res'] = all_users
         c['tab'] = order
         c['page'] = '/users?order=%s' % (order, )
-        #c['amp-get-delim'] = '&'
+        c['total_count'] = User.objects.count()
+        c['delim'] = '&'
         return get_response(request, 'users', c, current_page)
     except:
         raise Http404
@@ -217,7 +207,8 @@ def question_page(request, q_id):
              'title': q.title,
              'page': '/question/' + str(q_id),
              'answer_form': answer_form,
-             'answerform_error': answerform_error}
+             'answerform_error': answerform_error,
+             'total_count': q.answer_set.count()}
     except:
         raise Http404
 
@@ -260,7 +251,8 @@ def user1(request, username, tab=None):
          'page': '/users/' + user.username + '/' + tab,
          'current_page': page,
          'required_page': 'user',
-         'title': '%s\'s %s' % (user.username, tab)}
+         'title': '%s\'s %s' % (user.username, tab),
+         'delim': '?'}
 
     return render(request, "index.html", c)
 
@@ -291,6 +283,7 @@ def tag_search(request, tagname, tab):
     c['title'] = 'Search tag: '
     c['extra_title'] = tagname
     c['show_title'] = True
+    c['total_count'] = get_tag(tagname).question_set.count()
     return get_response(request, 'tag/' + tagname, c, current_page)
 
 
@@ -323,8 +316,9 @@ def change_content_rating(request, content_type, way):
                 ok = change_a_rating(content, request.user, value)
 
             if ok is None:
-                response_data = {'msg': 'You cannot vote to your own content.',
-                           'rating': content.rating}
+                response_data = {'msg': 'You cannot vote to your own %s.' % (content_type, ),
+                                 'notify': 'warning',
+                                 'rating': content.rating}
             else:
                 if ok:
                     content.rating += value
@@ -332,21 +326,25 @@ def change_content_rating(request, content_type, way):
 
                     response_data = {
                         'msg': "Your vote accepted.",
+                        'notify': 'success',
                         'rating': content.rating
                     }
                 else:
                     response_data = {
                         'msg': "You have already voted this way.\nYou cannot do it twice.",
+                        'notify': 'danger',
                         'rating': content.rating
                     }
         else:
             response_data = {
-                'msg': "You should login to make a vote.",
+                'msg': "You have to be logged in to make a vote.",
+                'notify': 'warning',
                 'rating': content.rating
             }
     else:
         response_data = {
-            'msg': error
+            'msg': error,
+            'notify': 'danger',
         }
     return HttpResponse(json.dumps(response_data), content_type="application/json")
 
@@ -399,7 +397,8 @@ def register(request):
     if request.method == 'POST':
         reg_form = RegistrationForm(request.POST, request.FILES)
         if reg_form.is_valid():
-            save_userpic(request.FILES['user_pic'], request.POST['username'])
+            if 'user_pic' in request.FILES:
+                save_userpic(request.FILES['user_pic'], request.POST['username'])
             new_user = reg_form.save()
             new_user = authenticate(username=request.POST['username'], password=request.POST['password2'])
             login(request, new_user)
@@ -419,3 +418,33 @@ def register(request):
         'new_users': get_users(10),
         'title': 'Sign up'
     })
+
+
+def search(request, tab):
+    if not tab or tab is None:
+        tab = 'questions'
+    query = request.GET.get('query')
+    current_page = get_page(request)
+    if query is None:
+        raise Http404
+
+    c = {}
+    if tab == 'questions':
+        c['res'] = search_questions(query, current_page)
+        c['total_count'] = Question.search.query(query).count()
+    elif tab == 'answers':
+        c['res'] = search_answers(query, current_page)
+        c['total_count'] = Answer.search.query(query).count()
+    else:
+        raise Http404
+
+    c['search'] = True
+    c['page'] = '/search/%s?query=%s' % (tab, query)
+    c['delim'] = '&'
+    c['tab'] = tab
+    c['title'] = 'Search: %s' % query
+    c['show_title'] = True
+    c['base_url'] = '/search'
+    c['query'] = query
+
+    return get_response(request, tab, c, current_page)

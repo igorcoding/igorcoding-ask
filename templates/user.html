@@ -1,6 +1,6 @@
 <section id="user_info">
     {% load staticfiles %}
-    <div class="user_pic large" style="background-image: url('{{ STATIC_URL }}img/{{ show_user.username }}.jpg');">&nbsp</div>
+    <div class="user_pic large" style="background-image: url('{{ MEDIA_URL }}{{ show_user.username }}.jpg');">&nbsp</div>
 
     <div class="fields">
         <div class="name">{{ show_user.first_name }} {{ show_user.last_name }} ({{ show_user.username }})</div>

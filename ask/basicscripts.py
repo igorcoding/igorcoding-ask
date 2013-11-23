@@ -189,3 +189,12 @@ def save_userpic(f, username):
     with open(filename, 'wb+') as destination:
         for chunk in f.chunks():
             destination.write(chunk)
+
+
+def search_questions(query, page, count=30):
+    offset = (page - 1) * count
+    return Question.search.query(query)[offset:(offset + count)]
+
+def search_answers(query, page, count=30):
+    offset = (page - 1) * count
+    return Answer.search.query(query)[offset:(offset + count)]
