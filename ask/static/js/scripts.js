@@ -106,6 +106,7 @@ jQuery(document).ready(function($) {
             })
               .done(function( msg ) {
                     content.find('.rating').text(msg['rating']);
+                    $('.user-rating-field').text(msg['user_rating']);
                     $.toast(msg['msg'], {sticky: false, type: msg['notify']});
                     //alert(msg['msg']);
               })

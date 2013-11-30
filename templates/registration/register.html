@@ -90,7 +90,7 @@
 
                 <div class="col-sm-6">
                     <input id="{{ reg_form.password1.id_for_label }}" class="form-control"
-                           maxlength="{{ form.password1.max_length }}" name="password1" type="password" placeholder="Your password goes here">
+                           maxlength="{{ reg_form.password1.max_length }}" name="password1" type="password" placeholder="Your password goes here">
                 </div>
                 <div class="col-sm-4 error_message">
                     {{ reg_form.password1.errors|first }}

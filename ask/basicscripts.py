@@ -1,9 +1,11 @@
 # coding=utf8
+import json
 import random
 import sys, os
-from twisted.python._reflectpy3 import ObjectNotFound
 from django.core.exceptions import ObjectDoesNotExist
-from django.db.models import Q
+from django.db.models import Q, F
+import memcache
+
 
 sys.path.append('/home/igor/Documents/www/igorcoding_ask/')
 os.environ['DJANGO_SETTINGS_MODULE'] = 'igorcoding_ask.settings'
@@ -83,23 +85,35 @@ def get_all_tags():
 
 
 def get_top_tags(count):
-    weights_count = 5
-    tags = Tag.objects.all().annotate(questions_count=models.Count('question')).order_by('-questions_count')[:count]
-    max_value = tags[0].questions_count
-    min_value = tags[count - 1].questions_count
-    delta = (max_value - min_value) / weights_count
+    mc = memcache.Client(['127.0.0.1:11211'], debug=0)
 
-    res = []
-    weight = weights_count
-    prev_count = tags[0].questions_count
-    for tag in tags:
-        if prev_count - tag.questions_count > delta:
-            weight -= 1
-            prev_count = tag.questions_count
-        res.append({'tag': tag, 'weight': weight})
+    #mc.delete('top_tags')
+    top = mc.get('top_tags')
+    if not top:
+        res = []
+        try:
+            weights_count = 5
+            tags = Tag.objects.all().annotate(questions_count=models.Count('question')).order_by('-questions_count')[:count]
+            max_value = tags[0].questions_count
+            min_value = tags[count - 1].questions_count
+            delta = (max_value - min_value) / weights_count
 
-    random.shuffle(res)
+            weight = weights_count
+            prev_count = tags[0].questions_count
+            for tag in tags:
+                if prev_count - tag.questions_count > delta:
+                    weight -= 1
+                    prev_count = tag.questions_count
+                res.append({'tagname': tag.tagname, 'weight': weight})
+
+            random.shuffle(res)
+        except:
+            res = []
+        mc.set('top_tags', json.dumps(res, ensure_ascii=False), time=4*24*60*60)
+        return res
+    res = json.loads(top, encoding='utf-8')
     return res
+
 
 
 def get_user(user_id):
@@ -115,7 +129,7 @@ def get_all_users(order, page, count=30):
     if order == 'date':
         return User.objects.order_by('-date_joined').filter(~Q(pk=1))[offset:(offset + count)]
     elif order == 'rating':
-        return User.objects.order_by('-rating').filter(~Q(pk=1))[offset:(offset + count)]
+        return User.objects.order_by('-userprofile__rating').filter(~Q(pk=1))[offset:(offset + count)]
     elif order == 'username':
         return User.objects.order_by('username').filter(~Q(pk=1))[offset:(offset + count)]
     elif order == 'name':
@@ -155,6 +169,10 @@ def change_q_rating(q, user, value):
         if vote_entry.value != value:
             q.rating += -vote_entry.value
             vote_entry.delete()
+            if value == 1:
+                q.author.userprofile.rating += 2
+            elif value == -1:
+                q.author.userprofile.rating -= 3
             ok = True
     except QuestionVote.DoesNotExist:
         ok = True
@@ -162,6 +180,11 @@ def change_q_rating(q, user, value):
     if ok:
         vote_entry = QuestionVote(user=user, question=q, value=value)
         vote_entry.save()
+        if value == 1:
+            q.author.userprofile.rating += 3
+        elif value == -1:
+            q.author.userprofile.rating -= 2
+        q.author.userprofile.save()
     return ok
 
 
@@ -174,6 +197,10 @@ def change_a_rating(a, user, value):
         if vote_entry.value != value:
             a.rating += -vote_entry.value
             vote_entry.delete()
+            if value == 1:
+                a.author.userprofile.rating += 2
+            elif value == -1:
+                a.author.userprofile.rating -= 5
             ok = True
     except AnswerVote.DoesNotExist:
         ok = True
@@ -181,6 +208,11 @@ def change_a_rating(a, user, value):
     if ok:
         vote_entry = AnswerVote(user=user, answer=a, value=value)
         vote_entry.save()
+        if value == 1:
+            a.author.userprofile.rating += 5
+        elif value == -1:
+            a.author.userprofile.rating -= 2
+        a.author.userprofile.save()
     return ok
 
 
@@ -193,7 +225,8 @@ def save_userpic(f, username):
 
 def search_questions(query, page, count=30):
     offset = (page - 1) * count
-    return Question.search.query(query)[offset:(offset + count)]
+    return Question.search.query(query).order_by('@weight')[offset:(offset + count)]
+
 
 def search_answers(query, page, count=30):
     offset = (page - 1) * count

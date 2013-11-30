@@ -10,8 +10,8 @@ urlpatterns = patterns('',
     url(r'^signup/$', views.register),
 
     url(r'^users/$', views.users),
-    url(r'^users/(?P<username>\S*)/(?P<tab>[A-Za-z]*)', views.user1),
-    url(r'^users/(?P<username>\S*)', views.user1),
+    url(r'^users/(?P<username>\S*)/(?P<tab>[A-Za-z]*)', views.user),
+    url(r'^users/(?P<username>\S*)', views.user),
 
 
     url(r'^question/(?P<q_id>\d+)', views.question_page),

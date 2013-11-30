@@ -1,18 +1,14 @@
 import json
-from django import contrib
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import render
-from django.http import HttpResponse, Http404, HttpResponseRedirect
-from django.template import Context
-from django.utils.datastructures import MultiValueDictKeyError
-from ask.forms import *
-from ask.models import *
-from basicscripts import *
-from math import ceil
 from django.contrib.auth.views import login as django_login
 from django.contrib.auth.views import logout as django_logout
+from django.shortcuts import render
+from django.http import HttpResponse, Http404, HttpResponseRedirect
+from django.utils.datastructures import MultiValueDictKeyError
+from ask.forms import *
+from basicscripts import *
+from math import ceil
 
 
 def get_page(request):
@@ -44,7 +40,7 @@ def get_count(to_count):
     return to_count.count()
 
 
-def get_response(request, required_page, extra_context, current_page):
+def get_ask_form(request):
     askform_error = False
     if request.method == "POST" and 'form_type' in request.POST and request.POST['form_type'] == 'ask':
         if not request.user.is_authenticated():
@@ -63,12 +59,19 @@ def get_response(request, required_page, extra_context, current_page):
                 if tag:
                     new_q.tag.add(get_or_add_tag(tag))
             new_q.save()
+            new_q.author.userprofile.rating += 1
+            new_q.author.userprofile.save()
 
             return HttpResponseRedirect("/question/" + str(new_q.id))
         else:
             askform_error = True
     else:
         form = AskForm()
+    return form, askform_error
+
+
+def get_response(request, required_page, extra_context, current_page):
+    form, askform_error = get_ask_form(request)
 
     if 'total_count' not in extra_context:
         raise Exception
@@ -77,17 +80,12 @@ def get_response(request, required_page, extra_context, current_page):
     if not 'delim' in extra_context:
         extra_context['delim'] = '?'
 
-
-    tags = get_top_tags(30)
-    new_users = get_users(10)
     pages_count = int(ceil(count / 30 + 1))
     page_left, page_right = get_pages_bounds(pages_count, current_page)
     pages = range(page_left, page_right + 1)
     all_tags = get_all_tags()
 
-    d = {'tags': tags,
-         'new_users': new_users,
-         'pages': pages,
+    d = {'pages': pages,
          'pages_count': pages_count,
          'current_page': current_page,
          'all_tags': all_tags,
@@ -216,7 +214,7 @@ def question_page(request, q_id):
 
 
 @login_required
-def user1(request, username, tab=None):
+def user(request, username, tab=None):
     if not tab:
         tab = 'questions'
     try:
@@ -228,33 +226,22 @@ def user1(request, username, tab=None):
 
     if tab == "questions":
         res = get_questions_by_user(user, page)
-        to_count = Question.objects.filter(author_id=user.id)
+        total_count = Question.objects.filter(author_id=user.id).count()
     elif tab == "answers":
         res = get_answers_by_user(user, page)
-        to_count = Answer.objects.filter(author_id=user.id)
+        total_count = Answer.objects.filter(author_id=user.id).count()
     else:
         raise Http404
-
-    tags = get_top_tags(30)
-    new_users = get_users(10)
-    pages_count = int(ceil(to_count.count() / 30 + 1))
-    page_left, page_right = get_pages_bounds(pages_count, page)
-    pages = range(page_left, page_right + 1)
 
     c = {'show_user': user,
          'res': res,
          'tab': tab,
-         'tags': tags,
-         'new_users': new_users,
-         'pages': pages,
-         'pages_count': pages_count,
          'page': '/users/' + user.username + '/' + tab,
-         'current_page': page,
-         'required_page': 'user',
          'title': '%s\'s %s' % (user.username, tab),
+         'total_count': total_count,
          'delim': '?'}
 
-    return render(request, "index.html", c)
+    return get_response(request, 'user', c, page)
 
 
 def tag_search(request, tagname, tab):
@@ -318,7 +305,8 @@ def change_content_rating(request, content_type, way):
             if ok is None:
                 response_data = {'msg': 'You cannot vote to your own %s.' % (content_type, ),
                                  'notify': 'warning',
-                                 'rating': content.rating}
+                                 'rating': content.rating,
+                                 'user_rating': request.user.userprofile.rating}
             else:
                 if ok:
                     content.rating += value
@@ -327,7 +315,8 @@ def change_content_rating(request, content_type, way):
                     response_data = {
                         'msg': "Your vote accepted.",
                         'notify': 'success',
-                        'rating': content.rating
+                        'rating': content.rating,
+                        'user_rating': content.author.userprofile.rating
                     }
                 else:
                     response_data = {
@@ -338,7 +327,7 @@ def change_content_rating(request, content_type, way):
         else:
             response_data = {
                 'msg': "You have to be logged in to make a vote.",
-                'notify': 'warning',
+                'notify': 'danger',
                 'rating': content.rating
             }
     else:
@@ -388,7 +377,7 @@ def my_logout(request):
         return HttpResponseRedirect('/')
 
     c = {'title': 'Logging out...'}
-    return django_logout(request, extra_context=c)
+    return django_logout(request, extra_context=c, next_page='/')
 
 
 def register(request):

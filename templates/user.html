@@ -1,12 +1,13 @@
-<section id="user_info">
+<section id="user_info" xmlns="http://www.w3.org/1999/html">
     {% load staticfiles %}
     <div class="user_pic large" style="background-image: url('{{ MEDIA_URL }}{{ show_user.username }}.jpg');">&nbsp</div>
 
     <div class="fields">
         <div class="name">{{ show_user.first_name }} {{ show_user.last_name }} ({{ show_user.username }})</div>
-        <div class="field-value"><span class="field-name">E-mail:</span> {{ show_user.email }}</div>
-        <div class="field-value"><span class="field-name">Joined:</span> {{ show_user.date_joined }}</div>
-        <div class="field-value"><span class="field-name">Last login:</span> {{ show_user.last_login }}</div>
+        <div class="field-value"><span class="field-name">E-mail:</span><a href="mailto:{{ show_user.email }}">{{ show_user.email }}</a></div>
+        <div class="field-value"><span class="field-name">Joined:</span>{{ show_user.date_joined }}</div>
+        <div class="field-value"><span class="field-name">Last login:</span>{{ show_user.last_login }}</div>
+        <div class="field-value"><span class="field-name">Rating:</span><span class="user-rating-field">{{ show_user.userprofile.rating }}</span></div>
     </div>
 </section>
 <header id="feed-header">

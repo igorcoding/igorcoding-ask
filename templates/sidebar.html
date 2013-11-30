@@ -13,8 +13,10 @@
         </form>
     </div>
 
-    {% include "tags-cloud.html" %}
-    {% include "new_users.html" %}
+
+    {% load sidebar_content %}
+    {% top_tags %}
+    {% new_users %}
 
 
 </aside>

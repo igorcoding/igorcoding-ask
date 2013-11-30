@@ -1,12 +1,16 @@
 # coding=utf8
-import pprint
+import sys, os
+sys.path.append('/home/igor/Documents/www/igorcoding_ask/')
+os.environ['DJANGO_SETTINGS_MODULE'] = 'igorcoding_ask.settings'
+
 import string
 import random
 import datetime
+from django.contrib.auth.models import User
 from random_words import *
 import time
 import MySQLdb
-import sys
+
 
 
 def value_in_dict_arr(dict_arr, key, value):
@@ -68,11 +72,21 @@ def generate_users(connection, cursor, usersCount):
         user["last_login"] = last_login_date
 
         users.append(user)
-        finalusers.append(user["date_joined"])
         cursor.execute('INSERT INTO auth_user (password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);',
                        (user["password"], user["last_login"], 0, user["username"],
                         user["first_name"], user["last_name"], user["email"], 0, 1, user["date_joined"],))
         connection.commit()
+
+        finalusers.append(user["date_joined"])
+
+        user_rating = random.randint(-50, 100)
+        cursor.execute('INSERT INTO ask_userprofile (user_id, rating) VALUES (%s, %s)', (len(users)+1, user_rating))
+        connection.commit()
+
+        obj = User.objects.get(pk=(len(users)+1))
+        obj.set_password(user["password"])
+        obj.save()
+
 
     print "Users generated."
     return finalusers

@@ -9,12 +9,14 @@
 }
 
 .login-page form {
-    margin-left: 150px;
+    padding-left: 25%;
+    border: lightgray solid 1px;
 }
 
 .login-form {
     margin: 0 auto;
     padding-right: 1%;
+
 }
 
 .form_error_message {

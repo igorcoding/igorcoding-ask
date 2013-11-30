@@ -1,9 +1,23 @@
-from gtk.keysyms import question
 import datetime
 from django.db import models
 from django.contrib.auth.models import User
-from django.utils import timezone
+from django.db.models.signals import post_save
 from djangosphinx.models import SphinxSearch
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User)
+    rating = models.IntegerField()
+
+    def __unicode__(self):
+        return '%s\'s profile' % self.user.username
+
+
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+       profile, created = UserProfile.objects.get_or_create(user=instance, rating=0)
+
+post_save.connect(create_user_profile, sender=User)
 
 
 class Tag(models.Model):
@@ -37,12 +51,11 @@ class Question(models.Model):
         index='questions_index',
         weights={
             'title': 100,
-            'contents': 100,
+            'contents': 50,
         }
     )
 
     def save(self, *args, **kwargs):
-        """ On save, update timestamps """
         if not self.id:
             self.creation_date = datetime.datetime.today()
         return super(Question, self).save(*args, **kwargs)
@@ -70,7 +83,6 @@ class Answer(models.Model):
     )
 
     def save(self, *args, **kwargs):
-        """ On save, update timestamps """
         if not self.id:
             self.date = datetime.datetime.today()
         return super(Answer, self).save(*args, **kwargs)

@@ -1,7 +1,7 @@
 # Django settings for igorcoding_ask project.
 import os
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 ENABLE_DJANGO_TOOLBAR = False
 
@@ -137,7 +137,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'ask',
-    'djangosphinx'
+    'djangosphinx',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
