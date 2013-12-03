@@ -3,7 +3,7 @@ import os
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
-ENABLE_DJANGO_TOOLBAR = False
+ENABLE_DJANGO_TOOLBAR = True
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -14,15 +14,6 @@ PROJECT_DIR = os.path.join(os.path.abspath(os.path.dirname(__file__)), '..')
 MANAGERS = ADMINS
 
 DATABASES = {
-    #'default': {
-    #    'ENGINE': 'django.db.backends.', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-    #    'NAME': '',                      # Or path to database file if using sqlite3.
-        # The following settings are not used with sqlite3:
-    #    'USER': '',
-    #    'PASSWORD': '',
-    #    'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-    #    'PORT': '',                      # Set to empty string for default.
-    #}
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'ask_db',
@@ -212,7 +203,7 @@ if DEBUG and ENABLE_DJANGO_TOOLBAR:
         return True
 
     DEBUG_TOOLBAR_CONFIG = {
-        'INTERCEPT_REDIRECTS': True,
+        'INTERCEPT_REDIRECTS': False,
         'SHOW_TOOLBAR_CALLBACK': custom_show_toolbar,
         #'EXTRA_SIGNALS': ['myproject.signals.MySignal'],
         'HIDE_DJANGO_SQL': False,

@@ -3,6 +3,8 @@ import json
 import random
 import sys, os
 from django.core.exceptions import ObjectDoesNotExist
+from django.core import serializers
+from django.core.serializers import json as django_json
 from django.db.models import Q, F
 import memcache
 
@@ -15,12 +17,12 @@ from django.contrib.auth.models import User
 from pprint import pprint
 
 
-def get_questions_by_date(page, count=30):
+def get_questions_by_date(page, count=20):
     offset = (page - 1) * count
     return Question.objects.order_by('-creation_date')[offset:(offset + count)]
 
 
-def get_questions_by_rating(page, count=30):
+def get_questions_by_rating(page, count=20):
     offset = (page - 1) * count
     return Question.objects.order_by('-rating')[offset:(offset + count)]
 
@@ -37,22 +39,22 @@ def get_answers_for_question(question_id):
     return Answer.objects.filter(question=get_question(question_id)).order_by('-date').order_by('-rating')
 
 
-def get_answers_by_date(page, count=30):
+def get_answers_by_date(page, count=20):
     offset = (page - 1) * count
     return Answer.objects.order_by('-date')[offset:(offset + count)]
 
 
-def get_answers_by_rating(page, count=30):
+def get_answers_by_rating(page, count=20):
     offset = (page - 1) * count
     return Answer.objects.order_by('-rating')[offset:(offset + count)]
 
 
-def get_questions_by_user(user, page, count=30):
+def get_questions_by_user(user, page, count=20):
     offset = (page - 1) * count
     return Question.objects.filter(author_id=user.id).order_by('-creation_date')[offset:(offset + count)]
 
 
-def get_answers_by_user(user, page, count=30):
+def get_answers_by_user(user, page, count=20):
     offset = (page - 1) * count
     return Answer.objects.filter(author_id=user.id).order_by('-date')[offset:(offset + count)]
 
@@ -70,7 +72,7 @@ def get_tag(tagname):
     return Tag.objects.get(tagname=tagname)
 
 
-def get_questions_by_tag(tagname, page, count=30, order='date'):
+def get_questions_by_tag(tagname, page, count=20, order='date'):
     offset = (page - 1) * count
     if order == 'date':
         return get_tag(tagname).question_set.order_by('-creation_date')[offset:(offset + count)]
@@ -115,7 +117,6 @@ def get_top_tags(count):
     return res
 
 
-
 def get_user(user_id):
     return User.objects.filter(pk=user_id)[0]
 
@@ -124,7 +125,7 @@ def get_user_by_name(username):
     return User.objects.filter(username=username)[0]
 
 
-def get_all_users(order, page, count=30):
+def get_all_users(order, page, count=20):
     offset = (page - 1) * count
     if order == 'date':
         return User.objects.order_by('-date_joined').filter(~Q(pk=1))[offset:(offset + count)]
@@ -138,18 +139,24 @@ def get_all_users(order, page, count=30):
         return None
 
 
-def get_users(count=None, order='date_joined'):
-    if order == 'date_joined':
-        if count is None:
-            return User.objects.order_by('-date_joined')
-        return User.objects.order_by('-date_joined').filter(~Q(pk=1))[:count + 1]
+def get_users(count=None):
+    mc = memcache.Client(['127.0.0.1:11211'], debug=0)
 
-    if order == 'rating':
-        if count is None:
-            return User.objects.order_by('-rating')
-        return User.objects.order_by('-rating').filter(~Q(pk=1))[:count + 1]
-
-    return None
+    #mc.delete('new_users')
+    jsonSer = django_json.Serializer()
+    new_users = mc.get('new_users')
+    if new_users is None:
+        try:
+            if count is None:
+                new_users = User.objects.filter(~Q(pk=1)).order_by('-date_joined')
+            else:
+                new_users = User.objects.filter(~Q(pk=1)).order_by('-date_joined')[:count + 1]
+        except:
+            new_users = []
+        mc.set('new_users', jsonSer.serialize(new_users), time=5*60)
+        return new_users
+    res = [obj.object for obj in django_json.Deserializer(new_users)]
+    return res
 
 
 def get_question_rating(question_id):
@@ -223,11 +230,11 @@ def save_userpic(f, username):
             destination.write(chunk)
 
 
-def search_questions(query, page, count=30):
+def search_questions(query, page, count=20):
     offset = (page - 1) * count
     return Question.search.query(query).order_by('@weight')[offset:(offset + count)]
 
 
-def search_answers(query, page, count=30):
+def search_answers(query, page, count=20):
     offset = (page - 1) * count
     return Answer.search.query(query)[offset:(offset + count)]

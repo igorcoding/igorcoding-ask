@@ -111,6 +111,14 @@
     right: 0;
 }
 
+.green-rating-button {
+    color: limegreen;
+}
+
+.red-rating-button {
+    color: red;
+}
+
 .counter .rating-buttons a {
     color: dimgrey;
     text-decoration: none;

@@ -39,7 +39,7 @@
             <nav>
                 <ul>
                     <li><a href="/">Questions</a></li>
-                    <li><a href="/answers/">Answers</a></li>
+                    <!--<li><a href="/answers/">Answers</a></li>-->
                     <li><a href="/users/">Users</a></li>
                 </ul>
             </nav>
@@ -76,7 +76,68 @@
             {% block content %}
             {% endblock %}
         </div>
-        {% include "ask-form.html" %}
+        <div class="darking-thing">&nbsp;</div>
+        <div class="my-modal"></div>
+
+        <div class="ask-modal my-modal">
+            <form id="ask-form" class="form-horizontal" method="POST">
+                <fieldset>
+                    <header>
+                        <span>Ask the question</span>
+                        <div class="modal-close-button glyphicon glyphicon-remove-circle"></div>
+                    </header>
+                    <section>
+                        {% csrf_token %}
+
+                        <div class="ask_form_error_message">
+                            {% if ask_form.title.errors or ask_form.contents.errors %}
+                                Some fields are required.
+                            {% endif %}
+                        </div>
+
+                        {% if ask_form.title.errors %}
+                        <div class="form-group has-error">
+                        {% else %}
+                        <div class="form-group">
+                        {% endif %}
+                            <label for="id_title" class="col-lg-2 control-label">Title</label>
+                            <div class="col-lg-10">
+                                {{ ask_form.title }}
+                            </div>
+                        </div>
+                        {% if ask_form.contents.errors %}
+                        <div class="form-group has-error">
+                        {% else %}
+                        <div class="form-group">
+                        {% endif %}
+                            <label for="id_contents" class="col-lg-2 control-label">Contents</label>
+                            <div class="col-lg-10">
+                                {{ ask_form.contents }}
+                            </div>
+                        </div>
+                        {% if ask_form.tags.errors %}
+                            <div class="form-group has-error">
+                        {% else %}
+                            <div class="form-group">
+                        {% endif %}
+                            <label for="allTags" class="col-lg-2 control-label">Tags</label>
+                            <div class="col-lg-10">
+                                <ul id="allTags"></ul>
+                                {{ ask_form.tags }}
+                            </div>
+
+                        </div>
+                    </section>
+                    <footer>
+                        <input type="hidden" name="form_type" value="ask">
+                        <div class="form-group ask-buttons">
+                            <button type="reset" class="btn btn-default">Cancel</button>
+                            <button type="submit" class="btn btn-success">Ask</button>
+                        </div>
+                    </footer>
+                </fieldset>
+            </form>
+        </div>
 
         {% load staticfiles %}
         <script type="text/javascript" src="{% static "js/jquery-2.0.3.js" %}"></script>
@@ -86,6 +147,43 @@
         <script type="text/javascript" src="{% static "js/jquery.toast.js" %}"></script>
         <script type="text/javascript" src="{% static "js/jquery.toast.min.js" %}"></script>
         <script type="text/javascript" src="{% static "js/scripts.js" %}"></script>
+
+        <script>
+            $(document).ready(function() {
+                $("#allTags").tagit({
+                    autocomplete: {delay: 0,
+                                   minLength: 2,
+                                   source: [{% for tag in all_tags %} "{{ tag.tagname }}", {% endfor %}]},
+                    caseSensitive: false,
+                    //allowSpaces: true,
+                    tagLimit: 3,
+                    singleField: true,
+                    singleFieldNode: document.getElementById('id_tags'),
+                    placeholderText: "Enter 0 to 3 tags...",
+                    removeConfirmation: true
+
+                });
+
+                {% if askform_error %}
+                    showModal($('.ask-modal'));
+                {% endif %}
+                {% if answerform_error %}
+                    window.location += '#answer_form';
+                {% endif %}
+
+                {% if not user.is_authenticated %}
+                    $('#ask-form fieldset').attr('disabled', '');
+                    $('#ask-form fieldset .ask_form_error_message').text('You have to be logged in to ask a question');
+                    $('#answer_form fieldset').attr('disabled', '');
+                    $('#answer_form fieldset #id_contents').attr('placeholder', "You have to be logged in to leave an answer");
+                {% endif %}
+            });
+
+
+
+        </script>
+
+
     </body>
 
 </html>

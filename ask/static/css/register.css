@@ -19,6 +19,5 @@
 }
 
 .reg-form form {
-    position: relative;
-    left: 15%;
+    margin-left: 15px;
 }

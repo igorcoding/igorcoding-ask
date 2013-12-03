@@ -15,8 +15,3 @@ def new_users():
     users = get_users(10)
     return {'new_users': users}
 
-
-@register.inclusion_tag('new_users.html')
-def new_users():
-    users = get_users(10)
-    return {'new_users': users}

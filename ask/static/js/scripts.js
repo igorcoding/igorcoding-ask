@@ -111,8 +111,7 @@ jQuery(document).ready(function($) {
                     //alert(msg['msg']);
               })
               .fail(function( msg ) {
-                    $.toast(msg['msg'], {sticky: false, type: msg['notify']});
-                    //alert(msg);
+                    $.toast(msg, {sticky: false, type: 'danger'});
               });
             return false;
         }
@@ -120,13 +119,6 @@ jQuery(document).ready(function($) {
             $.toast("An error occurred. Try refreshing your page.", {sticky: true, type: 'danger'});
             //alert("An error occurred. Try refreshing your page.");
     });
-
-/*
-    $('.tag').click(function() {
-        alert("tag");
-    });
-*/
-
 
     $(document).on('click', '.correctness.ratable', function() {
         var answer = $(this).parents('.answer');
@@ -157,18 +149,18 @@ jQuery(document).ready(function($) {
             if ($(this).hasClass('ratable'))
             {
                 if ($(this).hasClass('correct'))
-                    $(this).animate({'opacity': 0.2}, 300);
+                    $(this).stop().animate({'opacity': 0.2}, 300);
                 else
-                    $(this).animate({'opacity': 1}, 300);
+                    $(this).stop().animate({'opacity': 1}, 300);
             }
         },
         function() {
             if ($(this).hasClass('ratable'))
             {
                 if ($(this).hasClass('correct'))
-                    $(this).animate({'opacity': 1}, 300);
+                    $(this).stop().animate({'opacity': 1}, 300);
                 else
-                    $(this).animate({'opacity': 0.2}, 300);
+                    $(this).stop().animate({'opacity': 0.2}, 300);
             }
         }
     );

@@ -17,6 +17,10 @@
         <div class="nothing_found_msg">Nothing found on this query. Try again.</div>
     {% else %}
 
+    {% if not res %}
+        <div class="nothing_found_msg">Nothing here yet.</div>
+    {% endif %}
+
     {% for question in res %}
         <section class="question content-block" data-id="{{ question.id }}">
             <div class="side-info">
@@ -58,8 +62,9 @@
     {% endfor %}
 
 
-
+    {% if res %}
     {% include "paginator.html" %}
+    {% endif %}
 
     {% endif %}
 </div>

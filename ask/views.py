@@ -12,13 +12,16 @@ from math import ceil
 
 
 def get_page(request):
-    page = request.GET.get('page')
-    if page is None:
-        page = 1
-    page = int(page)
-    if page <= 0:
+    try:
+        page = request.GET.get('page')
+        if page is None:
+            page = 1
+        page = int(page)
+        if page <= 0:
+            raise Http404
+        return page
+    except:
         raise Http404
-    return page
 
 
 def get_pages_bounds(pages_count, page):
@@ -71,7 +74,32 @@ def get_ask_form(request):
 
 
 def get_response(request, required_page, extra_context, current_page):
-    form, askform_error = get_ask_form(request)
+    askform_error = False
+    if request.method == "POST" and 'form_type' in request.POST and request.POST['form_type'] == 'ask':
+        if not request.user.is_authenticated():
+            return HttpResponseRedirect('/login')
+        form = AskForm(request.POST)
+        if form.is_valid():
+            author = request.user
+            title = form.cleaned_data['title']
+            contents = form.cleaned_data['contents']
+            creation_date = datetime.datetime.today()
+            tags = form.cleaned_data['tags']
+
+            new_q = Question(author=author, title=title, contents=contents, creation_date=creation_date, rating=0)
+            new_q.save()
+            for tag in tags:
+                if tag:
+                    new_q.tag.add(get_or_add_tag(tag))
+            new_q.save()
+            new_q.author.userprofile.rating += 1
+            new_q.author.userprofile.save()
+
+            return HttpResponseRedirect("/question/" + str(new_q.id))
+        else:
+            askform_error = True
+    else:
+        form = AskForm()
 
     if 'total_count' not in extra_context:
         raise Exception
@@ -80,7 +108,12 @@ def get_response(request, required_page, extra_context, current_page):
     if not 'delim' in extra_context:
         extra_context['delim'] = '?'
 
-    pages_count = int(ceil(count / 30 + 1))
+    if 'objs_per_page' not in extra_context:
+        objs_per_page = 20
+    else:
+        objs_per_page = extra_context['objs_per_page']
+
+    pages_count = int(ceil(count / objs_per_page + 1))
     page_left, page_right = get_pages_bounds(pages_count, current_page)
     pages = range(page_left, page_right + 1)
     all_tags = get_all_tags()
@@ -126,6 +159,13 @@ def popular_questions(request):
     return questions(request, 'popular')
 
 
+def deprecated(func):
+    def new_func(request, tab):
+        raise Http404
+    return new_func
+
+
+@deprecated
 def answers(request, tab):
     if not tab and tab is not None:
         tab = 'new'
@@ -206,7 +246,8 @@ def question_page(request, q_id):
              'page': '/question/' + str(q_id),
              'answer_form': answer_form,
              'answerform_error': answerform_error,
-             'total_count': q.answer_set.count()}
+             'total_count': q.answer_set.count(),
+             'objs_per_page': 30}
     except:
         raise Http404
 
