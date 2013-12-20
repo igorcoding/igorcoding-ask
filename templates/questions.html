@@ -21,6 +21,13 @@
         <div class="nothing_found_msg">Nothing here yet.</div>
     {% endif %}
 
+    <section class="questions-refresher content-block">
+        <div class="new-questions-block">
+            <i class="glyphicon glyphicon-refresh questions-refresh"></i>
+            <div class="new-questions-msg">New Questions Arrived (<span id="new-questions-count">7</span>)
+            </div>
+        </div>
+    </section>
     {% for question in res %}
         <section class="question content-block" data-id="{{ question.id }}">
             <div class="side-info">

@@ -60,18 +60,31 @@ function setupCsrfAndAjax() {
     });
 }
 
+function onnewquestion(question) {
+
+}
+
+function newquestions(id, onnewquestion) {
+    $.get('http://localhost/listen/', { cid: id })
+		.done(function(data) {
+			onnewquestion(data);
+			newquestions(id, onnewquestion);
+		})
+		.fail(function(data) {
+			newquestions(id, onnewquestion);
+		});
+}
 
 jQuery(document).ready(function($) {
-
-    /*$('#feed-nav li').click(function(){
-        $(this).parents('#feed-nav').children('li').removeClass('active');
-        $(this).addClass('active');
-    });*/
 
     setupCsrfAndAjax();
 
     $.toast.config.align = 'right';
     $.toast.config.closeForStickyOnly = false;
+
+    var c = $.cookie();
+    //alert(c);
+    //newquestions()
 
     $('.content-block .rating-button').click(function() {
         var content = $(this).parents('.content-block');

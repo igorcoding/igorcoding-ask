@@ -87,7 +87,7 @@ def get_all_tags():
 
 
 def get_top_tags(count):
-    mc = memcache.Client(['127.0.0.1:11211'], debug=0)
+    mc = memcache.Client([settings.MEMCACHED_SERVER], debug=0)
 
     #mc.delete('top_tags')
     top = mc.get('top_tags')
@@ -140,10 +140,10 @@ def get_all_users(order, page, count=20):
 
 
 def get_users(count=None):
-    mc = memcache.Client(['127.0.0.1:11211'], debug=0)
+    mc = memcache.Client([settings.MEMCACHED_SERVER], debug=0)
 
     #mc.delete('new_users')
-    jsonSer = django_json.Serializer()
+    json_ser = django_json.Serializer()
     new_users = mc.get('new_users')
     if new_users is None:
         try:
@@ -153,7 +153,7 @@ def get_users(count=None):
                 new_users = User.objects.filter(~Q(pk=1)).order_by('-date_joined')[:count + 1]
         except:
             new_users = []
-        mc.set('new_users', jsonSer.serialize(new_users), time=5*60)
+        mc.set('new_users', json_ser.serialize(new_users), time=5*60)
         return new_users
     res = [obj.object for obj in django_json.Deserializer(new_users)]
     return res

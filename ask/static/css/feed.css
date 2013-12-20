@@ -278,3 +278,27 @@
     margin: 30px;
     font-size: 18px;
 }
+
+.questions-refresher {
+    cursor: pointer;
+    height: 50px;
+    line-height: 30px;
+    background-color: #fafafa;
+    border-top-width: 1px;
+}
+
+.new-questions-block {
+    font-size: 16px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.new-questions-msg {
+    display: inline;
+
+}
+
+.questions-refresh {
+    color: #3ec22e;
+    margin-right: 7px;
+}

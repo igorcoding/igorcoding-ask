@@ -20,7 +20,7 @@
                 <div class="col-sm-6">
                     <input id="{{ reg_form.username.id_for_label }}" class="form-control"
                            maxlength="{{ reg_form.username.max_length }}" name="username" type="text"
-                           placeholder="Enter a username" value="{{ reg_form.username.value|default_if_none:"" }}">
+                           placeholder="Enter a username" value="{{ reg_form.username.value|default_if_none:"" }}" autocomplete="off">
                 </div>
 
                 <div class="col-sm-4 error_message">
@@ -39,7 +39,7 @@
                 <div class="col-sm-6">
                     <input id="{{ reg_form.first_name.id_for_label }}" class="form-control"
                            maxlength="{{ reg_form.first_name.max_length }}" name="first_name" type="text"
-                           placeholder="Enter your first name" value="{{ reg_form.first_name.value|default_if_none:"" }}">
+                           placeholder="Enter your first name" value="{{ reg_form.first_name.value|default_if_none:"" }}" autocomplete="off">
                 </div>
 
                 <div class="col-sm-4 error_message">
@@ -57,7 +57,7 @@
                 <div class="col-sm-6">
                     <input id="{{ reg_form.last_name.id_for_label }}" class="form-control"
                            maxlength="{{ reg_form.last_name.max_length }}" name="last_name" type="text"
-                           placeholder="Enter your last name" value="{{ reg_form.last_name.value|default_if_none:"" }}">
+                           placeholder="Enter your last name" value="{{ reg_form.last_name.value|default_if_none:"" }}" autocomplete="off">
                 </div>
                 <div class="col-sm-4 error_message">
                     {{ reg_form.last_name.errors|first }}
@@ -74,7 +74,7 @@
                 <div class="col-sm-6">
                     <input id="{{ reg_form.email.id_for_label }}" class="form-control"
                            maxlength="{{ reg_form.email.max_length }}" name="email" type="text"
-                           placeholder="Enter a real email address" value="{{ reg_form.email.value|default_if_none:"" }}">
+                           placeholder="Enter a real email address" value="{{ reg_form.email.value|default_if_none:"" }}" autocomplete="off">
                 </div>
                 <div class="col-sm-4 error_message">
                     {{ reg_form.email.errors|first }}

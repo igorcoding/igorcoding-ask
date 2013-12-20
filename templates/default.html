@@ -49,7 +49,7 @@
                 <a href="/logout">logout</a>
             </div>
 
-            <div class="user_info" onclick="document.location.href='/users/{{ user.username }}'">
+            <div class="user_info" onclick="document.location.href='/users/{{ user.username }}'" data-id="{{ user.id }}">
                 <div class="user_pic" style="background-image: url('{{ MEDIA_URL }}{{ user.username }}.jpg');">&nbsp</div>
                 <div class="user_name">{{ user.username }}</div>
                 <!--<div class="user-rating"></div>-->
@@ -80,7 +80,7 @@
         <div class="my-modal"></div>
 
         <div class="ask-modal my-modal">
-            <form id="ask-form" class="form-horizontal" method="POST">
+            <form id="ask-form" class="form-horizontal" method="POST" action="">
                 <fieldset>
                     <header>
                         <span>Ask the question</span>
@@ -141,6 +141,7 @@
 
         {% load staticfiles %}
         <script type="text/javascript" src="{% static "js/jquery-2.0.3.js" %}"></script>
+        <script type="text/javascript" src="{% static "js/jquery.cookie.js" %}"></script>
         <script type="text/javascript" src="{% static "js/jquery-ui.js" %}"></script>
         <script type="text/javascript" src="{% static "js/bootstrap.js" %}"></script>
         <script type="text/javascript" src="{% static "js/tag-it.js" %}"></script>

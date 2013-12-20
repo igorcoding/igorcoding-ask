@@ -1,7 +1,7 @@
 # Django settings for igorcoding_ask project.
 import os
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 ENABLE_DJANGO_TOOLBAR = True
 
@@ -23,6 +23,8 @@ DATABASES = {
         'PORT': '',
     }
 }
+
+MEMCACHED_SERVER = '127.0.0.1:11211'
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
