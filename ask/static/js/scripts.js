@@ -60,18 +60,32 @@ function setupCsrfAndAjax() {
     });
 }
 
-function onnewquestion(question) {
+var newQuestionsCount = 0;
+var showNewQuestionRefresher = false;
 
+function onnewquestion(data) {
+    var question = JSON.parse(data);
+    ++newQuestionsCount;
+    $('#new-questions-count').text(newQuestionsCount);
+    if (!showNewQuestionRefresher) {
+        $('.questions-refresher').slideDown(300);
+        showNewQuestionRefresher = true;
+    }
+
+    // add to html new questions (hidden)
+    var $firstQuestion = $('.question').first();
+    var $qObj = $(question['markup']).addClass('hidden-block');
+    $firstQuestion.before($qObj);
 }
 
 function newquestions(id, onnewquestion) {
     $.get('http://localhost/listen/', { cid: id })
 		.done(function(data) {
 			onnewquestion(data);
-			newquestions(id, onnewquestion);
+			setTimeout(newquestions(id, onnewquestion), 500);
 		})
 		.fail(function(data) {
-			newquestions(id, onnewquestion);
+			setTimeout(newquestions(id, onnewquestion), 500);
 		});
 }
 
@@ -82,9 +96,18 @@ jQuery(document).ready(function($) {
     $.toast.config.align = 'right';
     $.toast.config.closeForStickyOnly = false;
 
-    var c = $.cookie();
+    //var c = $.cookie();
     //alert(c);
-    //newquestions()
+    newquestions(123, onnewquestion);
+
+
+    $('.questions-refresher').click(function() {
+        newQuestionsCount = 0;
+        showNewQuestionRefresher = false;
+        $('.questions-refresher').hide();
+
+        $('.question.hidden-block').show();
+    });
 
     $('.content-block .rating-button').click(function() {
         var content = $(this).parents('.content-block');

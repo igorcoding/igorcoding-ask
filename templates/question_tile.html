@@ -1,0 +1,37 @@
+<section class="question content-block" data-id="{{ question.id }}">
+    <div class="side-info">
+        <div class="counter">
+            <div class="rating">{{ question.rating }}</div>
+            <div class="rating-buttons">
+                <a href="#"><div class="glyphicon glyphicon-chevron-up rating-button up-button"></div></a>
+                <a href="#"><div class="glyphicon glyphicon-chevron-down rating-button down-button"></div></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="question-info">
+        <div class="question-title">
+            <a href="/question/{{ question.id }}">{{ question.title }}</a>
+        </div>
+        <div class="actions-menu">
+            <ul>
+                <li><a href="/question/{{ question.id }}#ans">Read answers ({{ question.answer_set.count }})</a></li>
+                <li><a href="/question/{{ question.id }}#answer">Answer</a></li>
+            </ul>
+        </div>
+        {% if question.tag.all %}
+        <div class="tags-section">
+            <i class="glyphicon glyphicon-tags"></i>
+            <div class="tags">
+                {% for tag in question.tag.all %}
+                    <span class="tag" onclick="document.location.href='/tag/{{ tag.tagname }}'">{{ tag.tagname }}</span>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        <div class="author-section">
+            <div class="post-time">{{ question.creation_date }}</div>
+            <div class="user-name">by <a href="/users/{{ question.author.username }}">{{ question.author }}</a></div>
+        </div>
+    </div>
+</section>

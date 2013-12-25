@@ -302,3 +302,7 @@
     color: #3ec22e;
     margin-right: 7px;
 }
+
+.hidden-block {
+    display: none;
+}

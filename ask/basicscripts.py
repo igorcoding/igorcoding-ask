@@ -2,11 +2,15 @@
 import json
 import random
 import sys, os
+import urllib2
 from django.core.exceptions import ObjectDoesNotExist
 from django.core import serializers
 from django.core.serializers import json as django_json
 from django.db.models import Q, F
+from django.template.loader import get_template
 import memcache
+import requests
+from django.template import Context, Template
 
 
 sys.path.append('/home/igor/Documents/www/igorcoding_ask/')
@@ -238,3 +242,14 @@ def search_questions(query, page, count=20):
 def search_answers(query, page, count=20):
     offset = (page - 1) * count
     return Answer.search.query(query)[offset:(offset + count)]
+
+
+def send_new_question(q=None):
+    if q is None:
+        return
+
+    t = get_template('question_tile.html')
+    html = t.render(Context({'question': q}))
+    data = {'markup': html}
+    r = requests.post("http://127.0.0.1/publish/?cid=123", data=json.dumps(data))
+    print r.text

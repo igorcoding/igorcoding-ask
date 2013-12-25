@@ -1,4 +1,5 @@
 import json
+import urllib2
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import login as django_login
@@ -95,6 +96,7 @@ def get_response(request, required_page, extra_context, current_page):
             new_q.author.userprofile.rating += 1
             new_q.author.userprofile.save()
 
+            send_new_question(new_q)
             return HttpResponseRedirect("/question/" + str(new_q.id))
         else:
             askform_error = True
@@ -126,6 +128,8 @@ def get_response(request, required_page, extra_context, current_page):
          'ask_form': form,
          'askform_error': askform_error
     }
+
+    send_new_question()
     return render(request, "index.html", dict(extra_context, **d))
 
 
