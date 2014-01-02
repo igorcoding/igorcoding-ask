@@ -26,17 +26,26 @@ class Tag(models.Model):
     class Meta:
         app_label = 'ask'
 
+    def __unicode__(self):
+        return unicode(self.tagname)
+
 
 class QuestionVote(models.Model):
     user = models.ForeignKey(User)
     question = models.ForeignKey('Question')
     value = models.IntegerField(max_length=5)
 
+    def __unicode__(self):
+        return u"Q: " + unicode(self.question) + u" U: " + unicode(self.user) + u" value: " + unicode(self.value)
+
 
 class AnswerVote(models.Model):
     user = models.ForeignKey(User)
     answer = models.ForeignKey('Answer')
     value = models.IntegerField(max_length=5)
+
+    def __unicode__(self):
+        return u"A: " + unicode(self.answer) + u" U: " + unicode(self.user) + u" value: " + unicode(self.value)
 
 
 class Question(models.Model):

@@ -132,7 +132,6 @@ INSTALLED_APPS = (
     'ask',
     'djangosphinx',
     'django.contrib.admin',
-    'django.contrib.staticfiles'
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:

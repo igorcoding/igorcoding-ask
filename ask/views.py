@@ -129,7 +129,6 @@ def get_response(request, required_page, extra_context, current_page):
          'askform_error': askform_error
     }
 
-    send_new_question()
     return render(request, "index.html", dict(extra_context, **d))
 
 

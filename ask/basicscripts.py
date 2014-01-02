@@ -250,6 +250,6 @@ def send_new_question(q=None):
 
     t = get_template('question_tile.html')
     html = t.render(Context({'question': q}))
-    data = {'markup': html}
+    data = {'markup': html, 'qid': q.id}
     r = requests.post("http://127.0.0.1/publish/?cid=123", data=json.dumps(data))
     print r.text

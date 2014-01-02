@@ -7,7 +7,7 @@ from igorcoding_ask import settings
 # from django.contrib import admin
 # admin.autodiscover()
 
-
+admin.autodiscover()
 urlpatterns = patterns('',
     # Examples:
     url(r'^', include('ask.urls')),

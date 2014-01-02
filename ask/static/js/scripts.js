@@ -62,20 +62,31 @@ function setupCsrfAndAjax() {
 
 var newQuestionsCount = 0;
 var showNewQuestionRefresher = false;
+var lastQId = -1;
 
 function onnewquestion(data) {
     var question = JSON.parse(data);
-    ++newQuestionsCount;
-    $('#new-questions-count').text(newQuestionsCount);
-    if (!showNewQuestionRefresher) {
-        $('.questions-refresher').slideDown(300);
-        showNewQuestionRefresher = true;
-    }
+    var markup = question['markup'];
+    var qId = parseInt(question['qid']);
 
-    // add to html new questions (hidden)
-    var $firstQuestion = $('.question').first();
-    var $qObj = $(question['markup']).addClass('hidden-block');
-    $firstQuestion.before($qObj);
+    if (qId != lastQId || lastQId == -1) {
+        lastQId = qId;
+        ++newQuestionsCount;
+        $('#new-questions-count').text(newQuestionsCount);
+        if (!showNewQuestionRefresher) {
+            $('.questions-refresher').slideDown(300);
+            showNewQuestionRefresher = true;
+        }
+
+        // add to html new questions (hidden)
+        var $firstQuestion = $('.question').first();
+        var $qObj = $(question['markup']).addClass('hidden-block');
+        $firstQuestion.before($qObj);
+    }
+    else {
+        showNewQuestionRefresher = false;
+        newQuestionsCount = 0;
+    }
 }
 
 function newquestions(id, onnewquestion) {
