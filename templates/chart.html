@@ -1,0 +1,18 @@
+{% extends "default.html" %}
+
+{% block extra_scripts %}
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    {% load staticfiles %}
+    <script type="text/javascript" src="{% static "js/tag_chart.js" %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div id="feed">
+        <div id="graphs" class="graph-page">
+            <section class="content-block graph">
+                <div id="tag_chart"></div>
+            </section>
+        </div>
+    </div>
+    {% include "sidebar.html" %}
+{% endblock %}

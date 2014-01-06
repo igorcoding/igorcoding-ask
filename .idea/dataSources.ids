@@ -10,10 +10,7 @@
     <user-password>dfdfdfd9dfcfdfd8dff5dfdadfcbdfd9dfd9</user-password>
     <libraries>
       <library>
-        <url>file://$USER_HOME$/.PyCharm30/config/jdbc-drivers/mysql-connector-license.txt</url>
-      </library>
-      <library>
-        <url>file://$USER_HOME$/.PyCharm30/config/jdbc-drivers/mysql-connector-java-5.1.26-bin.jar</url>
+        <url>file:///opt/mysql-connector-java/mysql-connector-java-5.1.26-bin.jar</url>
       </library>
     </libraries>
     <schema name="" catalog="ask_db"/>

@@ -65,33 +65,41 @@ var showNewQuestionRefresher = false;
 var lastQId = -1;
 
 function onnewquestion(data) {
-    var question = JSON.parse(data);
-    var markup = question['markup'];
-    var qId = parseInt(question['qid']);
+    try
+    {
+        var question = JSON.parse(data);
+        var markup = question['markup'];
+        var qId = parseInt(question['qid']);
 
-    if (qId != lastQId || lastQId == -1) {
-        lastQId = qId;
-        ++newQuestionsCount;
-        $('#new-questions-count').text(newQuestionsCount);
-        if (!showNewQuestionRefresher) {
-            $('.questions-refresher').slideDown(300);
-            showNewQuestionRefresher = true;
+        if (qId != lastQId || lastQId == -1) {
+            lastQId = qId;
+            ++newQuestionsCount;
+            $('#new-questions-count').text(newQuestionsCount);
+            if (!showNewQuestionRefresher) {
+                $('.questions-refresher').slideDown(300);
+                showNewQuestionRefresher = true;
+            }
+
+            // add to html new questions (hidden)
+            var $firstQuestion = $('.question').first();
+            var $qObj = $(question['markup']).addClass('hidden-block');
+            $firstQuestion.before($qObj);
         }
-
-        // add to html new questions (hidden)
-        var $firstQuestion = $('.question').first();
-        var $qObj = $(question['markup']).addClass('hidden-block');
-        $firstQuestion.before($qObj);
+        else {
+            showNewQuestionRefresher = false;
+            newQuestionsCount = 0;
+        }
     }
-    else {
-        showNewQuestionRefresher = false;
-        newQuestionsCount = 0;
+    catch (error)
+    {
+        console.log(error);
     }
 }
 
 function newquestions(id, onnewquestion) {
     $.get('http://localhost/listen/', { cid: id })
 		.done(function(data) {
+            console.log(data);
 			onnewquestion(data);
 			setTimeout(newquestions(id, onnewquestion), 500);
 		})
@@ -109,7 +117,7 @@ jQuery(document).ready(function($) {
 
     //var c = $.cookie();
     //alert(c);
-    newquestions(123, onnewquestion);
+    // newquestions(123, onnewquestion);
 
 
     $('.questions-refresher').click(function() {
@@ -160,11 +168,11 @@ jQuery(document).ready(function($) {
               .fail(function( msg ) {
                     $.toast(msg, {sticky: false, type: 'danger'});
               });
-            return false;
         }
         else
             $.toast("An error occurred. Try refreshing your page.", {sticky: true, type: 'danger'});
             //alert("An error occurred. Try refreshing your page.");
+        return false;
     });
 
     $(document).on('click', '.correctness.ratable', function() {

@@ -12,6 +12,8 @@
         <link rel="stylesheet" type="text/css" href="{% static "css/tag-it/jquery.tagit.css" %}" />
         <link rel="stylesheet" type="text/css" href="{% static "css/jquery.toast.css" %}" />
 
+        <script type="text/javascript" src="{% static "js/jquery-2.0.3.js" %}"></script>
+
         {% if request.path == '/logout/' or request.path == '/login/' %}
             <link rel="stylesheet" type="text/css" href="{% static "css/login.css" %}" />
         {% endif %}
@@ -27,6 +29,9 @@
         {% endif %}
 
 
+        {% block extra_head %}
+        {% endblock %}
+
     </head>
 
     <body>
@@ -41,6 +46,7 @@
                     <li><a href="/">Questions</a></li>
                     <!--<li><a href="/answers/">Answers</a></li>-->
                     <li><a href="/users/">Users</a></li>
+                    <li><a href="/chart/">Graph</a></li>
                 </ul>
             </nav>
 
@@ -147,6 +153,7 @@
         <script type="text/javascript" src="{% static "js/tag-it.js" %}"></script>
         <script type="text/javascript" src="{% static "js/jquery.toast.js" %}"></script>
         <script type="text/javascript" src="{% static "js/jquery.toast.min.js" %}"></script>
+        <script type="text/javascript" src="{% static "js/highcharts.js" %}"></script>
         <script type="text/javascript" src="{% static "js/scripts.js" %}"></script>
 
         <script>
@@ -184,7 +191,11 @@
 
         </script>
 
+        {% block extra_scripts %}
+        {% endblock %}
 
     </body>
+
+
 
 </html>

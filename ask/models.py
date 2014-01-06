@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from djangosphinx.models import SphinxSearch
+from django.utils import timezone
 
 
 class UserProfile(models.Model):
@@ -66,7 +67,7 @@ class Question(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.id:
-            self.creation_date = datetime.datetime.today()
+            self.creation_date = timezone.now()
         return super(Question, self).save(*args, **kwargs)
 
     class Meta:
@@ -93,7 +94,7 @@ class Answer(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.id:
-            self.date = datetime.datetime.today()
+            self.date = timezone.now()
         return super(Answer, self).save(*args, **kwargs)
 
     def __unicode__(self):

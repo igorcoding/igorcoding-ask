@@ -2,12 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6463f351-8393-4985-ab19-46ddcb1f5493" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ask/admin.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/chart.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ask/static/chartit/js/chartloader.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ask/static/js/highcharts.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ask/static/js/tag_chart.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.ids" afterPath="$PROJECT_DIR$/.idea/dataSources.ids" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ask/basicscripts.py" afterPath="$PROJECT_DIR$/ask/basicscripts.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.xml" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/default.html" afterPath="$PROJECT_DIR$/templates/default.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ask/static/css/feed.css" afterPath="$PROJECT_DIR$/ask/static/css/feed.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ask/generate_data.py" afterPath="$PROJECT_DIR$/ask/generate_data.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/igorcoding_ask.iml" afterPath="$PROJECT_DIR$/.idea/igorcoding_ask.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ask/models.py" afterPath="$PROJECT_DIR$/ask/models.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ask/static/js/scripts.js" afterPath="$PROJECT_DIR$/ask/static/js/scripts.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/igorcoding_ask/settings.py" afterPath="$PROJECT_DIR$/igorcoding_ask/settings.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/igorcoding_ask/urls.py" afterPath="$PROJECT_DIR$/igorcoding_ask/urls.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ask/urls.py" afterPath="$PROJECT_DIR$/ask/urls.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ask/views.py" afterPath="$PROJECT_DIR$/ask/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -25,7 +35,7 @@
     <SUITE FILE_PATH="coverage/igorcoding_ask$views.coverage" NAME="views Coverage Results" MODIFIED="1385124468411" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ask" />
     <SUITE FILE_PATH="coverage/igorcoding_ask$basicscripts.coverage" NAME="basicscripts Coverage Results" MODIFIED="1384414108216" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ask" />
     <SUITE FILE_PATH="coverage/igorcoding_ask$insert_data_mysqldb.coverage" NAME="insert_data mysqldb Coverage Results" MODIFIED="1383664773981" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/igorcoding_ask$generate_data.coverage" NAME="generate_data Coverage Results" MODIFIED="1385290308602" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ask" />
+    <SUITE FILE_PATH="coverage/igorcoding_ask$generate_data.coverage" NAME="generate_data Coverage Results" MODIFIED="1389034992830" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ask" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -47,16 +57,16 @@
       <file leaf-file-name="settings.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/igorcoding_ask/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="2" selection-start="420" selection-end="420" vertical-scroll-proportion="0.0" vertical-offset="252" max-vertical-offset="3978">
+            <state line="134" column="5" selection-start="4404" selection-end="4404" vertical-scroll-proportion="0.0" vertical-offset="2214" max-vertical-offset="3996">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="admin.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ask/admin.py">
+      <file leaf-file-name="tag_chart.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ask/static/js/tag_chart.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="0" selection-start="177" selection-end="177" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="612">
+            <state line="14" column="39" selection-start="489" selection-end="489" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1638">
               <folding />
             </state>
           </provider>
@@ -65,25 +75,7 @@
       <file leaf-file-name="urls.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ask/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="0" selection-start="703" selection-end="703" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="612">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="models.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ask/models.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="47" column="4" selection-start="1260" selection-end="1260" vertical-scroll-proportion="0.0" vertical-offset="216" max-vertical-offset="1980">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="basicscripts.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ask/basicscripts.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="233" column="33" selection-start="7227" selection-end="7227" vertical-scroll-proportion="0.0" vertical-offset="3915" max-vertical-offset="4500">
+            <state line="16" column="32" selection-start="487" selection-end="487" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="684">
               <folding />
             </state>
           </provider>
@@ -92,16 +84,59 @@
       <file leaf-file-name="views.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ask/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="130" column="0" selection-start="4159" selection-end="4159" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="8604">
+            <state line="492" column="5" selection-start="14793" selection-end="14793" vertical-scroll-proportion="0.0" vertical-offset="8505" max-vertical-offset="9990">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="scripts.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/ask/static/js/scripts.js">
+      <file leaf-file-name="generate_data.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ask/generate_data.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="95" column="32" selection-start="2870" selection-end="2870" vertical-scroll-proportion="0.22105263" vertical-offset="1584" max-vertical-offset="4860">
+            <state line="280" column="3" selection-start="9996" selection-end="9996" vertical-scroll-proportion="0.0" vertical-offset="4590" max-vertical-offset="5274">
+              <folding>
+                <marker date="1389034983971" expanded="true" signature="2514:2694" placeholder="INSERT INTO ..." />
+                <marker date="1389034983971" expanded="true" signature="3036:3097" placeholder="INSERT INTO ..." />
+                <marker date="1389034983971" expanded="true" signature="3761:3802" placeholder="INSERT INTO ..." />
+                <marker date="1389034983971" expanded="true" signature="5270:5374" placeholder="INSERT INTO ..." />
+                <marker date="1389034983971" expanded="true" signature="6540:6606" placeholder="INSERT INTO ..." />
+                <marker date="1389034983971" expanded="true" signature="8031:8143" placeholder="INSERT INTO ..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="basicscripts.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ask/basicscripts.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="90" column="28" selection-start="2590" selection-end="2590" vertical-scroll-proportion="0.0" vertical-offset="1329" max-vertical-offset="4896">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="chart.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/chart.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="12" column="28" selection-start="424" selection-end="424" vertical-scroll-proportion="-8.0" vertical-offset="0" max-vertical-offset="414">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="feed.css" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ask/static/css/feed.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="311" column="17" selection-start="4365" selection-end="4365" vertical-scroll-proportion="0.0" vertical-offset="5132" max-vertical-offset="5724">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="default.html" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/default.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="32" column="22" selection-start="1467" selection-end="1467" vertical-scroll-proportion="0.6741573" vertical-offset="216" max-vertical-offset="3708">
               <folding />
             </state>
           </provider>
@@ -125,30 +160,30 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/templates/registration/register.html" />
-        <option value="$PROJECT_DIR$/ask/forms.py" />
-        <option value="$PROJECT_DIR$/templates/default.html" />
-        <option value="$PROJECT_DIR$/ask/urls.py" />
-        <option value="$USER_HOME$/Desktop/sender.html" />
-        <option value="$PROJECT_DIR$/ask/static/css/feed.css" />
-        <option value="$PROJECT_DIR$/templates/question_tile.html" />
-        <option value="$PROJECT_DIR$/templates/questions.html" />
-        <option value="db-console:/b75e6a41/2966a323-7127-45dc-865d-297d34b91f31/" />
         <option value="$PROJECT_DIR$/igorcoding_ask/urls.py" />
+        <option value="$PROJECT_DIR$/ask/admin.py" />
         <option value="$PROJECT_DIR$/ask/models.py" />
+        <option value="$PROJECT_DIR$/templates/registration/login.html" />
+        <option value="$PROJECT_DIR$/templates/graph.html" />
+        <option value="$PROJECT_DIR$/ask/static/js/scripts.js" />
         <option value="$PROJECT_DIR$/igorcoding_ask/settings.py" />
+        <option value="$PROJECT_DIR$/templates/default.html" />
+        <option value="$PROJECT_DIR$/templates/chart.html" />
+        <option value="$PROJECT_DIR$/ask/urls.py" />
+        <option value="db-console:/b75e6a41/2966a323-7127-45dc-865d-297d34b91f31/" />
+        <option value="$PROJECT_DIR$/ask/generate_data.py" />
+        <option value="$PROJECT_DIR$/ask/static/css/feed.css" />
+        <option value="$PROJECT_DIR$/ask/static/js/tag_chart.js" />
         <option value="$PROJECT_DIR$/ask/views.py" />
         <option value="$PROJECT_DIR$/ask/basicscripts.py" />
-        <option value="$PROJECT_DIR$/ask/static/js/scripts.js" />
-        <option value="$PROJECT_DIR$/ask/admin.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="60" />
-    <option name="y" value="24" />
-    <option name="width" value="1307" />
-    <option name="height" value="745" />
+    <option name="x" value="58" />
+    <option name="y" value="-4" />
+    <option name="width" value="1309" />
+    <option name="height" value="773" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -201,10 +236,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="igorcoding_ask" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -349,6 +380,28 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="igorcoding_ask" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="igorcoding_ask" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ask" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="static" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="css" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
@@ -358,8 +411,8 @@
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="recentsLimit" value="5" />
-    <property name="options.lastSelected" value="com.jetbrains.python.configuration.PythonSdkConfigurable" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/sender.html" />
+    <property name="options.lastSelected" value="editor.preferences.appearance" />
+    <property name="last_opened_file_path" value="/opt/mysql-connector-java/mysql-connector-java-5.1.26-bin.jar" />
     <property name="restartRequiresConfirmation" value="true" />
     <property name="FullScreen" value="false" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
@@ -386,7 +439,7 @@
       <recent name="$PROJECT_DIR$/ask/templates" />
     </key>
   </component>
-  <component name="RunManager" selected="Django server.igorcoding_ask">
+  <component name="RunManager" selected="Python.generate_data">
     <configuration default="false" name="index.html" type="JavascriptDebugType" factoryName="JavaScript Debug" singleton="true" temporary="true" uri="http://localhost:8000/popular">
       <RunnerSettings RunnerId="JavascriptDebugRunner" />
       <ConfigurationWrapper RunnerId="JavascriptDebugRunner" />
@@ -810,25 +863,25 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="60" y="24" width="1307" height="745" extended-state="7" />
-    <editor active="true" />
+    <frame x="58" y="-4" width="1309" height="773" extended-state="6" />
+    <editor active="false" />
     <layout>
+      <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5183413" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3216" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32854864" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21604449" sideWeight="0.4816" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25338647" sideWeight="0.67623603" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24225576" sideWeight="0.5824" order="1" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.45135567" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32274246" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21570182" sideWeight="0.4816587" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2533757" sideWeight="0.5501672" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24504362" sideWeight="0.5502392" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.44976076" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3408" sideWeight="0.50038433" order="10" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4176" sideWeight="0.49961567" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.44976076" sideWeight="0.49961567" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5184" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32376397" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -862,130 +915,118 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/ask/basicscripts.py</url>
-          <line>66</line>
-          <option name="timeStamp" value="52" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/ask/basicscripts.py</url>
-          <line>150</line>
-          <option name="timeStamp" value="84" />
-        </line-breakpoint>
-      </breakpoints>
-      <option name="time" value="90" />
+      <option name="time" value="95" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/templates/questions.html">
+    <entry file="file://$PROJECT_DIR$/ask/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="14" selection-start="951" selection-end="951" vertical-scroll-proportion="0.0" vertical-offset="294" max-vertical-offset="828">
+        <state line="28" column="0" selection-start="737" selection-end="737" vertical-scroll-proportion="0.0" vertical-offset="540" max-vertical-offset="2070">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/question_tile.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="29" selection-start="126" selection-end="126" vertical-scroll-proportion="0.0" vertical-offset="36" max-vertical-offset="756">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="756">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file:///usr/local/lib/python2.7/dist-packages/django/contrib/admin/sites.py">
+    <entry file="file://$PROJECT_DIR$/templates/questions.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="257" column="0" selection-start="10227" selection-end="10227" vertical-scroll-proportion="0.39713773" vertical-offset="4134" max-vertical-offset="7974">
+        <state line="31" column="27" selection-start="1009" selection-end="1009" vertical-scroll-proportion="-9.777778" vertical-offset="294" max-vertical-offset="828">
           <folding />
         </state>
-      </provider>
-    </entry>
-    <entry file="dbDummy://db-console:/b75e6a41/2966a323-7127-45dc-865d-297d34b91f31/">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="0" selection-start="600" selection-end="634" vertical-scroll-proportion="0.31886792" vertical-offset="299" max-vertical-offset="1188" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/igorcoding_ask/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="2" selection-start="420" selection-end="420" vertical-scroll-proportion="0.0" vertical-offset="252" max-vertical-offset="3978">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/igorcoding_ask/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="20" selection-start="296" selection-end="296" vertical-scroll-proportion="0.18060201" vertical-offset="0" max-vertical-offset="598">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ask/templatetags/sidebar_content.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="41" selection-start="248" selection-end="248" vertical-scroll-proportion="0.37630662" vertical-offset="0" max-vertical-offset="574">
-          <folding>
-            <element signature="e#0#27#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/sidebar.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="18" selection-start="683" selection-end="683" vertical-scroll-proportion="0.5483871" vertical-offset="0" max-vertical-offset="558">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="18" selection-start="576" selection-end="576" vertical-scroll-proportion="0.56742555" vertical-offset="0" max-vertical-offset="571">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ask/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="0" selection-start="703" selection-end="703" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="612">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ask/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="130" column="0" selection-start="4159" selection-end="4159" vertical-scroll-proportion="0.0" vertical-offset="8043" max-vertical-offset="8604">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ask/basicscripts.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="233" column="33" selection-start="7227" selection-end="7227" vertical-scroll-proportion="0.0" vertical-offset="3915" max-vertical-offset="4500">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ask/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="4" selection-start="1260" selection-end="1260" vertical-scroll-proportion="0.0" vertical-offset="270" max-vertical-offset="2052">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ask/static/js/jquery.toast.min.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="561">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ask/admin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="0" selection-start="177" selection-end="177" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="612">
+        <state line="134" column="5" selection-start="4404" selection-end="4404" vertical-scroll-proportion="0.0" vertical-offset="2214" max-vertical-offset="3996">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ask/static/js/scripts.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="95" column="32" selection-start="2870" selection-end="2870" vertical-scroll-proportion="0.22105263" vertical-offset="1584" max-vertical-offset="4860">
+        <state line="145" column="9" selection-start="4093" selection-end="4093" vertical-scroll-proportion="0.06521739" vertical-offset="2592" max-vertical-offset="5004">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ask/templatetags/sidebar_content.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="19" selection-start="170" selection-end="170" vertical-scroll-proportion="0.2195122" vertical-offset="0" max-vertical-offset="574">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ask/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="32" selection-start="487" selection-end="487" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="684">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://db-console:/b75e6a41/2966a323-7127-45dc-865d-297d34b91f31/">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="12" selection-start="221" selection-end="221" vertical-scroll-proportion="0.6545454" vertical-offset="0" max-vertical-offset="414">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ask/static/css/feed.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="311" column="17" selection-start="4365" selection-end="4365" vertical-scroll-proportion="0.0" vertical-offset="5132" max-vertical-offset="5724">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/chart.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="28" selection-start="424" selection-end="424" vertical-scroll-proportion="-8.0" vertical-offset="0" max-vertical-offset="414">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ask/static/js/tag_chart.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="39" selection-start="489" selection-end="489" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1638">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ask/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="492" column="5" selection-start="14793" selection-end="14793" vertical-scroll-proportion="0.0" vertical-offset="8505" max-vertical-offset="9990">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ask/generate_data.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="280" column="3" selection-start="9996" selection-end="9996" vertical-scroll-proportion="0.0" vertical-offset="4590" max-vertical-offset="5274">
+          <folding>
+            <marker date="1389034983971" expanded="true" signature="2514:2694" placeholder="INSERT INTO ..." />
+            <marker date="1389034983971" expanded="true" signature="3036:3097" placeholder="INSERT INTO ..." />
+            <marker date="1389034983971" expanded="true" signature="3761:3802" placeholder="INSERT INTO ..." />
+            <marker date="1389034983971" expanded="true" signature="5270:5374" placeholder="INSERT INTO ..." />
+            <marker date="1389034983971" expanded="true" signature="6540:6606" placeholder="INSERT INTO ..." />
+            <marker date="1389034983971" expanded="true" signature="8031:8143" placeholder="INSERT INTO ..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ask/basicscripts.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="90" column="28" selection-start="2590" selection-end="2590" vertical-scroll-proportion="0.0" vertical-offset="1329" max-vertical-offset="4896">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/default.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="22" selection-start="1467" selection-end="1467" vertical-scroll-proportion="0.6741573" vertical-offset="216" max-vertical-offset="3708">
           <folding />
         </state>
       </provider>

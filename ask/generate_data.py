@@ -12,7 +12,6 @@ import time
 import MySQLdb
 
 
-
 def value_in_dict_arr(dict_arr, key, value):
     for dictionary in dict_arr:
         if key in dictionary and dictionary[key] == value:
@@ -267,7 +266,7 @@ def main():
     users_res = generate_users(connection,  cursor, MAX_USERS)
     print "Time: %d" % (time.time() - now)
 
-    now = time.time()
+    '''now = time.time()
     tags_res = generate_tags(connection, cursor, MAX_TAGS)
     print "Time: %d" % (time.time() - now)
 
@@ -279,7 +278,7 @@ def main():
     generate_answers(connection, cursor, MAX_ANSWERS, questions_res, users_res)
 
     print "Time: %d" % (time.time() - now)
-
+'''
     connection.close()
 
 main()

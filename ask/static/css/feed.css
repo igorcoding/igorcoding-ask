@@ -49,15 +49,17 @@
 
 
 
-
-
-
-
-#questions, #answers, #users {
+#questions, #answers, #users, #graphs {
     padding: 10px;
     background-color: white;
     border: lightgray solid;
     border-width: 0 1px 1px 1px;
+}
+
+
+.graph-page {
+    border-width: 1px !important;
+    margin-top: 42px;
 }
 
 .content-block {
@@ -197,7 +199,6 @@
     display: inline-block;
     float: right;
     margin-right: -40px;
-    padding-top: auto;
 }
 
 .author-section a {
@@ -305,4 +306,8 @@
 
 .hidden-block {
     display: none;
+}
+
+#tag_chart {
+    height: 400px;
 }

@@ -2,6 +2,7 @@
 import json
 import random
 import sys, os
+import urllib
 import urllib2
 from django.core.exceptions import ObjectDoesNotExist
 from django.core import serializers
@@ -101,7 +102,7 @@ def get_top_tags(count):
             weights_count = 5
             tags = Tag.objects.all().annotate(questions_count=models.Count('question')).order_by('-questions_count')[:count]
             max_value = tags[0].questions_count
-            min_value = tags[count - 1].questions_count
+            min_value = tags[min(count, len(tags)) - 1].questions_count
             delta = (max_value - min_value) / weights_count
 
             weight = weights_count
@@ -115,7 +116,7 @@ def get_top_tags(count):
             random.shuffle(res)
         except:
             res = []
-        mc.set('top_tags', json.dumps(res, ensure_ascii=False), time=4*24*60*60)
+        mc.set('top_tags', json.dumps(res, ensure_ascii=False), time=60)
         return res
     res = json.loads(top, encoding='utf-8')
     return res
@@ -251,5 +252,28 @@ def send_new_question(q=None):
     t = get_template('question_tile.html')
     html = t.render(Context({'question': q}))
     data = {'markup': html, 'qid': q.id}
-    r = requests.post("http://127.0.0.1/publish/?cid=123", data=json.dumps(data))
-    print r.text
+    #json_data = json.dumps(data)
+    #r = requests.post("http://127.0.0.1/publish/?cid=123", data=json_data)
+    #print r.text
+    import urllib2
+    #data = {'data': 'data'}
+    url = "http://127.0.0.1/publish/?cid=123"
+    opener = urllib2.build_opener(urllib2.HTTPHandler)
+
+    encoded_data = json.dumps(data)
+    print encoded_data
+    print len(encoded_data)
+
+    headers = {
+        'Content-Length': len(encoded_data),
+        'Content-Type': 'application/json; charset=UTF-8'
+    }
+
+    request = urllib2.Request(url, data=encoded_data, headers=headers)
+    opener.open(request)
+    opener.close()
+
+
+def get_questions_count_per_tags():
+    tags = Tag.objects.all().annotate(questions_count=models.Count('question'))
+    return [(tag.tagname,  tag.questions_count) for tag in tags]
