@@ -1,0 +1,14 @@
+{
+title: "The title",
+hAxisTitle: "H Axis",
+
+data: {
+  cols: ['Tag', 'Questions #'],
+  rows: [{'tag': 'tag1', 'count': 1},
+         {'tag': 'tag2', 'count': 3},
+	 {'tag': 'tag3', 'count': 3}
+        ]
+}
+
+
+}

@@ -1,0 +1,47 @@
+{% extends "default.html" %}
+
+{% block extra_head %}
+    <style>
+    	.progress
+		{
+    		position: relative;
+		}
+
+		.progress-bar
+		{
+			z-index: 1;
+			position: absolute;
+		}
+
+		.progress span
+		{
+			position: absolute;
+			top: 0;
+			z-index: 2;
+			color: black;
+			text-shadow: 1px 1px 2px black, 0 0 1em lightgray;
+			text-align: center;
+			width: 100%;
+		}
+    </style>
+{% endblock %}
+
+{% block extra_scripts %}
+    {% load staticfiles %}
+    <script type="text/javascript" src="{% static "js/progressbar.js" %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div id="feed">
+        <div id="graphs" class="graph-page">
+            <section class="content-block graph">
+                <div class="progress active">
+                    <div class="progress-bar"  role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                    </div>
+                    <span id="progressCaption">0%</span>
+                </div>
+            </section>
+        </div>
+    </div>
+    {% include "sidebar.html" %}
+{% endblock %}

@@ -97,10 +97,9 @@ def get_response(request, required_page, extra_context, current_page):
             new_q.author.userprofile.rating += 1
             new_q.author.userprofile.save()
 
-            send_new_question(new_q)
+            # send_new_question(new_q)
             mc = memcache.Client([settings.MEMCACHED_SERVER], debug=0)
             mc.delete('tags_chart')
-
             return HttpResponseRedirect("/question/" + str(new_q.id))
         else:
             askform_error = True
@@ -413,6 +412,7 @@ def my_login(request):
     if request.user.is_authenticated():
         return HttpResponseRedirect('/')
 
+
     c = {'ask_form': AskForm(),
          'title': 'Login'
     }
@@ -490,73 +490,29 @@ def chart(request):
 
 def get_chart_data(request):
     mc = memcache.Client([settings.MEMCACHED_SERVER], debug=0)
-    #mc.delete('top_tags')
+    # mc.delete('tags_chart')
     chart_data = mc.get('tags_chart')
     if not chart_data:
         chart_data = {'new': True,
                       'title': 'Questions count per tag',
                       'hAxisTitle': 'Tag'}
 
-        data = {'cols': [{'label': 'Tag', 'type': 'string'},
-                         {'label': 'Questions count', 'type': 'number'}],
+        data = {'cols': ['Tag', 'Questions count'],
                 'rows': []}
 
         qtags = get_questions_count_per_tags()
         for qtag in qtags:
-            data['rows'].append({'c': [{'v': qtag[0]}, {'v': qtag[1]}]})
+            data['rows'].append({'tag': qtag[0], 'count': qtag[1]})
 
         chart_data['data'] = data
         ret = HttpResponse(json.dumps(chart_data, ensure_ascii=False), content_type="application/json")
 
         chart_data['new'] = False
-        mc.set('tags_chart', json.dumps(chart_data, ensure_ascii=False), time=1*24*60*60)
+        mc.set('tags_chart', json.dumps(chart_data, ensure_ascii=False), time=60)
         return ret
 
     return HttpResponse(chart_data, content_type="application/json")
 
 
-
-
-@deprecated
-def graph(request):
-    pass
-    '''tag = Tag.objects.all()[0]
-    tag.question_set.count()
-    #Step 1: Create a DataPool with the data we want to retrieve.
-    data = DataPool(
-        series=[{'options': {
-                    'source': Tag.objects.all()[:10]
-                 },
-                 'terms': [
-                     'question_set__count',
-                     'tagname']
-                }]
-    )
-
-    #Step 2: Create the Chart object
-    cht = Chart(
-        datasource=data,
-        series_options=
-        [{'options': {
-            'type': 'line',
-            'stacking': False},
-          'terms': {
-              'tagname': [
-                  'question__count']
-          }}],
-        chart_options=
-        {'title': {
-            'text': 'Questions\' count by tag'},
-         'xAxis': {
-             'title': {
-                 'text': 'Tagname'}},
-         'yAxis': {
-             'title': {
-                 'text': 'Questions\' count'}}})
-
-    #Step 3: Send the PivotChart object to the template.
-    c = {
-        'chart': cht,
-        'ask_form': AskForm()
-    }
-    return render(request, "graph.html", c)'''
+def progress_bar(request):
+    return render(request, "progress_bar.html")
